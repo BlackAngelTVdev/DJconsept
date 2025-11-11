@@ -7,6 +7,11 @@
 |
 */
 
+import DonationObjectsController from '#controllers/donation_objects_controller'
 import router from '@adonisjs/core/services/router'
 
-router.on('/').render('pages/home')
+
+
+
+router.get('objets', [DonationObjectsController, 'index'])
+
