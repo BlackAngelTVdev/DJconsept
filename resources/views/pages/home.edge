@@ -1,9 +1,55 @@
 @let(title = 'Connexion')
 @include('partials/header')
 
+<style>
+    body {
+        background-color: #121212; /* fond principal sombre */
+        color: #e0e0e0; /* texte clair */
+    }
+
+    h1 {
+        color: #ffffff;
+    }
+
+    form {
+        background-color: #1e1e1e; /* fond du formulaire sombre */
+        border: 1px solid #333;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+    }
+
+    label {
+        color: #ccc;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+        background-color: #2a2a2a;
+        border: 1px solid #444;
+        color: #fff;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+        border-color: #00bcd4;
+        background-color: #333;
+        outline: none;
+        box-shadow: 0 0 5px #00bcd4;
+    }
+
+    .btn-outline-info {
+        color: #00bcd4;
+        border-color: #00bcd4;
+    }
+
+    .btn-outline-info:hover {
+        background-color: #00bcd4;
+        color: #121212;
+    }
+</style>
+
 <h1 class="text-center">{{title}}</h1>
 
-<form action="" up-target=".main, .navbar" method="post" class="w-75 mx-auto p-3 bg-light rounded">
+<form action="" up-target=".main, .navbar" method="post" class="w-25 mx-auto p-3 rounded">
     {{csrfField()}}
     @!component('components/input', { name : 'email', label : 'email', type : 'email'})
     @!component('components/input', { name : 'password', label : 'Mot de passe', type : 'password' })
