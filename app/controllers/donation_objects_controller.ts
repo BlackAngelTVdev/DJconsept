@@ -51,8 +51,20 @@ export default class DonationObjectsController {
   //  */
   // async update({ params, request }: HttpContext) {}
 
-  // /**
-  //  * Delete record
-  //  */
-  // async destroy({ params }: HttpContext) {}
+  /**
+   * Delete record
+   */
+/**
+ * Delete record
+ */
+  async destroy({ params, response }: HttpContext) {
+    
+    const object = await DonationObject.findOrFail(params.id)
+
+
+    await object.delete()
+
+
+    return response.redirect().toPath('/home')
+  }
 }
