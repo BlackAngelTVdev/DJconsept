@@ -3,7 +3,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 export default class DonationObjectsController {
   /**
-   * Afficher la liste des objets
+   * Afficher la liste des objets 
    */
   async index({ view }: HttpContext) {
 
@@ -12,17 +12,17 @@ export default class DonationObjectsController {
     return view.render('pages/home', { objects })
   }
 
-  // /**
-  //  * Display form to create a new record
-  //  */
+  /**
+   * affichage du formulaire pour ajouter un nouvelle objet
+   */
   async create({ view }: HttpContext) {
     
     return view.render('pages/new-object')
   }
 
-  // /**
-  //  * Handle form submission for the create action
-  //  */
+  /**
+   * requetes pour ajouter a la db un nouvelle objet
+   */
  async store({ request, response }: HttpContext) {
   
 
@@ -36,7 +36,7 @@ export default class DonationObjectsController {
 }
 
   /**
-   * voir un seul record
+   * voir un seul objet
    */
   async show({ params, view }: HttpContext) {
 
