@@ -21,14 +21,14 @@
         color: #ccc;
     }
 
-    input[type="email"],
+    input[type="User"],
     input[type="password"] {
         background-color: #2a2a2a;
         border: 1px solid #444;
         color: #fff;
     }
 
-    input[type="email"]:focus,
+    input[type="User"]:focus,
     input[type="password"]:focus {
         border-color: #00bcd4;
         background-color: #333;
@@ -51,7 +51,7 @@
 
 <form action="" up-target=".main, .navbar" method="post" class="w-25 mx-auto p-3 rounded">
     {{csrfField()}}
-    @!component('components/input', { name : 'email', label : 'email', type : 'email'})
+    @!component('components/input', { name : 'User', label : 'User', type : 'User'})
     @!component('components/input', { name : 'password', label : 'Mot de passe', type : 'password' })
     <button class="btn btn-outline-info mt-2" type="submit">{{title}}</button>
 </form>
