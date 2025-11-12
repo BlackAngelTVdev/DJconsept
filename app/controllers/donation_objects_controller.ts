@@ -5,40 +5,45 @@ export default class DonationObjectsController {
   /**
    * Afficher la liste des objets
    */
-  async index({view}: HttpContext) {
+  async index({ view }: HttpContext) {
 
     const objects = await DonationObject.all()
 
-    return view.render('pages/home', {objects})
+    return view.render('pages/home', { objects })
   }
 
-  /**
-   * Display form to create a new record
-   */
-  async create({}: HttpContext) {}
+  // /**
+  //  * Display form to create a new record
+  //  */
+  // async create({}: HttpContext) {}
 
-  /**
-   * Handle form submission for the create action
-   */
-  async store({ request }: HttpContext) {}
+  // /**
+  //  * Handle form submission for the create action
+  //  */
+  // async store({ request }: HttpContext) {}
 
-  /**
-   * Show individual record
-   */
-  async show({ params }: HttpContext) {}
+  // /**
+  //  * Show individual record
+  //  */
+async show({ params, view }: HttpContext) {
+    // findOrFail renvoie une erreur 404 si l'objet n'est pas trouvé
+    const object = await DonationObject.findOrFail(params.id) 
 
-  /**
-   * Edit individual record
-   */
-  async edit({ params }: HttpContext) {}
+    return view.render('pages/show-object', { object })
+  }
 
-  /**
-   * Handle form submission for the edit action
-   */
-  async update({ params, request }: HttpContext) {}
+  // /**
+  //  * Edit individual record
+  //  */
+  // async edit({ params }: HttpContext) {}
 
-  /**
-   * Delete record
-   */
-  async destroy({ params }: HttpContext) {}
+  // /**
+  //  * Handle form submission for the edit action
+  //  */
+  // async update({ params, request }: HttpContext) {}
+
+  // /**
+  //  * Delete record
+  //  */
+  // async destroy({ params }: HttpContext) {}
 }
