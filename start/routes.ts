@@ -14,4 +14,6 @@ import router from '@adonisjs/core/services/router'
 
 
 router.get('home', [DonationObjectsController, 'index'])
+router.get('new', [DonationObjectsController, 'create'])
 router.get('item/:id', [DonationObjectsController, 'show'])
+

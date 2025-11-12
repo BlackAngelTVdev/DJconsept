@@ -15,7 +15,10 @@ export default class DonationObjectsController {
   // /**
   //  * Display form to create a new record
   //  */
-  // async create({}: HttpContext) {}
+  async create({ view }: HttpContext) {
+    
+    return view.render('pages/new-object')
+  }
 
   // /**
   //  * Handle form submission for the create action
