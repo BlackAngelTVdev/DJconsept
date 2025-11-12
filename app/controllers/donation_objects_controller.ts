@@ -22,14 +22,14 @@ export default class DonationObjectsController {
   //  */
   // async store({ request }: HttpContext) {}
 
-  // /**
-  //  * Show individual record
-  //  */
-async show({ params, view }: HttpContext) {
-    // findOrFail renvoie une erreur 404 si l'objet n'est pas trouvé
-    const object = await DonationObject.findOrFail(params.id) 
+  /**
+   * voir un seul record
+   */
+  async show({ params, view }: HttpContext) {
 
-    return view.render('pages/show-object', { object })
+    const object = await DonationObject.findOrFail(params.id)
+
+    return view.render('pages/details', { object })
   }
 
   // /**
