@@ -24,13 +24,9 @@ export default class DonationObjectsController {
    * requetes pour ajouter a la db un nouvelle objet
    */
  async store({ request, response }: HttpContext) {
-  
 
   const data = request.only(['name', 'description'])
-
-
   const object = await DonationObject.create(data)
-
 
   return response.redirect().toPath(`/item/${object.id}`)
 }
