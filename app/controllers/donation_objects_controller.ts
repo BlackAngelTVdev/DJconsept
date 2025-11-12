@@ -23,7 +23,17 @@ export default class DonationObjectsController {
   // /**
   //  * Handle form submission for the create action
   //  */
-  // async store({ request }: HttpContext) {}
+ async store({ request, response }: HttpContext) {
+  
+
+  const data = request.only(['name', 'description'])
+
+
+  const object = await DonationObject.create(data)
+
+
+  return response.redirect().toPath(`/item/${object.id}`)
+}
 
   /**
    * voir un seul record
