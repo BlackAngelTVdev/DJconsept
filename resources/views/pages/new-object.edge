@@ -2,69 +2,54 @@
 <html lang="fr">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Proposer un nouvel objet</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proposer un nouvel objet</title>
 </head>
 
 <body>
-  
-  <h1>Proposer un nouvel objet</h1>
-  
-  <form action="/item" method="POST">
-    
-    {{ csrfField() }}
 
-    <div>
-      <label for="name">Nom de l'objet:</label><br>
-      <input 
-        type="text" 
-        id="name" 
-        name="name" 
-        required 
-        placeholder="Ex: Étagère"
-      />
-    </div>
-    
-    <br>
+    <h1>Proposer un nouvel objet</h1>
 
-    <div>
-      <label for="description">Description détaillée:</label><br>
-      <textarea 
-        id="description" 
-        name="description" 
-        rows="5" 
-        required 
-        placeholder="Décrivez l'état et les caractéristiques."
-      ></textarea>
-    </div>
+    <form action="/item" method="POST">
 
-    <br>
+        {{ csrfField() }}
 
-    <div>
-      <label for="status">Statut (Donner ou Prêter):</label><br>
-      <select 
-        id="status" 
-        name="status" 
-        required 
-      >
-        <option value="">-- Sélectionner le statut --</option>
-        <option value="donation">Donner</option>
-        <option value="loan">Prêter</option>
-      </select>
-    </div>
+        <div>
+            <label for="name">Nom de l'objet:</label><br>
+            <input type="text" id="name" name="name" required placeholder="Ex: Étagère" />
+        </div>
 
-    <br>
+        <br>
 
-    <div>
-      <button type="submit">
-        Ajouter l'objet
-      </button>
-    </div>
+        <div>
+            <label for="description">Description détaillée:</label><br>
+            <textarea id="description" name="description" rows="5" required
+                placeholder="Décrivez l'état et les caractéristiques."></textarea>
+        </div>
 
-  </form>
-  
-  <p><a href="/home">Retour à la page d'accueil</a></p>
+        <br>
+
+        <div>
+            <label for="status">Statut (Donner ou Prêter):</label><br>
+            <select id="status" name="status" required>
+                <option value="">-- Sélectionner le statut --</option>
+                <option value="donation">Donner</option>
+                <option value="loan">Prêter</option>
+            </select>
+        </div>
+
+        <br>
+
+        <div>
+            <button type="submit">
+                Ajouter l'objet
+            </button>
+        </div>
+
+    </form>
+
+    <p><a href="/home">Retour à la page d'accueil</a></p>
 
 </body>
 
