@@ -1,70 +1,50 @@
 import DonationObject from '#models/donation-object'
 import type { HttpContext } from '@adonisjs/core/http'
+import { updateDonationObjectValidator } from '#validators/donation_object'
 
 export default class DonationObjectsController {
-  /**
-   * Afficher la liste des objets 
-   */
+  
   async index({ view }: HttpContext) {
-
     const objects = await DonationObject.all()
-
     return view.render('pages/home', { objects })
   }
 
-  /**
-   * affichage du formulaire pour ajouter un nouvelle objet
-   */
   async create({ view }: HttpContext) {
-    
     return view.render('pages/new-object')
   }
 
-  /**
-   * requetes pour ajouter a la db un nouvelle objet
-   */
- async store({ request, response }: HttpContext) {
+  async store({ request, response }: HttpContext) {
+    const data = request.only(['name', 'description'])
+    const object = await DonationObject.create(data)
+    return response.redirect().toPath(`/item/${object.id}`)
+  }
 
-  const data = request.only(['name', 'description'])
-  const object = await DonationObject.create(data)
-
-  return response.redirect().toPath(`/item/${object.id}`)
-}
-
-  /**
-   * voir un seul objet
-   */
   async show({ params, view }: HttpContext) {
-
     const object = await DonationObject.findOrFail(params.id)
-
     return view.render('pages/details', { object })
   }
 
-  // /**
-  //  * Edit individual record
-  //  */
-  // async edit({ params }: HttpContext) {}
+  async edit({ params, view }: HttpContext) {
+    const object = await DonationObject.findOrFail(params.id)
+    return view.render('pages/edit-object', { object })
+  }
 
-  // /**
-  //  * Handle form submission for the edit action
-  //  */
-  // async update({ params, request }: HttpContext) {}
-
-  /**
-   * Delete record
-   */
-/**
- * Delete record
- */
-  async destroy({ params, response }: HttpContext) {
-    
+  async update({ params, request, response }: HttpContext) {
+    const payload = await request.validateUsing(updateDonationObjectValidator)
     const object = await DonationObject.findOrFail(params.id)
 
+    object.merge(payload)
+    await object.save()
 
+    return response.ok({
+      message: 'Objet de donation mis à jour avec succès.',
+      object: object.serialize(),
+    })
+  }
+
+  async destroy({ params, response }: HttpContext) {
+    const object = await DonationObject.findOrFail(params.id)
     await object.delete()
-
-
     return response.redirect().toPath('/home')
   }
 }
