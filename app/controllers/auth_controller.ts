@@ -8,7 +8,7 @@ export default class AuthController {
   /**
    * Affiche le formulaire de login
    */
-  public async showLogin({ view }: HttpContext) {
+  public async login({ view }: HttpContext) {
     return view.render('pages/login')
   }
 
