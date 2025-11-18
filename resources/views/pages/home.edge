@@ -4,14 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Je donne, je prête – Home</title>
-    <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
   <body>
    <h1>Liste des objets</h1>
 
    @each(object in objects)
-    <div>
+    <div class="item">
       {{ object.name}}
 
       {{ object.description}}
