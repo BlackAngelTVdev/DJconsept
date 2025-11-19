@@ -30,17 +30,24 @@ export default class DonationObjectsController {
   }
 
   async update({ params, request, response }: HttpContext) {
-    const payload = await request.validateUsing(updateDonationObjectValidator)
-    const object = await DonationObject.findOrFail(params.id)
+  // 1. Validation et récupération du payload
+  const payload = await request.validateUsing(updateDonationObjectValidator)
+  
+  // 2. Récupération de l'objet existant
+  const object = await DonationObject.findOrFail(params.id)
 
-    object.merge(payload)
-    await object.save()
+  // 3. Mise à jour de l'objet
+  object.merge(payload)
+  await object.save()
 
-    return response.ok({
-      message: 'Objet de donation mis à jour avec succès.',
-      object: object.serialize(),
-    })
-  }
+  // 4. Redirection vers la page de l'objet mis à jour
+  
+  // Si vous utilisez un nom de route :
+  return response.redirect(`/item/${object.id}`);
+
+  // OU si vous utilisez un chemin direct :
+  // return response.redirect(`/donations/${object.id}`) 
+}
 
   async destroy({ params, response }: HttpContext) {
     const object = await DonationObject.findOrFail(params.id)
