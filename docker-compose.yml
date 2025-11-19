@@ -1,0 +1,34 @@
+services:
+  je-donne-je-prete:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PORT=${PORT}
+
+    image: je-donne-je-prete:latest
+    container_name: je-donne-je-prete
+
+    ports:
+      - 0.0.0.0:${PORT}:${PORT}
+
+    environment:
+      - PORT=${PORT}
+
+    command: npm run dev
+
+    restart: always
+
+
+
+  db:
+    image: mysql
+    container_name: db
+
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    
+    restart: always
