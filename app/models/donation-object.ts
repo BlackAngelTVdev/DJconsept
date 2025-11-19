@@ -10,6 +10,10 @@ export default class DonationObject extends BaseModel {
 
   @column()
   declare description: string
+  @column()
+  declare type: boolean
+  @column()
+  declare status: Int16Array
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
