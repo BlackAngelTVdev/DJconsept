@@ -7,7 +7,6 @@ export default class DonationObjectsController {
   async index({ request, view }: HttpContext) {
 
     const filterType = request.input('filter_type', '')
-
     const query = DonationObject.query()
 
     if (filterType === '0') {
@@ -18,7 +17,6 @@ export default class DonationObjectsController {
     }
 
     const objects = await query.exec()
-
     return view.render('pages/home', {
       objects: objects,
       filterType: filterType
@@ -32,7 +30,6 @@ export default class DonationObjectsController {
   async store({ request, response }: HttpContext) {
 
     const formData = request.only(['name', 'description', 'type'])
-
     const isLending = formData.type === '1'
 
     const object = await DonationObject.create({
@@ -57,7 +54,6 @@ export default class DonationObjectsController {
   async update({ params, request, response }: HttpContext) {
 
     const payload = await request.validateUsing(updateDonationObjectValidator)
-
     const object = await DonationObject.findOrFail(params.id)
 
 

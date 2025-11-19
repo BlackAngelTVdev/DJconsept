@@ -10,7 +10,7 @@
 <body>
   <h1>Liste des objets</h1>
 
-  <form action="/" method="GET">
+  <form action="home" method="GET">
     <label for="filter_type">Filtrer par type :</label>
     <select name="filter_type" id="filter_type" onchange="this.form.submit()">
       <option value="" {{ (filterType==='' || filterType===null || filterType===undefined || filterType===true)
