@@ -6,6 +6,9 @@ services:
       args:
         - PORT=${PORT}
 
+    env_file:
+      - .env
+
     image: je-donne-je-prete:latest
     container_name: je-donne-je-prete
 
@@ -13,6 +16,7 @@ services:
       - 0.0.0.0:${PORT}:${PORT}
 
     environment:
+      - HOST=0.0.0.0
       - PORT=${PORT}
 
     command: npm run dev
@@ -30,5 +34,5 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-    
+
     restart: always
