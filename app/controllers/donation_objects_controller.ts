@@ -1,44 +1,71 @@
 import DonationObject from '#models/donation-object'
 import type { HttpContext } from '@adonisjs/core/http'
+import { updateDonationObjectValidator } from '#validators/donation_object'
 
 export default class DonationObjectsController {
-  /**
-   * Afficher la liste des objets
-   */
-  async index({view}: HttpContext) {
 
-    const objects = await DonationObject.all()
+  async index({ request, view }: HttpContext) {
 
-    return view.render('pages/home', {objects})
+    const filterType = request.input('filter_type', '')
+    const query = DonationObject.query()
+
+    if (filterType === '0') {
+      query.where('type', false)
+
+    } else if (filterType === '1') {
+      query.where('type', true)
+    }
+
+    const objects = await query.exec()
+    return view.render('pages/home', {
+      objects: objects,
+      filterType: filterType
+    })
   }
 
-  /**
-   * Display form to create a new record
-   */
-  async create({}: HttpContext) {}
+  async create({ view }: HttpContext) {
+    return view.render('pages/new-object')
+  }
 
-  /**
-   * Handle form submission for the create action
-   */
-  async store({ request }: HttpContext) {}
+  async store({ request, response }: HttpContext) {
 
-  /**
-   * Show individual record
-   */
-  async show({ params }: HttpContext) {}
+    const formData = request.only(['name', 'description', 'type'])
+    const isLending = formData.type === '1'
 
-  /**
-   * Edit individual record
-   */
-  async edit({ params }: HttpContext) {}
+    const object = await DonationObject.create({
+      name: formData.name,
+      description: formData.description,
+      type: isLending,
+    })
 
-  /**
-   * Handle form submission for the edit action
-   */
-  async update({ params, request }: HttpContext) {}
+    return response.redirect().toPath(`/item/${object.id}`)
+  }
 
-  /**
-   * Delete record
-   */
-  async destroy({ params }: HttpContext) {}
+  async show({ params, view }: HttpContext) {
+    const object = await DonationObject.findOrFail(params.id)
+    return view.render('pages/details', { object })
+  }
+
+  async edit({ params, view }: HttpContext) {
+    const object = await DonationObject.findOrFail(params.id)
+    return view.render('pages/edit-object', { object })
+  }
+
+  async update({ params, request, response }: HttpContext) {
+
+    const payload = await request.validateUsing(updateDonationObjectValidator)
+    const object = await DonationObject.findOrFail(params.id)
+
+
+    object.merge(payload)
+    await object.save()
+
+    return response.redirect(`/item/${object.id}`);
+  }
+
+  async destroy({ params, response }: HttpContext) {
+    const object = await DonationObject.findOrFail(params.id)
+    await object.delete()
+    return response.redirect().toPath('/home')
+  }
 }

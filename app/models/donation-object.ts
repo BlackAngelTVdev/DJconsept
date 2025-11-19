@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class DonationObject extends BaseModel {
+  public static $fillable = ['name', 'description', 'type'];
   @column({ isPrimary: true })
   declare id: number
 
@@ -10,6 +11,10 @@ export default class DonationObject extends BaseModel {
 
   @column()
   declare description: string
+  @column()
+  declare type: boolean
+  @column()
+  declare status: Int16Array
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
