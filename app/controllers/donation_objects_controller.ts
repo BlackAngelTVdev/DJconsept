@@ -3,10 +3,26 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { updateDonationObjectValidator } from '#validators/donation_object'
 
 export default class DonationObjectsController {
-  
-  async index({ view }: HttpContext) {
-    const objects = await DonationObject.all()
-    return view.render('pages/home', { objects })
+
+  async index({ request, view }: HttpContext) {
+
+    const filterType = request.input('filter_type', '')
+
+    const query = DonationObject.query()
+
+    if (filterType === '0') {
+      query.where('type', false)
+
+    } else if (filterType === '1') {
+      query.where('type', true)
+    }
+
+    const objects = await query.exec()
+
+    return view.render('pages/home', {
+      objects: objects,
+      filterType: filterType
+    })
   }
 
   async create({ view }: HttpContext) {
@@ -30,17 +46,17 @@ export default class DonationObjectsController {
   }
 
   async update({ params, request, response }: HttpContext) {
-  
-  const payload = await request.validateUsing(updateDonationObjectValidator)
-  
-  const object = await DonationObject.findOrFail(params.id)
+
+    const payload = await request.validateUsing(updateDonationObjectValidator)
+
+    const object = await DonationObject.findOrFail(params.id)
 
 
-  object.merge(payload)
-  await object.save()
+    object.merge(payload)
+    await object.save()
 
-  return response.redirect(`/item/${object.id}`);
-}
+    return response.redirect(`/item/${object.id}`);
+  }
 
   async destroy({ params, response }: HttpContext) {
     const object = await DonationObject.findOrFail(params.id)
