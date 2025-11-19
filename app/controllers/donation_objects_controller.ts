@@ -30,8 +30,17 @@ export default class DonationObjectsController {
   }
 
   async store({ request, response }: HttpContext) {
-    const data = request.only(['name', 'description'])
-    const object = await DonationObject.create(data)
+
+    const formData = request.only(['name', 'description', 'type'])
+
+    const isLending = formData.type === '1'
+
+    const object = await DonationObject.create({
+      name: formData.name,
+      description: formData.description,
+      type: isLending,
+    })
+
     return response.redirect().toPath(`/item/${object.id}`)
   }
 

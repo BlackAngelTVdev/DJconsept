@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class DonationObject extends BaseModel {
+  public static $fillable = ['name', 'description', 'type'];
   @column({ isPrimary: true })
   declare id: number
 

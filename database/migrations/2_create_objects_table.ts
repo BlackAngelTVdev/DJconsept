@@ -9,7 +9,7 @@ export default class extends BaseSchema {
 
       table.string('name').nullable()
       table.string('description').nullable()
-      table.boolean('type').defaultTo(true).notNullable()
+      table.boolean('type').notNullable()
       table.integer('status').notNullable().defaultTo(1)
       
       table.timestamp('created_at')
