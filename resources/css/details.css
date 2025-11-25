@@ -1,0 +1,139 @@
+/* ------------------------------
+    RESET + BASE
+--------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #ffffff; /* Fond blanc, cohérent avec la liste */
+}
+
+/* --- Structure Principale --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    margin-bottom: 30px; /* Réduit un peu la marge pour le détail */
+    border-bottom: 1px solid #e9ecef; /* Ligne de séparation légère */
+}
+
+main {
+    /* Main devient le conteneur principal du contenu de la page */
+    padding: 15px 30px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- Navigation (Repris de la liste) --- */
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-size: 1.1em;
+    color: #333;
+    padding: 5px 0;
+}
+
+.nav-links a.active {
+    color: #007bff;
+    font-weight: bold;
+    border-bottom: 2px solid #007bff;
+}
+
+.profile-icon {
+    width: 35px;
+    height: 35px;
+    background-color: #333;
+    border-radius: 50%;
+    margin-left: 20px;
+}
+
+/* --- Barre de Recherche (Repris de la liste) --- */
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.search-bar {
+    width: 60%;
+    max-width: 700px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #e0e0e0;
+    font-size: 1em;
+    color: #555;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-bar span {
+    color: #555;
+}
+
+.search-icon {
+    font-size: 1.2em;
+}
+
+/* --- Titre de Page (H1) sur la Page de Détail --- */
+h1 {
+    font-size: 2.2em;
+    color: #343a40; /* Gris foncé, plus sobre que la barre bleue complète */
+    padding-bottom: 10px;
+    border-bottom: 3px solid #007bff; /* Soulignement bleu pour l'importance */
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+
+/* --- Conteneur des Détails de l'Objet (Adapté) --- */
+.details-container {
+    max-width: 800px;
+    margin: 30px auto; /* Centrage dans le main, plus d'espace */
+    padding: 30px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0; /* Bordure légère */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Ombre douce */
+}
+
+/* --- Titre de l'Objet (H2 dans le HTML suggéré) --- */
+.object-name {
+    font-size: 1.8em;
+    color: #007bff; /* Bleu primaire */
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+/* --- Description de l'Objet (P) --- */
+.object-description {
+    font-size: 1.1em;
+    margin-top: 25px;
+    padding: 15px;
+    border-left: 5px solid #007bff;
+    background-color: #f8f9fa; /* Gris très clair */
+    border-radius: 6px;
+    color: #555;
+}
