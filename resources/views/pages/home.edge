@@ -5,52 +5,56 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-     @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
   <title>Je donne, je prête – Home</title>
 </head>
-<header>
-  <h1>Liste des objets</h1>
-  <a href="">Compte</a>
-</header>
+
 
 <body>
-
-
-  <form action="home" method="GET">
-    <label for="filter_type">Filtrer par type :</label>
-    <select name="filter_type" id="filter_type" onchange="this.form.submit()">
-      <option value="" {{ (filterType==='' || filterType===null || filterType===undefined || filterType===true)
-        ? 'selected' : '' }}>
-        Tous
-      </option>
-      <option value="0" {{ filterType==='0' ? 'selected' : '' }}>
-        À donner
-      </option>
-      <option value="1" {{ filterType==='1' ? 'selected' : '' }}>
-        À prêter
-      </option>
-    </select>
-  </form>
-  <div class="midle">
-    @each(object in objects)
-
-    <div class="item">
-      <h2 class="item-name">{{ object.name }}</h2>
-
-      <p>{{ object.description }}</p>
-
-      <p class="item-status">
-        @if(!object.type)
-        À donner
-        @else
-        À prêter
-        @end
-      </p>
-
-      <a href="/item/{{ object.id }}">voir plus</a>
+  <header>
+    <h1>Je donne, Je prête</h1>
+    <div>
+      <a href="/new">Ajouter</a>
+      <a href="">Compte</a>
     </div>
-    @end
-  </div>
+  </header>
+  <main>
+    <form action="home" method="GET">
+      <label for="filter_type">Filtrer par type :</label>
+      <select name="filter_type" id="filter_type" onchange="this.form.submit()">
+        <option value="" {{ (filterType==='' || filterType===null || filterType===undefined || filterType===true)
+          ? 'selected' : '' }}>
+          Tous
+        </option>
+        <option value="0" {{ filterType==='0' ? 'selected' : '' }}>
+          À donner
+        </option>
+        <option value="1" {{ filterType==='1' ? 'selected' : '' }}>
+          À prêter
+        </option>
+      </select>
+    </form>
+    <div class="midle">
+      @each(object in objects)
+
+      <div class="item">
+        <h2 class="item-name">{{ object.name }}</h2>
+
+        <p>{{ object.description }}</p>
+
+        <p class="item-status">
+          @if(!object.type)
+          À donner
+          @else
+          À prêter
+          @end
+        </p>
+
+        <a href="/item/{{ object.id }}">voir plus</a>
+      </div>
+      @end
+    </div>
+  </main>
 </body>
 
 </html>
