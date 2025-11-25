@@ -14,6 +14,9 @@ import auth from '@adonisjs/auth/services/main'
 router.get('/login', '#controllers/auth_controller.login')
 router.post('/login', '#controllers/auth_controller.authenticate')
 router.get('/', ({ view }) => view.render('pages/login'))
+// router.get('/account',({ view }) => view.render('pages/account'))
+router.get('/account', '#controllers/accounts_controller.account')
+
 
 router.get('home', [DonationObjectsController, 'index'])
 router.get('new', [DonationObjectsController, 'create'])
