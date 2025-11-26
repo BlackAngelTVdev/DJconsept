@@ -37,7 +37,6 @@ export default class AuthController {
 
     // Connexion
     await auth.use('web').login(user)
-
     return response.redirect('/home')
   }
 
