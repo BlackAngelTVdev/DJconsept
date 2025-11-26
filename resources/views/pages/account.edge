@@ -1,0 +1,54 @@
+@let(title = 'account')
+@include('partials/header')
+@let(css = 'account.css')
+<div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>{{ auth.user.username }}</h3>
+        <div class="user-photo"></div>
+
+        {{-- <a href="#">Modifier le profil</a> --}}
+        {{-- <a href="#">Paramètres</a> --}}
+
+        <br>
+        <a href="/login">Se déconnecter</a>
+    </div>
+
+    <!-- Main content -->
+    <div class="section">
+        
+        <h2>Objets à donner</h2>
+        <div class="items">
+            <div class="item"><div></div>Ballon de foot</div>
+            <div class="item"><div></div>Crayon</div>
+            <div class="item"><div></div>Sac à dos</div>
+            <div class="item"><div></div>Clavier Logitech</div>
+            <div class="item"><div></div>Cahier</div>
+            <div class="item"><div></div>Ballon de foot</div>
+        </div>
+
+        <h2>Objets à prêter</h2>
+        <div class="items">
+            <div class="item"><div></div>Ballon de foot</div>
+            <div class="item"><div></div>Crayon</div>
+            <div class="item"><div></div>Sac à dos</div>
+            <div class="item"><div></div>Clavier Logitech</div>
+            <div class="item"><div></div>Cahier</div>
+            <div class="item"><div></div>Ballon de foot</div>
+        </div>
+
+        <h2>Historique</h2>
+        <div class="items">
+            <div class="item"><div></div>Ballon de foot</div>
+            <div class="item"><div></div>Crayon</div>
+            <div class="item"><div></div>Sac à dos</div>
+            <div class="item"><div></div>Clavier Logitech</div>
+            <div class="item"><div></div>Cahier</div>
+            <div class="item"><div></div>Ballon de foot</div>
+        </div>
+
+    </div>
+
+</div>
+@include('partials/footer')
