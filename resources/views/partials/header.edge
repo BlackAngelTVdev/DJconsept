@@ -1,12 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>{{title || 'Je donne, je prête'}}</title>
-  </head>
-  <body>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  @vite([`resources/css/${css}`, 'resources/js/app.js'])
+  <title>{{title || '404'}} | Je donne, je prête</title>
+</head>
 
 
+<body>
+  <header>
+    <a href="/home" class="logo">
+      <img src="/resources/img/logo.png">
+    </a>
+    <div>
+      <a href="/new">Ajouter</a>
+      <a href="">Compte</a>
+    </div>
+  </header>

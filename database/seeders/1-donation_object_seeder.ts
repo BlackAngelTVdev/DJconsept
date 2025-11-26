@@ -76,8 +76,8 @@ export default class extends BaseSeeder {
       type: false,
       status: 1,
     },{
-      name: 'Couvertures polaires',
-      description: 'Lot de deux couvertures, couleurs assorties',
+      name: 'AMD EPYC 9965',
+      description: 'proco ma geul',
       type: true,
       status: 1,
     },]

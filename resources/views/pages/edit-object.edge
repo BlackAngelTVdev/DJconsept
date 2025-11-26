@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Éditer {{ object.name }}</title>
-</head>
-<body>
+@let(title = 'Edit')
+@let(css = 'details.css')
+@include('partials/header')
+
 
   <h1>Éditer l'Objet de Donation : {{ object.name }}</h1>
 
