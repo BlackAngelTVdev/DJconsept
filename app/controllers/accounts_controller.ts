@@ -8,7 +8,7 @@ export default class AccountsController {
       return response.redirect('/login')
     }
 
-    return view.render('/account', {
+    return view.render('pages/account', {
       user: auth.user
     })
   }
