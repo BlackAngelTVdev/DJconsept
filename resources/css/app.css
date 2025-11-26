@@ -24,6 +24,8 @@ header {
 
 main {
     padding: 15px 30px;
+    width: 80%;
+    margin: auto;
 }
 
 /* --- Navigation --- */
@@ -31,179 +33,16 @@ main {
     width: 250px;
 }
 
-.nav-links {
-    display: flex;
-    gap: 25px;
-    align-items: center;
+.imgbutton{
+    width: 50px;
 }
-
-.nav-links a {
+.imgbuttonun{
+    width: 51px;
+}
+.textdeco{
     text-decoration: none;
-    font-size: 1.1em;
-    color: #333;
-    padding: 5px 0;
+    margin-right: 5px;
 }
-
-.nav-links a.active {
-    color: #007bff;
-    font-weight: bold;
-    border-bottom: 2px solid #007bff;
-}
-
-.profile-icon {
-    width: 35px;
-    height: 35px;
-    background-color: #333;
-    border-radius: 50%;
-    margin-left: 20px;
-}
-
-/* --- Barre de Recherche --- */
-.search-container {
+.bouton{
     display: flex;
-    justify-content: center;
-    padding: 20px 0;
-}
-
-.search-bar {
-    width: 60%;
-    max-width: 700px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 25px;
-    background-color: #e0e0e0;
-    font-size: 1em;
-    color: #555;
-    outline: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.search-bar span {
-    color: #555;
-}
-
-.search-icon {
-    font-size: 1.2em;
-}
-
-/* --- Titre et Filtres/Catégories --- */
-.content-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 15px 50px 0;
-}
-
-h2.section-title {
-    font-size: 1.5em;
-    color: #007bff;
-    font-weight: bold;
-    margin-top: 0;
-}
-
-.filters-and-categories {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.categories-title {
-    font-size: 1.1em;
-    font-weight: bold;
-    color: #333;
-    margin: 0;
-}
-
-/* --- Filtre (Sélecteur) --- */
-form {
-    display: inline-flex;
-    align-items: center;
-}
-
-label[for="filter_type"] {
-    font-size: 1.1em;
-    font-weight: 500;
-    color: #343a40;
-    margin-right: 15px;
-    padding: 5px 0;
-}
-
-#filter_type {
-    background-color: #ffffff;
-    color: #007bff;
-    border: 2px solid #007bff;
-    border-radius: 8px;
-    padding: 8px 12px;
-    height: 40px;
-    font-size: 1em;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-#filter_type option {
-    background-color: #ffffff;
-    color: #343a40;
-    padding: 8px;
-}
-
-#filter_type option:checked {
-    background-color: #e9ecef;
-    color: #007bff;
-}
-
-/* --- Grille d'objets --- */
-.midle {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px 0px;
-    width: 75%;
-}
-
-.item {
-    flex: 0 0 calc(25% - 15px);
-    height: 200px;
-    background-color: #dddddd;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 10px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.categories-placeholder {
-    position: absolute;
-    top: 220px;
-    right: 50px;
-    width: 15%;
-    height: 420px;
-    background-color: #dddddd;
-    border-radius: 8px;
-}
-
-/* --- Styles du Texte dans les Objets --- */
-.item-name {
-    font-size: 1em;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.item p, .item a {
-    font-size: 0.9em;
-    color: #555;
-    margin: 2px 0;
-    text-decoration: none;
-}
-
-.item a {
-    color: #007bff; 
-    font-weight: bold;
 }

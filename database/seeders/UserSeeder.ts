@@ -7,7 +7,11 @@ export default class extends BaseSeeder {
     const users = [{
       username: 'Admin',
       password: 'Admin',
-    }]
+    },{
+      username: 'Damien',
+      password: '1234',
+    },
+  ]
 
     await User.createMany(users)
   }

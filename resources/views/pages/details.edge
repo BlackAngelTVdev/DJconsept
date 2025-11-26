@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Je donne, je prête – {{object.name}} </title>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  @vite(['resources/css/details.css'])
-  </head>
+@let(title = 'Home')
+@let(css = 'details.css')
+@include('partials/header')
 
-<body>
-    <h1>Détail de {{object.name}}</h1>
     
-    <div class="details-container">
-        <h2 class="object-name">{{ object.name}}</h2>
-        
-        <p class="object-description">{{ object.description}}</p>
-    </div>
+    
   </body>
 </html>
