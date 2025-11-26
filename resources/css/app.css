@@ -11,6 +11,7 @@
 body {
     font-family: sans-serif;
     background-color: #ffffff;
+    font-family: 'Roboto','Helvetica','Arial',sans-serif;
 }
 
 /* --- Structure Principale --- */
@@ -19,7 +20,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 15px 30px;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
 }
 
 main {
@@ -36,13 +37,8 @@ main {
 .imgbutton{
     width: 50px;
 }
-.imgbuttonun{
-    width: 51px;
-}
+
 .textdeco{
     text-decoration: none;
     margin-right: 5px;
-}
-.bouton{
-    display: flex;
 }
