@@ -7,7 +7,7 @@
     <form action="/items" method="POST">
 
         {{ csrfField() }}
-
+        @!component('components/input', { name : 'thumbnail', label : "image de l'objet", type : 'file' })
         <div>
             <label for="name">Nom de l'objet:</label><br>
             <input type="text" id="name" name="name" required placeholder="Ex: Étagère" />
