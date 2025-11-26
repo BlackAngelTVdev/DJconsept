@@ -1,15 +1,14 @@
 # Dockerfile
 
-FROM node:25-trixie
+FROM node:25-alpine
 
-RUN mkdir -p /opt/app
-WORKDIR /opt/app
+WORKDIR /root
 COPY . .
 
 RUN npm install
 
 ARG PORT
-
 EXPOSE $PORT
 
-CMD [ "npm", "run", "dev"]
+RUN chmod +x start.sh
+CMD ["./start.sh"]

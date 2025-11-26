@@ -19,19 +19,16 @@ services:
       - HOST=0.0.0.0
       - PORT=${PORT}
 
-    command: npm run dev
-
     restart: always
 
 
 
   db:
-    image: mysql
+    image: docker.io/library/mysql:8.0
     container_name: db
 
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
 
