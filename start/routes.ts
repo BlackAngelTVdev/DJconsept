@@ -14,7 +14,6 @@ import auth from '@adonisjs/auth/services/main'
 router.get('/login', '#controllers/auth_controller.login')
 router.post('/login', '#controllers/auth_controller.authenticate')
 router.get('/', ({ view }) => view.render('pages/login'))
-// router.get('/account',({ view }) => view.render('pages/account'))
 router.get('/account', '#controllers/accounts_controller.account')
 
 
@@ -26,4 +25,4 @@ router.get('item/:id/edit', [DonationObjectsController, 'edit'])
 router.post('items', [DonationObjectsController, 'store'])
 router.post('item/:id', [DonationObjectsController, 'update']).as('donation_objects.update')
 router.delete('item/:id', [DonationObjectsController, 'destroy'])
-// router.get('/home', ({ view }) => view.render('pages/home'))
+
