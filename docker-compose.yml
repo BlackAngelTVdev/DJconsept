@@ -16,9 +16,9 @@ services:
       - 0.0.0.0:${PORT}:${PORT}
 
     environment:
-      - HOST=0.0.0.0
+      - HOST=${HOST}
       - PORT=${PORT}
-      - DB_HOST=db
+      - DB_HOST=${DB_HOST}
 
     restart: always
 
@@ -29,8 +29,8 @@ services:
     container_name: db
 
     environment:
-      DB_HOST: db
+      DB_HOST: ${DB_HOST}
       MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 
     restart: always
