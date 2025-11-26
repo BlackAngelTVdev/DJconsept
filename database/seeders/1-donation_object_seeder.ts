@@ -77,7 +77,7 @@ export default class extends BaseSeeder {
       status: 1,
     },{
       name: 'AMD EPYC 9965',
-      description: 'proco ma geul',
+      description: 'AMD EPYC 9965 est un processeur serveur haut de gamme (CPU) offrant une densité de cœurs massive (potentiellement plus de 100 cœurs Zen 4/5) et une bande passante mémoire/I/O extrême (DDR5, PCIe Gen 5) pour les charges de travail les plus exigeantes des centres de données et du calcul haute performance (HPC)',
       type: true,
       status: 1,
     },]

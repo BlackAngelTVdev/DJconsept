@@ -1,0 +1,79 @@
+h1 {
+    font-size: 26px;
+    font-weight: 600;
+    margin: auto;
+    max-width: 650px;
+}
+
+/* ----------- Formulaire ----------- */
+form {
+    max-width: 650px;
+    background: #fff;
+    padding: 20px 0;
+    margin: auto;
+}
+
+/* Conteneur de chaque champ */
+form div {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* ----------- Champs texte ----------- */
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 16px;
+    background-color: #f2f2f2;
+    outline: none;
+    transition: 0.2s;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #6d8aff;
+    background-color: #ffffff;
+}
+
+/* Placeholder plus léger */
+::placeholder {
+    color: #999;
+}
+
+/* ----------- Bouton ----------- */
+button {
+    width: 180px;
+    padding: 12px;
+    background-color: #3e5bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #2e46d5;
+}
+
+/* ----------- Lien retour ----------- */
+p{
+    max-width: 650px;
+    margin: auto;
+}
+p a {
+    color: #3e5bff;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+    margin: auto;
+}

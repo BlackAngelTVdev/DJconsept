@@ -1,5 +1,5 @@
 @let(title = 'Home')
-@let(css = 'app.css')
+@let(css = 'home.css')
 @include('partials/header')
 
 <main>
@@ -24,7 +24,7 @@
     <div class="item">
       <h2 class="item-name">{{ object.name }}</h2>
 
-      <p>{{ object.description }}</p>
+
 
       <p class="item-status">
         @if(!object.type)
