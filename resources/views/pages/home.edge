@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
+@let(title = 'Home')
+@let(css = 'app.css')
+@include('partials/header')
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-     @vite(['resources/css/app.css', 'resources/js/app.js'])
-  <title>Je donne, je prête – Home</title>
-</head>
-<header>
-  <h1>Liste des objets</h1>
-  <a href="/account">Compte</a>
-</header>
-
-<body>
-
-
+<main>
   <form action="home" method="GET">
     <label for="filter_type">Filtrer par type :</label>
     <select name="filter_type" id="filter_type" onchange="this.form.submit()">
@@ -51,6 +38,7 @@
     </div>
     @end
   </div>
+</main>
 </body>
 
 </html>

@@ -4,16 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Je donne, je prête – {{object.name}} </title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  @vite(['resources/css/details.css'])
   </head>
 
-  <body>
-   <h1>Détaile de {{object.name}}</h1>
-
-      {{ object.name}}
-
-      {{ object.description}}
-
-
+<body>
+    <h1>Détail de {{object.name}}</h1>
+    
+    <div class="details-container">
+        <h2 class="object-name">{{ object.name}}</h2>
+        
+        <p class="object-description">{{ object.description}}</p>
+    </div>
   </body>
 </html>
