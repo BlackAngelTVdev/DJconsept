@@ -1,44 +1,66 @@
-    body {
-        background-color: #121212; /* fond principal sombre */
-        color: #e0e0e0; /* texte clair */
-    }
+/* Conteneur du formulaire */
+form {
+    width: 320px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-family: 'Inter', sans-serif;
+}
 
-    h1 {
-        color: #ffffff;
-    }
+/* Labels */
+form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+}
 
-    form {
-        background-color: #1e1e1e; /* fond du formulaire sombre */
-        border: 1px solid #333;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
-    }
+/* Inputs */
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: 0.2s;
+}
 
-    label {
-        color: #ccc;
-    }
+/* Focus des inputs */
+form input:focus {
+    outline: none;
+    border-color: #4e8cff;
+    box-shadow: 0 0 6px rgba(78,140,255,0.4);
+}
 
-    input[type="text"],
-    input[type="password"] {
-        background-color: #2a2a2a;
-        border: 1px solid #444;
-        color: #fff;
-    }
+/* Bouton */
+form button {
+    width: 100%;
+    padding: 10px;
+    background: #2d5be3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
 
-    input[type="text"]:focus,
-    input[type="password"]:focus {
-        border-color: #00bcd4;
-        background-color: #333;
-        outline: none;
-        color: #ccc;
-        box-shadow: 0 0 5px #00bcd4;
-    }
+/* Effet hover du bouton */
+form button:hover {
+    background: #244ac1;
+}
 
-    .btn-outline-info {
-        color: #00bcd4;
-        border-color: #00bcd4;
-    }
-
-    .btn-outline-info:hover {
-        background-color: #00bcd4;
-        color: #121212;
-    }
+/* Footer optionnel */
+footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #555;
+    font-size: 14px;
+}
