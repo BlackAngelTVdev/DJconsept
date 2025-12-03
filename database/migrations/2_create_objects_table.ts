@@ -11,7 +11,7 @@ export default class extends BaseSchema {
       table.string('description', 5000).nullable()
       table.boolean('type').notNullable()
       table.integer('status').notNullable().defaultTo(1)
-      table.text('image_base_64').nullable()
+      table.specificType('image_base_64', 'MEDIUMTEXT').nullable()
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

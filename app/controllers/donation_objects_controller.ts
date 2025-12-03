@@ -5,7 +5,7 @@ import * as fs from 'fs/promises'
 export default class DonationObjectsController {
 
   async index({ request, view }: HttpContext) {
-
+    
     const filterType = request.input('filter_type', '')
     const query = DonationObject.query()
 
