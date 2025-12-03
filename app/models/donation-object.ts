@@ -3,7 +3,7 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 // ⚠️ Plus besoin des imports de relations (hasMany, etc.)
 
 export default class DonationObject extends BaseModel {
-  public static $fillable = ['name', 'description', 'type'];
+  public static $fillable = ['name', 'description', 'type','status', 'categorie'];
   
   @column({ isPrimary: true })
   declare id: number
@@ -19,6 +19,9 @@ export default class DonationObject extends BaseModel {
   
   @column()
   declare status: number // Type corrigé à 'number'
+
+  @column()
+  declare categorie: string | null
 
   /**
    * ⬅️ Propriété pour le chemin de l'image unique
