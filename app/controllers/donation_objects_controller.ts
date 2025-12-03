@@ -27,10 +27,17 @@ export default class DonationObjectsController {
     return view.render('pages/new-object')
   }
 
+
 async store({ request, response }: HttpContext) {
     
-    const formData = request.only(['name', 'description', 'type'])
+    // 1. AJOUT de 'categorie' dans la récupération des données
+    const formData = request.only(['name', 'description', 'type', 'categorie'])
     const isLending = formData.type === '1'
+
+    // 2. Vérification rapide de la catégorie (car elle est obligatoire)
+    if (!formData.categorie) {
+      return response.badRequest('Le champ catégorie est manquant.')
+    }
     
     const imageFile = request.file('image', {
       size: '2mb',
@@ -56,12 +63,14 @@ async store({ request, response }: HttpContext) {
       name: formData.name,
       description: formData.description,
       type: isLending,
+      // 3. PASSAGE de la catégorie à la création de l'objet
+      categorie: formData.categorie, 
       imageBase64: imageBase64,
       status: 1,
     })
 
     return response.redirect().toPath(`/item/${object.id}`)
-  }
+}
 
   async show({ params, view }: HttpContext) {
     const object = await DonationObject.findOrFail(params.id)
