@@ -1,26 +1,8 @@
-/* ------------------------------
-    RESET + BASE
---------------------------------*/
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto','Helvetica','Arial',sans-serif;
-}
-
-body {
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vh;
-}
 
 /* ----------- Formulaire Login ----------- */
 form {
     max-width: 500px;
-    max-height: 250px;
-    margin: auto;
+    margin: 200 auto ;
     width: 420px;
     background: #fff;
     padding: 30px 35px;
@@ -29,6 +11,9 @@ form {
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+img {
+    margin-bottom: 20px;
 }
 
 /* ----------- Champs texte ----------- */
