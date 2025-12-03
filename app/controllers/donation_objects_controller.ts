@@ -1,11 +1,11 @@
 import DonationObject from '#models/donation-object'
 import type { HttpContext } from '@adonisjs/core/http'
 import { updateDonationObjectValidator } from '#validators/donation_object'
-
+import * as fs from 'fs/promises'
 export default class DonationObjectsController {
 
   async index({ request, view }: HttpContext) {
-
+    
     const filterType = request.input('filter_type', '')
     const query = DonationObject.query()
 
@@ -27,15 +27,37 @@ export default class DonationObjectsController {
     return view.render('pages/new-object')
   }
 
-  async store({ request, response }: HttpContext) {
-
+async store({ request, response }: HttpContext) {
+    
     const formData = request.only(['name', 'description', 'type'])
     const isLending = formData.type === '1'
+    
+    const imageFile = request.file('image', {
+      size: '2mb',
+      extnames: ['jpg', 'jpeg', 'png', 'webp'],
+    })
+
+    let imageBase64: string | null = null
+
+    if (imageFile) {
+      if (!imageFile.tmpPath) {
+        return response.badRequest('Fichier image manquant ou non prêt.')
+      }
+      
+      const fileContent = await fs.readFile(imageFile.tmpPath)
+      
+      const mimeType = imageFile.extname ? `image/${imageFile.extname.replace('jpg', 'jpeg')}` : 'application/octet-stream'
+      imageBase64 = `data:${mimeType};base64,${fileContent.toString('base64')}`
+
+      // NOTE: Le fichier temporaire sera nettoyé par AdonisJS
+    }
 
     const object = await DonationObject.create({
       name: formData.name,
       description: formData.description,
       type: isLending,
+      imageBase64: imageBase64,
+      status: 1,
     })
 
     return response.redirect().toPath(`/item/${object.id}`)
