@@ -6,7 +6,7 @@
   <title>Je donne, je prête</title>
 </head>
 <body>
-<form action="/login" method="post" up-follow class="w-25 mx-auto p-3 rounded">
+<form action="/login" method="post">
     {{csrfField()}}
     @!component('components/input', { name : 'User', label : 'User', type : 'text'})
     @!component('components/input', { name : 'password', label : 'Mot de passe', type : 'password' })
