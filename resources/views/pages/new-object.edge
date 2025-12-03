@@ -8,7 +8,25 @@
 
         {{ csrfField() }}
 
-        @!component('components/input', { name : 'image', label : "Image de l'objet", type : 'file' })
+        {{-- Conteneur Flex pour aligner le champ et la prévisualisation --}}
+        <div style="display: flex; align-items: flex-start; gap: 20px;">
+            <div>
+                {{-- Ajout de l'événement onchange pour appeler la fonction JS --}}
+                @!component('components/input', {
+                name : 'image',
+                label : "Image de l'objet",
+                type : 'file',
+                attributes: { onchange: 'previewImage(event)' }
+                })
+            </div>
+
+            {{-- Élément <img> pour la prévisualisation --}}
+            <div style="flex-shrink: 0; padding-top: 20px;">
+                <img id="image-preview" src="" alt="Prévisualisation de l'image"
+                    style="max-width: 150px; max-height: 150px; border: 1px solid #ccc; display: none;">
+            </div>
+        </div>
+
         <div>
             <label for="name">Nom de l'objet:</label><br>
             <input type="text" id="name" name="name" required placeholder="Ex: Étagère" />
@@ -24,10 +42,8 @@
 
         <br>
 
-        {{-- 🚀 AJOUT DU CHAMP CATÉGORIE --}}
         <div>
             <label for="categorie">Catégorie:</label><br>
-            {{-- Le nom du champ DOIT être 'categorie' pour correspondre au contrôleur --}}
             <select id="categorie" name="categorie" required>
                 <option value="">-- Sélectionner une catégorie --</option>
                 <option value="Sport & Loisirs">Sport & Loisirs</option>
