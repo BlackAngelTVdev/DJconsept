@@ -14,7 +14,7 @@
 
   <input type="hidden" name="_method" value="PUT"> 
 
-{{-- Nom de l'objet --}}
+
     <div>
       <label for="name">Nom de l'objet</label>
       <input 
@@ -24,31 +24,25 @@
         value="{{ flashMessages.get('name') || object.name }}"
         placeholder="Ex: Livre de cuisine"
       >
-      {{-- Affichage des erreurs pour le nom --}}
+
       @if(flashMessages.has('errors.name'))
         <p style="color: red;">Erreur: {{ flashMessages.get('errors.name') }}</p>
       @endif
     </div>
     
-    <br>
 
-    {{-- Description de l'objet --}}
+
     <div>
       <label for="description">Description</label>
-      <textarea 
-        id="description" 
-        name="description" 
-        rows="5"
-        placeholder="Décrivez l'état et la nature de l'objet..."
-      >{{ flashMessages.get('description') || object.description }}</textarea>
-      {{-- Affichage des erreurs pour la description --}}
-      @if(flashMessages.has('errors.description'))
-        <p style="color: red;">Erreur: {{ flashMessages.get('errors.description') }}</p>
-      @endif
-    </div>
-    
-    <br>
+       <textarea 
 
+       >{{ flashMessages.get('description') || object.description }}</textarea>
+ 
+       @if(flashMessages.has('errors.description'))
+         <p style="color: red;">Erreur: {{ flashMessages.get('errors.description') }}</p>
+      @endif
+      </div>
+    
     <div>
       <button type="submit">
         Sauvegarder les modifications
