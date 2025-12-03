@@ -6,7 +6,7 @@
   <form action="home" method="GET" class="filter-form"> {{-- Ajout d'une classe pour styliser --}}
     
     {{-- 1. FILTRE PAR TYPE (Existant) --}}
-    <label for="filter_type">Filtrer par type : </label>
+    <label for="filter_type">Filtrer par type </label>
     <select name="filter_type" id="filter_type" onchange="this.form.submit()">
       <option value="" {{ (filterType === '' || filterType === null || filterType === undefined) ? 'selected' : '' }}>
         Tous
@@ -19,15 +19,13 @@
       </option>
     </select>
     
-    {{-- 🚀 2. NOUVEAU FILTRE PAR CATÉGORIE --}}
-    <label for="filter_categorie" style="margin-left: 20px;">Filtrer par catégorie : </label>
+    <label for="filter_categorie" style="margin-left: 20px;">Filtrer par catégorie  </label>
     <select name="filter_categorie" id="filter_categorie" onchange="this.form.submit()">
-      {{-- Option "Toutes les catégories" --}}
+
       <option value="" {{ (filterCategorie === '' || filterCategorie === null || filterCategorie === undefined) ? 'selected' : '' }}>
         Toutes les catégories
       </option>
 
-      {{-- Boucle sur la liste des catégories passées par le contrôleur --}}
       @each(categorie in categories)
         <option value="{{ categorie }}" {{ filterCategorie === categorie ? 'selected' : '' }}>
           {{ categorie }}
@@ -40,11 +38,9 @@
     @each(object in objects)
 
     <div class="item">
-      {{-- Affichage de l'image (si elle existe) --}}
       @if(object.imageBase64)
         <img src="{{ object.imageBase64 }}" alt="Image de {{ object.name }}">
       @else
-        <img src="/assets/default-image.png" alt="Pas d'image disponible">
       @end
       
       <h2 class="item-name">{{ object.name }}</h2>

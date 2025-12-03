@@ -97,7 +97,7 @@ label[for="filter_type"] {
     padding: 5px 0;
 }
 
-#filter_type {
+#filter_type , #filter_categorie{
     background-color: #ffffff;
     color: #007bff;
     border: 2px solid #007bff;
@@ -112,16 +112,13 @@ label[for="filter_type"] {
     appearance: none;
 }
 
-#filter_type option {
+#filter_type , #filter_categorie option {
     background-color: #ffffff;
     color: #343a40;
     padding: 8px;
 }
 
-#filter_type option:checked {
-    background-color: #e9ecef;
-    color: #007bff;
-}
+
 
 /* --- Grille d'objets --- */
 .midle {
@@ -174,6 +171,7 @@ label[for="filter_type"] {
     font-weight: bold;
 }
 .item img{
-    width: 50%;
+    width: 40%;
+
     margin: auto;
 }
