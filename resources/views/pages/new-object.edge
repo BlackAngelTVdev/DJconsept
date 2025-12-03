@@ -1,13 +1,17 @@
 @let(title = 'Proposer un nouvel objet')
 @let(css = 'ajout.css')
 @include('partials/header')
-    <main>
+<main>
     <h1>Proposer un nouvel objet</h1>
 
-    <form action="/items" method="POST">
+    {{-- ⬅️ Modification 1 : Ajout de l'attribut enctype pour l'envoi de fichiers --}}
+    <form action="/items" method="POST" enctype="multipart/form-data">
 
         {{ csrfField() }}
-        @!component('components/input', { name : 'thumbnail', label : "image de l'objet", type : 'file' })
+
+        {{-- ⬅️ Modification 2 : Assurez-vous que le nom du champ est 'image' (comme utilisé dans request.file('image')
+        du contrôleur) --}}
+        @!component('components/input', { name : 'image', label : "image de l'objet", type : 'file' })
         <div>
             <label for="name">Nom de l'objet:</label><br>
             <input type="text" id="name" name="name" required placeholder="Ex: Étagère" />
@@ -25,7 +29,10 @@
 
         <div>
             <label for="status">Statut (Donner ou Prêter):</label><br>
-            <select id="status" name="status" required>
+            {{-- ATTENTION: Le nom du champ 'status' ne correspond pas à la colonne 'type' utilisée dans le contrôleur.
+            --}}
+            {{-- Le contrôleur utilise request.only(['name', 'description', 'type']). Je change 'status' en 'type' --}}
+            <select id="type" name="type" required>
                 <option value="">-- Sélectionner le statut --</option>
                 <option value="0">Donner</option>
                 <option value="1">Prêter</option>
