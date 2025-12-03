@@ -12,6 +12,7 @@ export default class extends BaseSchema {
       table.boolean('type').notNullable()
       table.integer('status').notNullable().defaultTo(1)
       table.specificType('image_base_64', 'MEDIUMTEXT').nullable()
+      table.string('categorie').defaultTo('aucune')
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

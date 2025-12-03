@@ -4,14 +4,29 @@
 <main>
     <h1>Proposer un nouvel objet</h1>
 
-    {{-- ⬅️ Modification 1 : Ajout de l'attribut enctype pour l'envoi de fichiers --}}
     <form action="/items" method="POST" enctype="multipart/form-data">
 
         {{ csrfField() }}
 
-        {{-- ⬅️ Modification 2 : Assurez-vous que le nom du champ est 'image' (comme utilisé dans request.file('image')
-        du contrôleur) --}}
-        @!component('components/input', { name : 'image', label : "image de l'objet", type : 'file' })
+        {{-- Conteneur Flex pour aligner le champ et la prévisualisation --}}
+        <div style="display: flex; align-items: flex-start; gap: 20px;">
+            <div>
+                {{-- Ajout de l'événement onchange pour appeler la fonction JS --}}
+                @!component('components/input', {
+                name : 'image',
+                label : "Image de l'objet",
+                type : 'file',
+                attributes: { onchange: 'previewImage(event)' }
+                })
+            </div>
+
+            {{-- Élément <img> pour la prévisualisation --}}
+            <div style="flex-shrink: 0; padding-top: 20px;">
+                <img id="image-preview" src="" alt="Prévisualisation de l'image"
+                    style="max-width: 150px; max-height: 150px; border: 1px solid #ccc; display: none;">
+            </div>
+        </div>
+
         <div>
             <label for="name">Nom de l'objet:</label><br>
             <input type="text" id="name" name="name" required placeholder="Ex: Étagère" />
@@ -28,10 +43,25 @@
         <br>
 
         <div>
-            <label for="status">Statut (Donner ou Prêter):</label><br>
-            {{-- ATTENTION: Le nom du champ 'status' ne correspond pas à la colonne 'type' utilisée dans le contrôleur.
-            --}}
-            {{-- Le contrôleur utilise request.only(['name', 'description', 'type']). Je change 'status' en 'type' --}}
+            <label for="categorie">Catégorie:</label><br>
+            <select id="categorie" name="categorie" required>
+                <option value="">-- Sélectionner une catégorie --</option>
+                <option value="Sport & Loisirs">Sport & Loisirs</option>
+                <option value="Culture & Livres">Culture & Livres</option>
+                <option value="Vêtements">Vêtements</option>
+                <option value="Informatique & Tech">Informatique & Tech</option>
+                <option value="Maison & Cuisine">Maison & Cuisine</option>
+                <option value="Jouets & Enfants">Jouets & Enfants</option>
+                <option value="Électroménager">Électroménager</option>
+                <option value="Musique & Art">Musique & Art</option>
+                <option value="Bureau & Fournitures">Bureau & Fournitures</option>
+            </select>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="type">Statut (Donner ou Prêter):</label><br>
             <select id="type" name="type" required>
                 <option value="">-- Sélectionner le statut --</option>
                 <option value="0">Donner</option>
