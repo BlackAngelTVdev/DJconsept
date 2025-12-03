@@ -16,20 +16,9 @@ services:
       - 0.0.0.0:${PORT}:${PORT}
 
     environment:
-      - HOST=0.0.0.0
+      - HOST=${HOST}
       - PORT=${PORT}
+      - DB_HOST=${DB_HOST}
 
     restart: always
 
-
-
-  db:
-    image: docker.io/library/mysql:8.0
-    container_name: db
-
-    environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-
-    restart: always

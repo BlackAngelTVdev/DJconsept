@@ -133,7 +133,7 @@ label[for="filter_type"] {
 
 .item {
     flex: 0 0 calc(25% - 15px);
-    height: 200px;
+    height: 300px;
     background-color: #dddddd;
     border-radius: 8px;
     display: flex;
@@ -172,4 +172,8 @@ label[for="filter_type"] {
 .item a {
     color: #007bff; 
     font-weight: bold;
+}
+.item img{
+    width: 50%;
+    margin: auto;
 }
