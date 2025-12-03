@@ -22,15 +22,3 @@ services:
 
     restart: always
 
-
-
-  db:
-    image: docker.io/library/mysql:8.0
-    container_name: db
-
-    environment:
-      DB_HOST: ${DB_HOST}
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-
-    restart: always

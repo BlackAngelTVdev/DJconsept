@@ -3,6 +3,7 @@
 LOCK_FILE="init.lock"
 
 until nc -z -v -w30 "$DB_HOST" "$DB_PORT"; do
+  echo "DB inaccessible"
   sleep 2
 done
 
