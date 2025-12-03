@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html lang="fr">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="/css/login">
-  <title>{{title || '404'}} | Je donne, je prête</title>
+  @vite([`resources/css/login.css`,'resources/css/app.css', 'resources/js/app.js'])
+  <title>Je donne, je prête</title>
 </head>
 <body>
-<form action="/login" method="post" up-follow class="w-25 mx-auto p-3 rounded">
+<form action="/login" method="post">
+  <img src="resources/img/logo.png">
     {{csrfField()}}
-    @!component('components/input', { name : 'User', label : 'User', type : 'text'})
-    @!component('components/input', { name : 'password', label : 'Mot de passe', type : 'password' })
-    <button class="btn btn-outline-info mt-2" type="submit">connexion</button>
+    @!component('components/input', { name : 'User', label : 'Username', type : 'text'})
+    @!component('components/input', { name : 'password', label : 'Password', type : 'password' })
+    <button class="btn btn-outline-info mt-2" type="submit">Login</button>
 </form>
 
 @include('partials/footer')
