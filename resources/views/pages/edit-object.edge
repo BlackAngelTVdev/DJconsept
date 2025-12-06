@@ -32,16 +32,18 @@
     
 
 
-    <div>
-      <label for="description">Description</label>
-       <textarea 
+<div>
+  <label for="description">Description</label>
+  <textarea 
+    id="description"
+    name="description"
+  >{{ flashMessages.get('description') || object.description }}</textarea>
 
-       >{{ flashMessages.get('description') || object.description }}</textarea>
- 
-       @if(flashMessages.has('errors.description'))
-         <p style="color: red;">Erreur: {{ flashMessages.get('errors.description') }}</p>
-      @endif
-      </div>
+  @if(flashMessages.has('errors.description'))
+    <p style="color: red;">Erreur: {{ flashMessages.get('errors.description') }}</p>
+  @endif
+</div>
+
     
     <div>
       <button type="submit">

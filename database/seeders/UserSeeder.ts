@@ -10,6 +10,9 @@ export default class extends BaseSeeder {
     },{
       username: 'Damien',
       password: '1234',
+    },{
+      username: 'Guest',
+      password: 'Guest',
     },
   ]
 
