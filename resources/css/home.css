@@ -169,10 +169,15 @@ label[for="filter_type"] {
 .item a {
     color: #007bff; 
     font-weight: bold;
+    display: block;
+    text-align: center;
 }
-.item img{
-    width: 100%;
-    max-width: 250px;
+.item-image-thumbnail {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: center; 
 
-    margin: auto;
+    border-radius: 4px; 
+    margin-bottom: 10px; 
 }
