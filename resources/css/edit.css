@@ -1,0 +1,112 @@
+/* ----------- Titre ----------- */
+h1 {
+    font-size: 26px;
+    font-weight: 600;
+    margin: auto;
+    max-width: 650px;
+    padding-bottom: 20px;
+}
+
+/* ----------- Formulaire ----------- */
+form {
+    max-width: 650px;
+    background: #fff;
+    padding: 20px 0;
+    margin: auto;
+}
+
+
+form div {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* ----------- Champs texte et Select/Textarea ----------- */
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 16px;
+    background-color: #f2f2f2;
+    outline: none;
+    resize: vertical;
+    transition: 0.2s;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus,
+input[type="file"]:focus {
+    border-color: #6d8aff;
+    background-color: #ffffff;
+}
+
+
+::placeholder {
+    color: #999;
+}
+
+/* ----------- Conteneur d'erreur (si présent) ----------- */
+
+form div p {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+/* ----------- Boutons et Liens d'Action ----------- */
+
+form div:last-of-type {
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+    margin-top: 40px; 
+}
+
+button {
+    width: 180px;
+    padding: 12px;
+    background-color: #3e5bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #2e46d5;
+}
+
+
+form div:last-of-type a {
+    color: #666; 
+    text-decoration: none;
+    font-size: 16px;
+}
+
+form div:last-of-type a:hover {
+    color: #3e5bff; /* Bleu au survol */
+    text-decoration: underline;
+}
+
+/* ----------- Lien retour général ----------- */
+p{
+    max-width: 650px;
+    margin: auto;
+}
+
+p a {
+    color: #3e5bff;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}

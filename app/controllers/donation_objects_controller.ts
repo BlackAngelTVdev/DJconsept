@@ -99,13 +99,43 @@ async store({ request, response }: HttpContext) {
     return view.render('pages/edit-object', { object })
   }
 
-  async update({ params, request, response }: HttpContext) {
+async update({ params, request, response }: HttpContext) {
 
     const payload = await request.validateUsing(updateDonationObjectValidator)
     const object = await DonationObject.findOrFail(params.id)
 
+    const updateData: { 
+      name?: string, 
+      description?: string, 
+      type?: boolean, 
+      categorie?: string, 
+      imageBase64?: string | null 
+    } = {}
 
-    object.merge(payload)
+    if (payload.name !== undefined) updateData.name = payload.name
+    if (payload.description !== undefined) updateData.description = payload.description
+    
+    if (payload.type !== undefined) updateData.type = payload.type === 1 
+    
+    if (payload.categorie !== undefined) updateData.categorie = payload.categorie
+
+    if (payload.image) {
+      const imageFile = payload.image
+      let imageBase64: string | null = null
+
+      if (!imageFile.tmpPath) {
+        return response.badRequest('Fichier image manquant ou non prêt.')
+      }
+
+      const fileContent = await fs.readFile(imageFile.tmpPath)
+      
+      const mimeType = imageFile.extname ? `image/${imageFile.extname.replace('jpg', 'jpeg')}` : 'application/octet-stream'
+      imageBase64 = `data:${mimeType};base64,${fileContent.toString('base64')}`
+      
+      updateData.imageBase64 = imageBase64
+    }
+    
+    object.merge(updateData)
     await object.save()
 
     return response.redirect(`/item/${object.id}`);
