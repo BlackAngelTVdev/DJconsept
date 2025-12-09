@@ -21,7 +21,9 @@
                     type : 'file',
                     attributes: { onchange: 'previewImage(event)' } 
                 })
+                
             </div>
+            <img id="imageDisplay" src="{{object.imageBase64}}" alt="Aperçu de l'image sélectionnée">
 
         </div>
         
@@ -101,5 +103,26 @@
     </form>
     <p><a href="/home">Retour à la page d'accueil</a></p>
 </main>
+<script>
+const imageSelector = document.getElementById('image');
+const imageDisplay = document.getElementById('imageDisplay');
+
+imageSelector.addEventListener('change', function(event) {
+
+    if (event.target.files && event.target.files[0]) {
+
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+
+            imageDisplay.src = e.target.result;
+            imageDisplay.style.display = 'block';
+        };
+
+
+        reader.readAsDataURL(event.target.files[0]);
+    }
+});
+</script>
 </body>
 </html>
