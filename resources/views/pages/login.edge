@@ -9,7 +9,7 @@
 <form action="/login" method="post">
   <img src="resources/img/logo.png">
     {{csrfField()}}
-    @!component('components/input', { name : 'User', label : 'Username', type : 'text'})
+    @!component('components/input', { name : 'Username', label : 'Username', type : 'text'})
     @!component('components/input', { name : 'password', label : 'Password', type : 'password' })
     <button class="btn btn-outline-info mt-2" type="submit">Login</button>
 </form>

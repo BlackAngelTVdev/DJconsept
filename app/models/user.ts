@@ -14,7 +14,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare id: number
 
   @column()
-  declare username: string | null
+  declare Username: string | null
 
   @column({ serializeAs: null })
   declare password: string
