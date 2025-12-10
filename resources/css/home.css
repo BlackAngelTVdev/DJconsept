@@ -123,8 +123,9 @@ label[for="filter_type"] {
 /* --- Grille d'objets --- */
 .midle {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap:wrap;
     gap: 20px;
+    margin: auto;
     padding: 20px 0px;
 }
 
@@ -137,6 +138,7 @@ label[for="filter_type"] {
     flex-direction: column;
     justify-content: flex-end;
     padding: 10px;
+    min-width: 277px;
     box-sizing: border-box;
     text-align: center;
 }
@@ -180,4 +182,22 @@ label[for="filter_type"] {
 
     border-radius: 4px; 
     margin-bottom: 10px; 
+}
+@media (max-width: 600px) {
+    main{
+        margin: 0;
+        width: 100%;
+    }
+    .item{
+        width: 100%;
+        margin: auto;
+    }
+    .filter-form{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: start;
+        align-items: start;
+        
+    }
 }

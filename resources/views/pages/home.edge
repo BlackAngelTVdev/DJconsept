@@ -19,7 +19,7 @@
       </option>
     </select>
 
-    <label for="filter_categorie" style="margin-left: 20px;">Filtrer par catégorie </label>
+    <label for="filter_categorie" >Filtrer par catégorie </label>
     <select name="filter_categorie" id="filter_categorie" onchange="this.form.submit()">
 
       <option value="" {{ (filterCategorie==='' || filterCategorie===null || filterCategorie===undefined) ? 'selected'
@@ -39,22 +39,23 @@
     @each(object in objects)
 
     <div class="item">
-      <a href="/item/{{ object.id }}">
+      <a href="/item/{{ object.id }}" class="flexResponse">
         @if(object.imageBase64)
-        <img src="{{ object.imageBase64 }}" alt="Image de {{ object.name }}"class="item-image-thumbnail">
+        <img src="{{ object.imageBase64 }}" alt="Image de {{ object.name }}" class="item-image-thumbnail">
         @else
         @end
+        <div class="item-info">
+          <h2 class="item-name">{{ object.name }}</h2>
 
-        <h2 class="item-name">{{ object.name }}</h2>
-
-        <p class="item-status">
-          @if(!object.type)
-          À donner
-          @else
-          À prêter
-          @end
-          | {{object.categorie}}
-        </p>
+          <p class="item-status">
+            @if(!object.type)
+            À donner
+            @else
+            À prêter
+            @end
+            | {{object.categorie}}
+          </p>
+        </div>
       </a>
     </div>
     @end

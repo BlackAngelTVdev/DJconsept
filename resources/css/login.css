@@ -1,8 +1,6 @@
-
-/* ----------- Formulaire Login ----------- */
 form {
     max-width: 500px;
-    margin: 200 auto ;
+    margin: 200px auto;
     width: 420px;
     background: #fff;
     padding: 30px 35px;
@@ -11,12 +9,17 @@ form {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    transition: all 0.3s ease-in-out; 
 }
 img {
     margin-bottom: 20px;
+    max-width: 100%; 
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* ----------- Champs texte ----------- */
 input[type="text"],
 input[type="password"] {
     width: 100%;
@@ -27,6 +30,7 @@ input[type="password"] {
     background-color: #e9e9e9;  
     outline: none;
     transition: 0.2s;
+    box-sizing: border-box; 
 }
 
 input[type="text"]:focus,
@@ -35,12 +39,10 @@ input[type="password"]:focus {
     background-color: #f5f5f58e; 
 }
 
-/* Placeholder */
 ::placeholder {
     color: #777;
 }
 
-/* ----------- Bouton connexion ----------- */
 form button {
     width: 100%;
     padding: 12px;
@@ -53,8 +55,34 @@ form button {
     font-weight: 600;
     letter-spacing: 0.5px;
     transition: 0.2s;
+    box-sizing: border-box; 
 }
 
 form button:hover {
     background-color: #2e46d5;
+}
+
+@media (max-width: 600px) {
+    form {
+        max-width: none; 
+        width: 90%; 
+        margin: 50px auto; 
+        border-radius: 10px; 
+        padding: 20px; 
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    input[type="text"],
+    input[type="password"],
+    form button {
+        font-size: 15px;
+    }
+    
+    img {
+        margin-bottom: 15px;
+    }
+    
+    form {
+        gap: 15px;
+    }
 }

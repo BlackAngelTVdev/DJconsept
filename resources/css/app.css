@@ -12,6 +12,7 @@ body {
     font-family: sans-serif;
     background-color: #ffffff;
     font-family: 'Roboto','Helvetica','Arial',sans-serif;
+    min-height: 150vh; /* Ajouté pour tester l'effet sticky/fixed */
 }
 
 /* --- Structure Principale --- */
@@ -41,4 +42,82 @@ main {
 .textdeco{
     text-decoration: none;
     margin-right: 5px;
+}
+
+/* ------------------------------
+    BARRE D'ACTION INFERIEURE (STICKY/FIXED)
+--------------------------------*/
+
+.bottom-action-bar{
+    
+    position: fixed; 
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    
+    /* Styles du conteneur */
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    padding: 10px 30px; 
+    
+    /* Apparence */
+    background-color: #f7f7f7; 
+    border-top: 1px solid #ddd;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+    display: none;
+}
+
+ .action-button {
+
+    /* Styles spécifiques aux boutons de la barre */
+    padding: 8px 15px;
+    margin-left: 10px;
+    background-color: #3e5bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+ .action-button:hover {
+    background-color: #2e46d5;
+
+}
+
+
+/* ------------------------------
+    RESPONSIVE POUR LA BARRE D'ACTION
+--------------------------------*/
+
+@media (max-width: 600px) {
+    .bottom-action-bar {
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-around; 
+    }
+    .bouton{
+        display: none;
+    }
+    .bottom-action-bar .action-button {
+        flex-grow: 1; 
+        text-align: center;
+        margin: 0 5px; 
+    }
+
+    header {
+        padding: 15px 15px;
+    }
+    
+    .logo img{
+        width: 180px; 
+    }
+    
+    main {
+        padding: 15px;
+        width: 100%;
+    }
 }
