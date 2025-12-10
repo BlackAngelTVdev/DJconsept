@@ -16,7 +16,12 @@
       @end
       | {{object.categorie}}
     </h2>
-    <h3>Publié par: {{ object.user.Username ? object.user.Username : 'Inconnu' }}</h3>
+    <h3>Publié par:
+      @if(object.user)
+      {{ object.user.Username }}
+      @else
+      Inconnu
+      @end</h3>
     <p>{{object.description}}</p>
 
     <a href="#" class="myButton" onclick="alert('objet réservé')">Je réserve</a>
