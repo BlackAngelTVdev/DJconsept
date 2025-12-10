@@ -22,3 +22,20 @@ services:
 
     restart: always
 
+<<<<<<< HEAD
+=======
+  db:
+    image: mariadb:12.1
+    container_name: db
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
+    volumes:
+      - db_data:/var/lib/mysql
+
+    restart: always
+>>>>>>> d85597e (ajout de la db dans le conteneur)
