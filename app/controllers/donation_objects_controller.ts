@@ -48,9 +48,18 @@ export default class DonationObjectsController {
   }
 
 
-async store({ request, response }: HttpContext) {
+async store({ request, response, auth }: HttpContext) {
+    
+    // 1. Vérification de l'utilisateur
+    if (!auth.user) {
+      return response.unauthorized('Vous devez être connecté pour ajouter un objet.')
+    }
+    
+    // Récupération de l'ID de l'utilisateur connecté
+    const userId = auth.user.id
     
     const formData = request.only(['name', 'description', 'type', 'categorie'])
+    // 'type' est une chaîne de caractères ('1' ou '0') dans le formulaire. La conversion en booléen est correcte.
     const isLending = formData.type === '1'
 
     if (!formData.categorie) {
@@ -73,24 +82,27 @@ async store({ request, response }: HttpContext) {
       
       const mimeType = imageFile.extname ? `image/${imageFile.extname.replace('jpg', 'jpeg')}` : 'application/octet-stream'
       imageBase64 = `data:${mimeType};base64,${fileContent.toString('base64')}`
-
     }
 
+    // 2. Création de l'objet et intégration du user_id
     const object = await DonationObject.create({
+      userId: userId, // 🔥 AJOUT : L'ID de l'utilisateur connecté est inséré ici.
       name: formData.name,
       description: formData.description,
       type: isLending,
-
       categorie: formData.categorie, 
       imageBase64: imageBase64,
       status: 1,
     })
 
     return response.redirect().toPath(`/item/${object.id}`)
-}
+  }
 
   async show({ params, view }: HttpContext) {
-    const object = await DonationObject.findOrFail(params.id)
+    const object = await DonationObject.query()
+      .where('id', params.id)
+      .preload('user') // Charge les données de l'utilisateur associé au userId
+      .firstOrFail()
     return view.render('pages/details', { object })
   }
 
