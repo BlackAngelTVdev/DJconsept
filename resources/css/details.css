@@ -1,4 +1,4 @@
-main{
+ main{
     display: flex;
     gap: 15px;
 }
@@ -23,26 +23,54 @@ p{
     line-height: 1.5;
 }
 .myButton {
-	box-shadow:inset -1px 0px 0px 0px #97c4fe;
-	background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
-	background-color:#3d94f6;
-	border-radius:5px;
+    box-shadow:inset -1px 0px 0px 0px #97c4fe;
+    background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+    background-color:#3d94f6;
+    border-radius:5px;
     width: 100%;
     text-align: center;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Verdana;
-	font-size:15px;
-	font-weight:bold;
-	padding:15px 50px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #1570cd;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Verdana;
+    font-size:15px;
+    font-weight:bold;
+    padding:15px 50px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #1570cd;
+
 }
+
 
 .myButton:active {
-	position:relative;
-	top:1px;
+    position:relative;
+    top:1px;
+
 }
 
-        
+@media (max-width: 1200px) {
+    main {
+        flex-direction: column; /* Empilement des colonnes */
+        padding: 15px;
+        gap: 10px;
+    }
+
+    main div, main .droit {
+        width: 100%; /* Les deux conteneurs prennent toute la largeur */
+        max-width: none;
+        flex-grow: 0; /* Désactiver la croissance pour qu'ils soient égaux */
+        flex-shrink: 0;
+    }
+}
+
+/* MOBILE SEUL (max-width: 600px) */
+@media (max-width: 600px) {
+    main div, main .droit {
+        padding: 15px; /* Réduction du padding sur les petits écrans */
+    }
+    
+    .myButton {
+        font-size: 14px; /* Réduction de la taille du texte du bouton */
+        padding: 12px 20px;
+    }
+}

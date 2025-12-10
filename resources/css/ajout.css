@@ -3,23 +3,24 @@ h1 {
     font-weight: 600;
     margin: auto;
     max-width: 650px;
+    padding: 0 20px; /* Ajout d'un padding pour les bords */
+    text-align: center; /* Centrer le titre par défaut */
 }
 
-/* ----------- Formulaire ----------- */
 form {
     max-width: 650px;
     background: #fff;
     padding: 20px 0;
     margin: auto;
+    box-sizing: border-box;
 }
 
-/* Conteneur de chaque champ */
 form div {
     margin-top: 30px;
     margin-bottom: 20px;
+    padding: 0 20px; /* Ajout d'un padding pour les champs */
 }
 
-/* ----------- Champs texte ----------- */
 input[type="text"],
 textarea,
 select {
@@ -32,6 +33,7 @@ select {
     outline: none;
     resize: vertical;
     transition: 0.2s;
+    box-sizing: border-box; /* Essentiel pour que 100% inclut le padding */
 }
 
 input[type="text"]:focus,
@@ -41,12 +43,10 @@ select:focus {
     background-color: #ffffff;
 }
 
-/* Placeholder plus léger */
 ::placeholder {
     color: #999;
 }
 
-/* ----------- Bouton ----------- */
 button {
     width: 180px;
     padding: 12px;
@@ -58,17 +58,23 @@ button {
     font-size: 16px;
     letter-spacing: 0.5px;
     transition: 0.2s;
+    box-sizing: border-box;
+    display: block; /* Permet de le centrer sur mobile si nécessaire */
+    margin-left: auto; /* Centrage en desktop */
+    margin-right: auto;
 }
 
 button:hover {
     background-color: #2e46d5;
 }
 
-/* ----------- Lien retour ----------- */
-p{
+p {
     max-width: 650px;
     margin: auto;
+    padding: 0 20px;
+    text-align: center; /* Centrer le lien retour */
 }
+
 p a {
     color: #3e5bff;
     text-decoration: none;
@@ -76,9 +82,40 @@ p a {
 
 p a:hover {
     text-decoration: underline;
-    margin: auto;
 }
-#imageDisplay{
-    width: 150PX;
-    height: 150PX;
+
+#imageDisplay {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* RESPONSIVE MOBILE (max-width: 650px) */
+@media (max-width: 650px) {
+    h1 {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+
+    form {
+        width: 100%;
+        max-width: none;
+        padding: 0;
+    }
+    
+    form div {
+        padding: 0 15px; /* Réduction du padding sur les bords pour l'alignement */
+    }
+
+    button {
+        width: 100%; /* Le bouton prend toute la largeur */
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    p {
+        max-width: 100%;
+        padding: 0 15px;
+    }
 }
