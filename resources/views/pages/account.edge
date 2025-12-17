@@ -11,46 +11,68 @@
         <br>
         <a href="/logout">Se déconnecter</a>
     </div>
+    <div>
+        <div class="section">
+            <h2>Objects à donner</h2>
+            <div class="items">
+                @let(donations = objects.filter(o => !o.type))
 
+                @each(object in donations)
+                <div class="item-wrapper">
+                    <a class="item" href="/item/{{object.id}}">
+                        <img src="{{object.imageBase64}}" alt=" ">
+                        <p class="item-name">{{ object.name }}</p>
+                        <p class="item-cat">{{ object.categorie }}</p>
+                    </a>
 
-    <div class="section">
-
-        <h2>Objets à donner</h2>
-        <div class="items">
-
-            @let(donations = objects.filter(o => !o.type))
-
-            @each(object in donations)
-            <a class="item textdeco" href="/item/{{object.id}}">
-                <img src="{{object.imageBase64}}" alt=" ">
-                <p>{{ object.name }}</p>
-                <p>{{ object.categorie }}</p>
-            </a>
-            @else
-            <p>Vous n'avez pas encore d'objets à donner.</p>
-            @end
+                    <div class="item-actions">
+                        <a href="/item/{{object.id}}/edit" class="btn-edit">EDIT</a>
+                        <form action="/item/{{ object.id }}?_method=DELETE" method="POST"
+                            onsubmit="return confirm('Supprimer ?')">
+                            {{ csrfField() }}
+                            <button type="submit" class="btn-delete">SUPPRIMER</button>
+                        </form>
+                    </div>
+                </div>
+                @else
+                <p>Vous n'avez pas encore d'objets à donner.</p>
+                @end
+            </div>
         </div>
+        <div class="section">
+            <h2>Objets à prêter</h2>
+            <div class="items">
 
-        <h2>Objets à prêter</h2>
-        <div class="items">
+                @let(loans = objects.filter(o => o.type))
 
-            @let(loans = objects.filter(o => o.type))
+                @each(object in loans)
+                <div class="item-wrapper">
+                    <a class="item" href="/item/{{object.id}}">
+                        <img src="{{object.imageBase64}}" alt=" ">
+                        <p class="item-name">{{ object.name }}</p>
+                        <p class="item-cat">{{ object.categorie }}</p>
+                    </a>
 
-            @each(object in loans)
-            <a class="item textdeco" href="/item/{{object.id}}">
-                <img src="{{object.imageBase64}}" alt=" ">
-                <p>{{ object.name }}</p>
-                <p>{{ object.categorie }}</p>
-            </a>
-            @else
-            <p>Vous n'avez pas encore d'objets à prêter.</p>
-            @end
+                    <div class="item-actions">
+                        <a href="/item/{{object.id}}/edit" class="btn-edit">EDIT</a>
+                        <form action="/item/{{ object.id }}?_method=DELETE" method="POST"
+                            onsubmit="return confirm('Supprimer ?')">
+                            {{ csrfField() }}
+                            <button type="submit" class="btn-delete">SUPPRIMER</button>
+                        </form>
+                    </div>
+                </div>
+                @else
+                <p>Vous n'avez pas encore d'objets à prêter.</p>
+                @end
+            </div>
+
+            <h2>Historique</h2>
+            <div class="items">
+
+            </div>
+
         </div>
-
-        <h2>Historique</h2>
-        <div class="items">
-
-        </div>
-
     </div>
-    @include('partials/footer')
+</div>
+@include('partials/footer')

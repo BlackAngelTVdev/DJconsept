@@ -106,10 +106,21 @@ async store({ request, response, auth }: HttpContext) {
     return view.render('pages/details', { object })
   }
 
-  async edit({ params, view }: HttpContext) {
+
+  async edit({ params, view, auth,response }: HttpContext) {
+    
+    const user = auth.user! 
+    
     const object = await DonationObject.findOrFail(params.id)
-    return view.render('pages/edit-object', { object })
+    
+    
+    if (object.userId === user.id) {
+      return view.render('pages/edit-object', { object })
+    } else {
+      return response.redirect().toRoute('donation_objects.index')
+    }
   }
+  
 
 async update({ params, request, response }: HttpContext) {
 
@@ -156,6 +167,6 @@ async update({ params, request, response }: HttpContext) {
   async destroy({ params, response }: HttpContext) {
     const object = await DonationObject.findOrFail(params.id)
     await object.delete()
-    return response.redirect().toPath('/home')
+    return response.redirect().toPath('/account')
   }
 }
