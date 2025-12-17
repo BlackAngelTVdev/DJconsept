@@ -69,11 +69,32 @@
 }
 
 .item {
-    width: 90px;
+    flex: 0 0 calc(20% - (15px * 4 / 5));
     text-align: center;
     flex-shrink: 0;
-}
+    background-color: #dddddd;
+    border-radius: 8px;
+    padding: 10px;
+    height: 300px;
+    
 
+}
+.item img {
+     width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: center; 
+
+    border-radius: 4px; 
+    margin-bottom: 10px; 
+}
+.item p, .item a {
+    font-size: 0.9em;
+    color: #555;
+    margin: 2px 0;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
 .item div {
     width: 90px;
     height: 90px;
