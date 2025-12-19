@@ -22,34 +22,62 @@
 
 | Technologie | Usage |
 | :--- | :--- |
-| ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) | **Logique principale** : Développement du backend et des scripts. |
-| ![AdonisJS](https://img.shields.io/badge/AdonisJS-220052?style=for-the-badge&logo=adonisjs&logoColor=white) | **Framework** : Structure robuste pour l'application Node.js. |
-| ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white) | **Base de données** : Stockage et gestion des données structurées. |
-| ![Edge](https://img.shields.io/badge/Edge_Template-5A45FF?style=for-the-badge&logo=edge&logoColor=white) | **Moteur de template** : Génération dynamique des vues HTML. |
+| ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) | Logique backend & scripts |
+| ![AdonisJS](https://img.shields.io/badge/AdonisJS-220052?style=for-the-badge&logo=adonisjs&logoColor=white) | Framework Node.js |
+| ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white) | Base de données |
+| ![Edge](https://img.shields.io/badge/Edge-5A45FF?style=for-the-badge&logo=edge&logoColor=white) | Moteur de template |
 
 ## 🚀 Installation & Lancement
 
 1. **Cloner le projet**
    ```bash
-   git clone [https://github.com/BlackAngelTVdev/](https://github.com/BlackAngelTVdev/)[Je-donne-ou-je-prete].git
-   cd [Je-donne-ou-je-prete]
+   git clone https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete.git
+   cd Je-donne-ou-je-prete
    ```
-2. **Installer les dépendances**
+2. **Configuration de l'environnement**
+   Copiez le fichier d'exemple et générez votre clé d'application :
+   ```bash
+   npm i
+   cp .env.example .env
+   node ace generate:key
+3. **Migration et ajout de données dans la base**
     ```
-    npm install  # ou pip install -r requirements.txt
+    node ace migration:fresh --seed
     ```
-3. **Configurer les variables d'environnement**
-   Créez un fichier .env et ajoutez vos clés API.
 4. **Lancer l'application**
    ```
-   npm start
+   npm run dev
    ```
 ## 📖 Utilisation
-  Explique ici comment utiliser le projet en 2-3 lignes ou avec un exemple de code :
-  ```
-  // Petit snippet de code d'exemple
-  const app = require('mon-outil');
-  app.run();
+
+Une fois le serveur lancé, vous pouvez vous connecter avec les identifiants par défaut :
+
+| Compte | Identifiant | Mot de passe |
+| :--- | :--- | :--- |
+| **Administrateur** | `Admin` | `Admin` |
+| **Inviter (pas de perm)** | `Guest`| `Guest`|
+
+si vous voulez modifier le compte par defaut il faut aller dans ```database/seeders/1-UserSeeder.ts``` puis modifier les users par defaut
+  ```js
+
+export default class extends BaseSeeder {
+  async run() {
+
+    const users = [{
+      username: 'Admin',
+      password: 'Admin',
+    },{
+      username: 'Test',
+      password: '1234',
+    },{
+      username: 'Guest',
+      password: 'Guest',
+    },
+  ]
+
+      await User.createMany(users)
+   }
+}
   ```
 ## 🤝 Contribution
 1. Forkez le projet
@@ -60,9 +88,12 @@
 
 ## 👤 Auteur
 
-**BlackAngelTVdev**
+- **BlackAngelTVdev**
 ![Follow](https://img.shields.io/github/followers/BlackAngelTVdev?label=Follow%20Me&style=social)
-
+- **alberrboyyy**
+![Follow](https://img.shields.io/github/followers/alberrboyyy?label=Follow%20Me&style=social)
+- **Gianmarco-Ruberti**
+![Follow](https://img.shields.io/github/followers/Gianmarco-Ruberti?label=Follow%20Me&style=social)
 ---
 ## 📄 Licence
 
