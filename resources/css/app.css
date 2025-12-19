@@ -11,8 +11,10 @@
 body {
     font-family: sans-serif;
     background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
     font-family: 'Roboto','Helvetica','Arial',sans-serif;
-    min-height: 150vh; /* Ajouté pour tester l'effet sticky/fixed */
+    min-height: 100vh; /* Ajouté pour tester l'effet sticky/fixed */
 }
 
 /* --- Structure Principale --- */
@@ -26,8 +28,10 @@ header {
 
 main {
     padding: 15px 30px;
+    flex: 1;
     width: 80%;
     margin: auto;
+    min-height: calc(100vh - 180px); 
 }
 
 /* --- Navigation --- */
@@ -88,6 +92,57 @@ main {
 
 }
 
+.footer-projet {
+    background-color: #1a252f; 
+    color: #ecf0f1;
+    padding: 40px 0 30px 0; 
+    text-align: center;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.footer-content p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+.github-link {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    border-radius: 12px; 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.github-link i {
+    font-size: 1.6rem;
+}
+
+
+.github-link:hover {
+    background-color: #3e5bff;
+    border-color: #3e5bff;
+    transform: translateY(-5px); 
+    box-shadow: 0 10px 20px rgba(62, 91, 255, 0.3);
+}
 
 /* ------------------------------
     RESPONSIVE POUR LA BARRE D'ACTION

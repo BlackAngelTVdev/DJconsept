@@ -1,78 +1,81 @@
 @let(title = 'account')
 @let(css = 'account.css')
 @include('partials/header')
-<div class="container">
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h3>{{ auth.user.Username }}</h3>
-        <div class="user-photo"></div>
+<main>
+    <div class="container">
 
-        <br>
-        <a href="/logout">Se déconnecter</a>
-    </div>
-    <div>
-        <div class="section">
-            <h2>Objects à donner</h2>
-            <div class="items">
-                @let(donations = objects.filter(o => !o.type))
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3>{{ auth.user.Username }}</h3>
+            <div class="user-photo"></div>
 
-                @each(object in donations)
-                <div class="item-wrapper">
-                    <a class="item" href="/item/{{object.id}}">
-                        <img src="{{object.imageBase64}}" alt=" ">
-                        <p class="item-name">{{ object.name }}</p>
-                        <p class="item-cat">{{ object.categorie }}</p>
-                    </a>
+            <br>
+            <a href="/logout">Se déconnecter</a>
+        </div>
+        <div>
+            <div class="section">
+                <h2>Objects à donner</h2>
+                <div class="items">
+                    @let(donations = objects.filter(o => !o.type))
 
-                    <div class="item-actions">
-                        <a href="/item/{{object.id}}/edit" class="btn-edit">EDIT</a>
-                        <form action="/item/{{ object.id }}?_method=DELETE" method="POST"
-                            onsubmit="return confirm('Supprimer ?')">
-                            {{ csrfField() }}
-                            <button type="submit" class="btn-delete">SUPPRIMER</button>
-                        </form>
+                    @each(object in donations)
+                    <div class="item-wrapper">
+                        <a class="item" href="/item/{{object.id}}">
+                            <img src="{{object.imageBase64}}" alt=" ">
+                            <p class="item-name">{{ object.name }}</p>
+                            <p class="item-cat">{{ object.categorie }}</p>
+                        </a>
+
+                        <div class="item-actions">
+                            <a href="/item/{{object.id}}/edit" class="btn-edit">EDIT</a>
+                            <form action="/item/{{ object.id }}?_method=DELETE" method="POST"
+                                onsubmit="return confirm('Supprimer ?')">
+                                {{ csrfField() }}
+                                <button type="submit" class="btn-delete">SUPPRIMER</button>
+                            </form>
+                        </div>
                     </div>
+                    @else
+                    <p>Vous n'avez pas encore d'objets à donner.</p>
+                    @end
                 </div>
-                @else
-                <p>Vous n'avez pas encore d'objets à donner.</p>
-                @end
+            </div>
+            <div class="section">
+                <h2>Objets à prêter</h2>
+                <div class="items">
+
+                    @let(loans = objects.filter(o => o.type))
+
+                    @each(object in loans)
+                    <div class="item-wrapper">
+                        <a class="item" href="/item/{{object.id}}">
+                            <img src="{{object.imageBase64}}" alt=" ">
+                            <p class="item-name">{{ object.name }}</p>
+                            <p class="item-cat">{{ object.categorie }}</p>
+                        </a>
+
+                        <div class="item-actions">
+                            <a href="/item/{{object.id}}/edit" class="btn-edit">EDIT</a>
+                            <form action="/item/{{ object.id }}?_method=DELETE" method="POST"
+                                onsubmit="return confirm('Supprimer ?')">
+                                {{ csrfField() }}
+                                <button type="submit" class="btn-delete">SUPPRIMER</button>
+                            </form>
+                        </div>
+                    </div>
+                    @else
+                    <p>Vous n'avez pas encore d'objets à prêter.</p>
+                    @end
+                </div>
+
+                <h2>Historique</h2>
+                <div class="items">
+
+                </div>
+
             </div>
         </div>
-        <div class="section">
-            <h2>Objets à prêter</h2>
-            <div class="items">
-
-                @let(loans = objects.filter(o => o.type))
-
-                @each(object in loans)
-                <div class="item-wrapper">
-                    <a class="item" href="/item/{{object.id}}">
-                        <img src="{{object.imageBase64}}" alt=" ">
-                        <p class="item-name">{{ object.name }}</p>
-                        <p class="item-cat">{{ object.categorie }}</p>
-                    </a>
-
-                    <div class="item-actions">
-                        <a href="/item/{{object.id}}/edit" class="btn-edit">EDIT</a>
-                        <form action="/item/{{ object.id }}?_method=DELETE" method="POST"
-                            onsubmit="return confirm('Supprimer ?')">
-                            {{ csrfField() }}
-                            <button type="submit" class="btn-delete">SUPPRIMER</button>
-                        </form>
-                    </div>
-                </div>
-                @else
-                <p>Vous n'avez pas encore d'objets à prêter.</p>
-                @end
-            </div>
-
-            <h2>Historique</h2>
-            <div class="items">
-
-            </div>
-
-        </div>
     </div>
-</div>
+</main>
 @include('partials/footer')
