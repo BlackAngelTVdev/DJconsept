@@ -5,18 +5,18 @@
 ![Forks](https://img.shields.io/github/forks/BlackAngelTVdev/Je-donne-ou-je-prete?style=for-the-badge&color=808080)
 ![Last Commit](https://img.shields.io/github/last-commit/BlackAngelTVdev/Je-donne-ou-je-prete?style=for-the-badge&color=blue)
 
-> **[Une seule phrase simple qui décrit l'utilité du projet]**
-> *Exemple : Une extension Chrome pour automatiser la gestion de stock.*
-
+**Une plateforme intuitive pour donner et prêter vos objets en toute simplicité.**
 ---
 
 ## 🧐 Aperçu
-![LoginJeDonneJePrête](https://i.postimg.cc/prCQYVDm/Capture-d-ecran-2025-12-19-112200.png)
+![LoginJeDonneJePrête](https://i.postimg.cc/c4VBSJdF/Capture-d-ecran-2025-12-19-124935.png)
 
 ## ✨ Fonctionnalités
-- ✅ **Fonction 1** : Description rapide.
-- ✅ **Fonction 2** : Pourquoi c'est cool.
-- ✅ **Fonction 3** : Ce qui le différencie des autres.
+
+- ✅ **Donner des objets** : Permettez aux utilisateurs de céder définitivement des objets dont ils n'ont plus l'utilité.
+- ✅ **Prêter des objets** : Gérez facilement les prêts temporaires avec un suivi des dates de retour pour ne plus rien perdre.
+- ✅ **Gestion par catégorie** : Organisez votre inventaire de manière intuitive (Électronique, Outils, Loisirs) pour une recherche ultra-rapide.
+- ❌ **Système de recherche** : Trouvez instantanément ce dont vous avez besoin grâce à des filtres avancés et une barre de recherche performante.
 
 ## 🛠 Tech Stack
 
@@ -34,10 +34,10 @@
    git clone https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete.git
    cd Je-donne-ou-je-prete
    ```
-2. **Configuration de l'environnement**
-   Copiez le fichier d'exemple et générez votre clé d'application :
+2. **Installation et Configuration**
+   Installez les dépendances, copiez et renommez le fichier d'environnement, puis générez la clé :
    ```bash
-   npm i
+   npm install
    cp .env.example .env
    node ace generate:key
 3. **Migration et ajout de données dans la base**
