@@ -95,8 +95,7 @@ main {
 .footer-projet {
     background-color: #1a252f; 
     color: #ecf0f1;
-    padding: 40px 0 30px 0; 
-    text-align: center;
+    padding: 30px 50px; 
     width: 100%;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: auto;
@@ -104,50 +103,80 @@ main {
 
 .footer-content {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: center;
+    max-width: 1200px; 
+    margin: 0 auto;
+}
+
+/* Groupe de droite (Stats + Bouton) */
+.footer-right {
+    display: flex;
     align-items: center;
     gap: 20px;
 }
-
 
 .footer-content p {
     font-size: 0.95rem;
     font-weight: 300;
     letter-spacing: 1px;
     color: rgba(255, 255, 255, 0.7);
+    margin: 0;
 }
 
+.github-stats {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    gap: 8px;
+}
+
+.github-stats img {
+    height: auto; 
+    border-radius: 4px;
+}
 
 .github-link {
     background-color: rgba(255, 255, 255, 0.05);
     color: #ffffff;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 24px;
-    border-radius: 12px; 
+    gap: 10px;
+    padding: 8px 18px;
+    border-radius: 10px; 
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .github-link i {
-    font-size: 1.6rem;
+    font-size: 1.3rem;
 }
-
 
 .github-link:hover {
     background-color: #3e5bff;
     border-color: #3e5bff;
-    transform: translateY(-5px); 
-    box-shadow: 0 10px 20px rgba(62, 91, 255, 0.3);
+    transform: translateY(-3px); 
+    box-shadow: 0 5px 15px rgba(62, 91, 255, 0.3);
 }
+
 
 /* ------------------------------
     RESPONSIVE POUR LA BARRE D'ACTION
 --------------------------------*/
 
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    .footer-right {
+        flex-direction: column;
+    }
+}
 @media (max-width: 600px) {
     .bottom-action-bar {
         padding: 10px 15px;
