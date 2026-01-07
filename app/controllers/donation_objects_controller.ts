@@ -1,11 +1,11 @@
 import DonationObject from '#models/donation-object'
 import type { HttpContext } from '@adonisjs/core/http'
 import { updateDonationObjectValidator } from '#validators/donation_object'
-import app from '@adonisjs/core/services/app' // Retirez les accolades
+import app from '@adonisjs/core/services/app'
 import { cuid } from '@adonisjs/core/helpers'
-import fs from 'node:fs/promises' // Pour supprimer l'ancienne image
-// Vous pouvez garder fs si vous en avez besoin ailleurs,
-// mais Adonis gère le déplacement des fichiers nativement.
+import sharp from 'sharp'
+import fs from 'node:fs/promises'
+
 import db from '@adonisjs/lucid/services/db'
 
 export default class DonationObjectsController {
@@ -47,39 +47,39 @@ export default class DonationObjectsController {
   }
 
   async store({ request, response, auth }: HttpContext) {
-    if (!auth.user) {
-      return response.unauthorized('Vous devez être connecté.')
-    }
+    if (!auth.user) return response.unauthorized('Connectez-vous.')
 
-    const userId = auth.user.id
     const formData = request.only(['name', 'description', 'type', 'categorie'])
-    const isLending = formData.type === '1'
-
     const imageFile = request.file('image', {
-      size: '2mb',
+      size: '5mb', // On peut accepter plus gros au départ car on va compresser
       extnames: ['jpg', 'jpeg', 'png', 'webp'],
     })
 
     let fileName: string | null = null
 
     if (imageFile) {
-      // Génère un nom unique : clv12345.jpg
-      fileName = `${cuid()}.${imageFile.extname}`
+      // 1. On prépare le nom du fichier (toujours .webp)
+      fileName = `${cuid()}.webp`
+      const uploadPath = app.makePath('public/uploads/items', fileName)
 
-      // Déplace le fichier vers public/uploads/items
-      await imageFile.move(app.makePath('public/uploads/items'), {
-        name: fileName,
-      })
+      // 2. Utilisation de Sharp pour transformer et compresser
+      // .resize(800) redimensionne à 800px de large max (optionnel mais recommandé)
+      // .webp({ quality: 80 }) compresse à 80% (excellent ratio)
+      if (imageFile.tmpPath) {
+        await sharp(imageFile.tmpPath)
+          .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
+          .webp({ quality: 75 }) // Ajustez entre 60 (très compressé) et 80 (bonne qualité)
+          .toFile(uploadPath)
+      }
     }
 
     const object = await DonationObject.create({
-      userId: userId,
+      userId: auth.user.id,
       name: formData.name,
       description: formData.description,
-      type: isLending,
+      type: formData.type === '1',
       categorie: formData.categorie,
-      // On enregistre uniquement le nom du fichier (ex: "clv123.jpg")
-      imagePath: fileName, // Assurez-vous que le champ s'appelle imagePath dans votre modèle
+      imagePath: fileName,
       status: 1,
     })
 
@@ -110,7 +110,6 @@ export default class DonationObjectsController {
     const payload = await request.validateUsing(updateDonationObjectValidator)
     const object = await DonationObject.findOrFail(params.id)
 
-    // On prépare les données de mise à jour
     const updateData: any = {}
 
     if (payload.name !== undefined) updateData.name = payload.name
@@ -118,29 +117,35 @@ export default class DonationObjectsController {
     if (payload.type !== undefined) updateData.type = payload.type === 1
     if (payload.categorie !== undefined) updateData.categorie = payload.categorie
 
-    // GESTION DE L'IMAGE PHYSIQUE
+    // GESTION DE L'IMAGE AVEC COMPRESSION WEBP
     if (payload.image) {
       const imageFile = payload.image
 
-      // 1. Générer un nom unique (ex: clv123.jpg)
-      const fileName = `${cuid()}.${imageFile.extname}`
+      // 1. On force l'extension .webp
+      const fileName = `${cuid()}.webp`
+      const uploadPath = app.makePath('public/uploads/items', fileName)
 
-      // 2. Supprimer l'ancienne image du serveur si elle existe pour ne pas encombrer le disque
+      // 2. Supprimer l'ancienne image du serveur
       if (object.imagePath) {
         try {
           await fs.unlink(app.makePath('public/uploads/items', object.imagePath))
         } catch (e) {
-          // Si le fichier n'existe pas déjà, on ignore l'erreur
+          // Ignorer si l'ancien fichier était déjà supprimé ou introuvable
         }
       }
 
-      // 3. Déplacer le nouveau fichier vers le dossier public
-      await imageFile.move(app.makePath('public/uploads/items'), {
-        name: fileName,
-      })
+      // 3. Traitement de la nouvelle image avec Sharp
+      if (imageFile.tmpPath) {
+        await sharp(imageFile.tmpPath)
+          .resize(1200, 1200, {
+            fit: 'inside',
+            withoutEnlargement: true,
+          })
+          .webp({ quality: 75 }) // Compression "de fou" : tu peux descendre à 60 si besoin
+          .toFile(uploadPath)
 
-      // 4. Enregistrer le nom du fichier dans l'objet de mise à jour
-      updateData.imagePath = fileName
+        updateData.imagePath = fileName
+      }
     }
 
     object.merge(updateData)
