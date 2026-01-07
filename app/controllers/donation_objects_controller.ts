@@ -49,36 +49,31 @@ export default class DonationObjectsController {
   async store({ request, response, auth }: HttpContext) {
     if (!auth.user) return response.unauthorized('Connectez-vous.')
 
-    const formData = request.only(['name', 'description', 'type', 'categorie'])
-    const imageFile = request.file('image', {
-      size: '5mb', // On peut accepter plus gros au départ car on va compresser
-      extnames: ['jpg', 'jpeg', 'png', 'webp'],
-    })
+    // 1. Validation des données entrantes
+    const payload = await request.validateUsing(createDonationObjectValidator)
 
     let fileName: string | null = null
 
-    if (imageFile) {
-      // 1. On prépare le nom du fichier (toujours .webp)
+    // 2. Gestion de l'image avec Sharp si elle existe
+    if (payload.image) {
       fileName = `${cuid()}.webp`
       const uploadPath = app.makePath('public/uploads/items', fileName)
 
-      // 2. Utilisation de Sharp pour transformer et compresser
-      // .resize(800) redimensionne à 800px de large max (optionnel mais recommandé)
-      // .webp({ quality: 80 }) compresse à 80% (excellent ratio)
-      if (imageFile.tmpPath) {
-        await sharp(imageFile.tmpPath)
+      if (payload.image.tmpPath) {
+        await sharp(payload.image.tmpPath)
           .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
-          .webp({ quality: 75 }) // Ajustez entre 60 (très compressé) et 80 (bonne qualité)
+          .webp({ quality: 75 })
           .toFile(uploadPath)
       }
     }
 
+    // 3. Création de l'objet avec les données validées
     const object = await DonationObject.create({
       userId: auth.user.id,
-      name: formData.name,
-      description: formData.description,
-      type: formData.type === '1',
-      categorie: formData.categorie,
+      name: payload.name,
+      description: payload.description,
+      type: payload.type === '1', // Conversion string -> boolean
+      categorie: payload.categorie,
       imagePath: fileName,
       status: 1,
     })
