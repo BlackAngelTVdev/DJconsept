@@ -1,19 +1,35 @@
-name: Deploy to Proxmox
+name: Deploy Production
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    
+    env:
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      APP_KEY: ${{ secrets.APP_KEY }}
+
     steps:
-      - name: Trigger deployment
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            echo "Triggering deployment..."
+      - name: Récupération du code
+        uses: actions/checkout@v4
+
+
+      - name: Configuration de l'environnement
+        run: |
+          cp .env.example .env
+          sed -i "s|APP_KEY=|APP_KEY=$APP_KEY|g" .env
+
+          sed -i "s|DB_PASSWORD=root|DB_PASSWORD=$DB_PASSWORD|g" .env
+          sed -i "s|DB_ROOT_PASSWORD=|DB_ROOT_PASSWORD=$DB_PASSWORD|g" .env
+
+      - name: Build et Démarrage
+        run: |
+          docker compose down --remove-orphans
+          docker compose up -d --build
+
+      - name: Nettoyage
+        run: docker image prune -f
