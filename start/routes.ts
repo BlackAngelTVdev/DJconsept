@@ -21,12 +21,12 @@ router.group(() => {
   router.get('/logout', [AuthController, 'logout']).as('logout')
  
   // DonationObjects routes
-router.get('home', [DonationObjectsController, 'index']).as('donation_objects.index')
-router.get('new', [DonationObjectsController, 'create']).as('donation_objects.create')
-router.get('item/:id', [DonationObjectsController, 'show']).as('donation_objects.show')
-router.get('item/:id/edit', [DonationObjectsController, 'edit']).as('donation_objects.edit')
+  router.get('home', [DonationObjectsController, 'index']).as('donation_objects.index')
+  router.get('new', [DonationObjectsController, 'create']).as('donation_objects.create')
+  router.get('item/:id', [DonationObjectsController, 'show']).as('donation_objects.show')
+  router.get('item/:id/edit', [DonationObjectsController, 'edit']).as('donation_objects.edit')
  
-router.post('items', [DonationObjectsController, 'store']).as('donation_objects.store')
-router.post('item/:id', [DonationObjectsController, 'update']).as('donation_objects.update')
-router.delete('item/:id', [DonationObjectsController, 'destroy']).as('donation_objects.destroy')
+  router.post('items', [DonationObjectsController, 'store']).as('donation_objects.store')
+  router.post('item/:id', [DonationObjectsController, 'update']).as('donation_objects.update')
+  router.delete('item/:id', [DonationObjectsController, 'destroy']).as('donation_objects.destroy')
 }).use(middleware.auth())
