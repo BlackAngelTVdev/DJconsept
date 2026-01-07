@@ -28,10 +28,9 @@ export default class DonationObject extends BaseModel {
   @column()
   declare categorie: string | null
 
-  /**
-   * ⬅️ Propriété pour l'image en Base64
-   */
-  @column({ serializeAs: 'image_base_64' }) // ⬅️ Utilise l'alias 'image_base_64' pour la base de données
+  //Propriété pour l'image en Base64
+
+  @column({ serializeAs: 'image_base_64' }) // Utilise l'alias 'image_base_64' pour la base de données
   declare imageBase64: string | null // Correspond à 'image_base_64' dans la base de données
 
 

@@ -3,16 +3,12 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Hash from '@adonisjs/core/services/hash'
 
 export default class AuthController {
-  /**
-   * Affiche le formulaire de login
-   */
+  //Affiche le formulaire de login
   public async login({ view }: HttpContext) {
     return view.render('pages/login')
   }
 
-  /**
-   * Authentifie l'utilisateur
-   */
+  //Authentifie l'utilisateur
   public async authenticate({ request, auth, response, session }: HttpContext) {
     const { Username, password } = request.only(['Username', 'password'])
     
@@ -39,9 +35,7 @@ export default class AuthController {
     return response.redirect('/home')
   }
 
-  /**
-   * Déconnexion
-   */
+  //Déconnexion
   public async logout({ auth, response }: HttpContext) {
     await auth.use('web').logout()
     return response.redirect('/login')

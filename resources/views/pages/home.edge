@@ -3,9 +3,8 @@
 @include('partials/header')
 
 <main>
-  <form action="home" method="GET" class="filter-form"> {{-- Ajout d'une classe pour styliser --}}
+  <form action="home" method="GET" class="filter-form">
 
-    {{-- 1. FILTRE PAR TYPE (Existant) --}}
     <label for="filter_type">Filtrer par type </label>
     <select name="filter_type" id="filter_type" onchange="this.form.submit()">
       <option value="" {{ (filterType==='' || filterType===null || filterType===undefined) ? 'selected' : '' }}>

@@ -8,10 +8,8 @@
 
         {{ csrfField() }}
 
-        {{-- Conteneur Flex pour aligner le champ et la prévisualisation --}}
         <div >
             <div>
-                {{-- Ajout de l'événement onchange pour appeler la fonction JS --}}
                 @!component('components/input', {
                 name : 'image',
                 label : "Image de l'objet",

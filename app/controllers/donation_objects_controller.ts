@@ -86,7 +86,7 @@ async store({ request, response, auth }: HttpContext) {
 
     // 2. Création de l'objet et intégration du user_id
     const object = await DonationObject.create({
-      userId: userId, // 🔥 AJOUT : L'ID de l'utilisateur connecté est inséré ici.
+      userId: userId, // AJOUT : L'ID de l'utilisateur connecté est inséré ici.
       name: formData.name,
       description: formData.description,
       type: isLending,
