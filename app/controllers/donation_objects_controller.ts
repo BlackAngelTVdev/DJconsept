@@ -1,14 +1,19 @@
 import DonationObject from '#models/donation-object'
 import type { HttpContext } from '@adonisjs/core/http'
-import { updateDonationObjectValidator } from '#validators/donation_object'
+import {
+  createDonationObjectValidator,
+  updateDonationObjectValidator,
+} from '#validators/donation_object'
 import app from '@adonisjs/core/services/app'
 import { cuid } from '@adonisjs/core/helpers'
 import sharp from 'sharp'
 import fs from 'node:fs/promises'
-
 import db from '@adonisjs/lucid/services/db'
 
 export default class DonationObjectsController {
+  /**
+   * Liste des objets avec filtres (Home)
+   */
   async index({ request, view }: HttpContext) {
     const filterType = request.input('filter_type')
     const filterCategorie = request.input('filter_categorie')
@@ -27,6 +32,7 @@ export default class DonationObjectsController {
 
     const objects = await query
 
+    // Récupération des catégories uniques pour le filtre
     const categoriesResult = await db
       .from('donation_objects')
       .distinct('categorie')
@@ -42,19 +48,25 @@ export default class DonationObjectsController {
     })
   }
 
+  /**
+   * Affiche le formulaire de création
+   */
   async create({ view }: HttpContext) {
     return view.render('pages/new-object')
   }
 
+  /**
+   * Enregistre un nouvel objet (Compression WebP)
+   */
   async store({ request, response, auth }: HttpContext) {
-    if (!auth.user) return response.unauthorized('Connectez-vous.')
+    if (!auth.user) return response.unauthorized('Vous devez être connecté.')
 
-    // 1. Validation des données entrantes
+    // 1. Validation des données
     const payload = await request.validateUsing(createDonationObjectValidator)
 
     let fileName: string | null = null
 
-    // 2. Gestion de l'image avec Sharp si elle existe
+    // 2. Traitement de l'image avec Sharp
     if (payload.image) {
       fileName = `${cuid()}.webp`
       const uploadPath = app.makePath('public/uploads/items', fileName)
@@ -62,17 +74,17 @@ export default class DonationObjectsController {
       if (payload.image.tmpPath) {
         await sharp(payload.image.tmpPath)
           .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
-          .webp({ quality: 75 })
+          .webp({ quality: 75 }) // Compression WebP optimisée
           .toFile(uploadPath)
       }
     }
 
-    // 3. Création de l'objet avec les données validées
+    // 3. Création en base de données
     const object = await DonationObject.create({
       userId: auth.user.id,
       name: payload.name,
       description: payload.description,
-      type: payload.type === '1', // Conversion string -> boolean
+      type: payload.type === '1',
       categorie: payload.categorie,
       imagePath: fileName,
       status: 1,
@@ -81,62 +93,62 @@ export default class DonationObjectsController {
     return response.redirect().toPath(`/item/${object.id}`)
   }
 
+  /**
+   * Affiche les détails d'un objet
+   */
   async show({ params, view }: HttpContext) {
-    const object = await DonationObject.query()
-      .where('id', params.id)
-      .preload('user') // Charge les données de l'utilisateur associé au userId
-      .firstOrFail()
+    const object = await DonationObject.query().where('id', params.id).preload('user').firstOrFail()
+
     return view.render('pages/details', { object })
   }
 
+  /**
+   * Formulaire d'édition (vérification propriétaire)
+   */
   async edit({ params, view, auth, response }: HttpContext) {
     const user = auth.user!
-
     const object = await DonationObject.findOrFail(params.id)
 
-    if (object.userId === user.id) {
-      return view.render('pages/edit-object', { object })
-    } else {
+    if (object.userId !== user.id) {
       return response.redirect().toRoute('donation_objects.index')
     }
+
+    return view.render('pages/edit-object', { object })
   }
 
+  /**
+   * Mise à jour de l'objet (Suppression ancienne image + WebP)
+   */
   async update({ params, request, response }: HttpContext) {
     const payload = await request.validateUsing(updateDonationObjectValidator)
     const object = await DonationObject.findOrFail(params.id)
 
-    const updateData: any = {}
+    const updateData: any = {
+      name: payload.name,
+      description: payload.description,
+      type: payload.type === 1,
+      categorie: payload.categorie,
+    }
 
-    if (payload.name !== undefined) updateData.name = payload.name
-    if (payload.description !== undefined) updateData.description = payload.description
-    if (payload.type !== undefined) updateData.type = payload.type === 1
-    if (payload.categorie !== undefined) updateData.categorie = payload.categorie
-
-    // GESTION DE L'IMAGE AVEC COMPRESSION WEBP
+    // Si une nouvelle image est envoyée
     if (payload.image) {
-      const imageFile = payload.image
-
-      // 1. On force l'extension .webp
       const fileName = `${cuid()}.webp`
       const uploadPath = app.makePath('public/uploads/items', fileName)
 
-      // 2. Supprimer l'ancienne image du serveur
+      // Supprimer l'ancienne image physiquement du disque
       if (object.imagePath) {
         try {
           await fs.unlink(app.makePath('public/uploads/items', object.imagePath))
         } catch (e) {
-          // Ignorer si l'ancien fichier était déjà supprimé ou introuvable
+          // On ignore si le fichier n'existait pas déjà
         }
       }
 
-      // 3. Traitement de la nouvelle image avec Sharp
-      if (imageFile.tmpPath) {
-        await sharp(imageFile.tmpPath)
-          .resize(1200, 1200, {
-            fit: 'inside',
-            withoutEnlargement: true,
-          })
-          .webp({ quality: 75 }) // Compression "de fou" : tu peux descendre à 60 si besoin
+      // Compression de la nouvelle image
+      if (payload.image.tmpPath) {
+        await sharp(payload.image.tmpPath)
+          .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
+          .webp({ quality: 75 })
           .toFile(uploadPath)
 
         updateData.imagePath = fileName
@@ -149,15 +161,18 @@ export default class DonationObjectsController {
     return response.redirect(`/item/${object.id}`)
   }
 
+  /**
+   * Suppression de l'objet et de son image
+   */
   async destroy({ params, response }: HttpContext) {
     const object = await DonationObject.findOrFail(params.id)
 
-    // SUPPRESSION DE L'IMAGE SUR LE DISQUE
+    // Nettoyage du fichier image sur le serveur
     if (object.imagePath) {
       try {
         await fs.unlink(app.makePath('public/uploads/items', object.imagePath))
       } catch (e) {
-        // Ignorer si le fichier physique est déjà absent
+        // Erreur ignorée
       }
     }
 

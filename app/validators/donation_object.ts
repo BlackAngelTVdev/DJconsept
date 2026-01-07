@@ -13,25 +13,31 @@ const categoriesList = [
   'Bureau & Fournitures',
 ]
 
+export const createDonationObjectValidator = vine.compile(
+  vine.object({
+    name: vine.string().trim().minLength(3).maxLength(255),
+    description: vine.string().trim().escape().maxLength(5000).optional(),
+    type: vine.enum(['0', '1']), // On attend les strings du formulaire
+    categorie: vine.string().trim(),
+    image: vine
+      .file({
+        size: '5mb',
+        extnames: ['jpg', 'jpeg', 'png', 'webp'],
+      })
+      .optional(), // Mettre .optional() si l'image n'est pas obligatoire
+  })
+)
 export const updateDonationObjectValidator = vine.compile(
   vine.object({
-    // Nom (Optionnel pour l'édition)
-    name: vine.string().trim().maxLength(255).optional(), 
-    
-    // Description (Optionnel pour l'édition)
-    description: vine.string().trim().minLength(10).optional(),
-    
-    // Catégorie (Optionnel pour l'édition, validation de l'inclusion)
-    categorie: vine.string().trim().in(categoriesList).optional(),
-    
-    // Type (Statut: 0 pour donner, 1 pour prêter. Optionnel)
-    type: vine.number().withoutDecimals().range([0, 1]).optional(),
-    
-    // Image (Fichier, Optionnel pour l'édition)
-    image: vine.file({
-      size: '2mb',
-      extnames: ['jpg', 'jpeg', 'png', 'webp'],
-    }).optional(),
-
+    name: vine.string().trim().minLength(3).maxLength(255),
+    description: vine.string().trim().escape().maxLength(5000).optional(),
+    type: vine.enum(['0', '1']), // On attend les strings du formulaire
+    categorie: vine.string().trim(),
+    image: vine
+      .file({
+        size: '5mb',
+        extnames: ['jpg', 'jpeg', 'png', 'webp'],
+      })
+      .optional(), // Mettre .optional() si l'image n'est pas obligatoire
   })
 )
