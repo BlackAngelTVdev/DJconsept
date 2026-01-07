@@ -40,7 +40,7 @@
     <div class="item">
       <a href="/item/{{ object.id }}" class="flexResponse">
         @if(object.imagePath)
-        <img src="{{ `/uploads/items/${object.imagePath}` }}" alt="Image de {{ object.name }}" class="item-image-thumbnail">
+        <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy" alt="Image de {{ object.name }}" class="item-image-thumbnail">
         @else
         @end
         <div class="item-info">
