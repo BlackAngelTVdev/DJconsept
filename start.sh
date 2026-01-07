@@ -1,7 +1,5 @@
 #!/bin/sh
 
-LOCK_FILE="init.lock"
-
 echo "Waiting for database..."
 echo DB_NAME: ${DB_NAME}
 echo DB_HOST: ${DB_HOST}
