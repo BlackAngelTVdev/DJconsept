@@ -4,7 +4,7 @@
 
 <main>
   <div>
-    <img src="{{ object.imageBase64 }}" alt="Image de {{ object.name }}">
+    <img src="{{ `/uploads/items/${object.imagePath}` }}" alt="{{ object.name }}">
   </div>
   <div class="droit">
     <h1>{{object.name}}</h1>

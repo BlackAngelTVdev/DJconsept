@@ -21,7 +21,7 @@
                     @each(object in donations)
                     <div class="item-wrapper">
                         <a class="item" href="/item/{{object.id}}">
-                            <img src="{{object.imageBase64}}" alt=" ">
+                            <img src="{{ `/uploads/items/${object.imagePath}` }}" alt="{{ object.name }}">
                             <p class="item-name">{{ object.name }}</p>
                             <p class="item-cat">{{ object.categorie }}</p>
                         </a>
@@ -49,7 +49,7 @@
                     @each(object in loans)
                     <div class="item-wrapper">
                         <a class="item" href="/item/{{object.id}}">
-                            <img src="{{object.imageBase64}}" alt=" ">
+                            <img src="{{ `/uploads/items/${object.imagePath}` }}" alt="{{ object.name }}">
                             <p class="item-name">{{ object.name }}</p>
                             <p class="item-cat">{{ object.categorie }}</p>
                         </a>

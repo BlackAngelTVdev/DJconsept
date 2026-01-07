@@ -1,19 +1,17 @@
 import DonationObject from '#models/donation-object'
 import type { HttpContext } from '@adonisjs/core/http'
 import { updateDonationObjectValidator } from '#validators/donation_object'
-import * as fs from 'fs/promises'
-
+import app from '@adonisjs/core/services/app' // Retirez les accolades
+import { cuid } from '@adonisjs/core/helpers'
+import fs from 'node:fs/promises' // Pour supprimer l'ancienne image
+// Vous pouvez garder fs si vous en avez besoin ailleurs,
+// mais Adonis gère le déplacement des fichiers nativement.
 import db from '@adonisjs/lucid/services/db'
 
 export default class DonationObjectsController {
-
-
-
   async index({ request, view }: HttpContext) {
-
     const filterType = request.input('filter_type')
     const filterCategorie = request.input('filter_categorie')
-
 
     let query = DonationObject.query().orderBy('created_at', 'desc')
 
@@ -27,13 +25,14 @@ export default class DonationObjectsController {
       query = query.where('categorie', filterCategorie)
     }
 
-
     const objects = await query
 
-    const categoriesResult = await db.from('donation_objects').distinct('categorie').orderBy('categorie', 'asc')
-    
+    const categoriesResult = await db
+      .from('donation_objects')
+      .distinct('categorie')
+      .orderBy('categorie', 'asc')
 
-    const categories = categoriesResult.map(row => row.categorie)
+    const categories = categoriesResult.map((row) => row.categorie)
 
     return view.render('pages/home', {
       objects,
@@ -47,51 +46,40 @@ export default class DonationObjectsController {
     return view.render('pages/new-object')
   }
 
-
-async store({ request, response, auth }: HttpContext) {
-    
-    // 1. Vérification de l'utilisateur
+  async store({ request, response, auth }: HttpContext) {
     if (!auth.user) {
-      return response.unauthorized('Vous devez être connecté pour ajouter un objet.')
+      return response.unauthorized('Vous devez être connecté.')
     }
-    
-    // Récupération de l'ID de l'utilisateur connecté
+
     const userId = auth.user.id
-    
     const formData = request.only(['name', 'description', 'type', 'categorie'])
-    // 'type' est une chaîne de caractères ('1' ou '0') dans le formulaire. La conversion en booléen est correcte.
     const isLending = formData.type === '1'
 
-    if (!formData.categorie) {
-      return response.badRequest('Le champ catégorie est manquant.')
-    }
-    
     const imageFile = request.file('image', {
       size: '2mb',
       extnames: ['jpg', 'jpeg', 'png', 'webp'],
     })
 
-    let imageBase64: string | null = null
+    let fileName: string | null = null
 
     if (imageFile) {
-      if (!imageFile.tmpPath) {
-        return response.badRequest('Fichier image manquant ou non prêt.')
-      }
-      
-      const fileContent = await fs.readFile(imageFile.tmpPath)
-      
-      const mimeType = imageFile.extname ? `image/${imageFile.extname.replace('jpg', 'jpeg')}` : 'application/octet-stream'
-      imageBase64 = `data:${mimeType};base64,${fileContent.toString('base64')}`
+      // Génère un nom unique : clv12345.jpg
+      fileName = `${cuid()}.${imageFile.extname}`
+
+      // Déplace le fichier vers public/uploads/items
+      await imageFile.move(app.makePath('public/uploads/items'), {
+        name: fileName,
+      })
     }
 
-    // 2. Création de l'objet et intégration du user_id
     const object = await DonationObject.create({
-      userId: userId, // AJOUT : L'ID de l'utilisateur connecté est inséré ici.
+      userId: userId,
       name: formData.name,
       description: formData.description,
       type: isLending,
-      categorie: formData.categorie, 
-      imageBase64: imageBase64,
+      categorie: formData.categorie,
+      // On enregistre uniquement le nom du fichier (ex: "clv123.jpg")
+      imagePath: fileName, // Assurez-vous que le champ s'appelle imagePath dans votre modèle
       status: 1,
     })
 
@@ -106,66 +94,73 @@ async store({ request, response, auth }: HttpContext) {
     return view.render('pages/details', { object })
   }
 
+  async edit({ params, view, auth, response }: HttpContext) {
+    const user = auth.user!
 
-  async edit({ params, view, auth,response }: HttpContext) {
-    
-    const user = auth.user! 
-    
     const object = await DonationObject.findOrFail(params.id)
-    
-    
+
     if (object.userId === user.id) {
       return view.render('pages/edit-object', { object })
     } else {
       return response.redirect().toRoute('donation_objects.index')
     }
   }
-  
 
-async update({ params, request, response }: HttpContext) {
-
+  async update({ params, request, response }: HttpContext) {
     const payload = await request.validateUsing(updateDonationObjectValidator)
     const object = await DonationObject.findOrFail(params.id)
 
-    const updateData: { 
-      name?: string, 
-      description?: string, 
-      type?: boolean, 
-      categorie?: string, 
-      imageBase64?: string | null 
-    } = {}
+    // On prépare les données de mise à jour
+    const updateData: any = {}
 
     if (payload.name !== undefined) updateData.name = payload.name
     if (payload.description !== undefined) updateData.description = payload.description
-    
-    if (payload.type !== undefined) updateData.type = payload.type === 1 
-    
+    if (payload.type !== undefined) updateData.type = payload.type === 1
     if (payload.categorie !== undefined) updateData.categorie = payload.categorie
 
+    // GESTION DE L'IMAGE PHYSIQUE
     if (payload.image) {
       const imageFile = payload.image
-      let imageBase64: string | null = null
 
-      if (!imageFile.tmpPath) {
-        return response.badRequest('Fichier image manquant ou non prêt.')
+      // 1. Générer un nom unique (ex: clv123.jpg)
+      const fileName = `${cuid()}.${imageFile.extname}`
+
+      // 2. Supprimer l'ancienne image du serveur si elle existe pour ne pas encombrer le disque
+      if (object.imagePath) {
+        try {
+          await fs.unlink(app.makePath('public/uploads/items', object.imagePath))
+        } catch (e) {
+          // Si le fichier n'existe pas déjà, on ignore l'erreur
+        }
       }
 
-      const fileContent = await fs.readFile(imageFile.tmpPath)
-      
-      const mimeType = imageFile.extname ? `image/${imageFile.extname.replace('jpg', 'jpeg')}` : 'application/octet-stream'
-      imageBase64 = `data:${mimeType};base64,${fileContent.toString('base64')}`
-      
-      updateData.imageBase64 = imageBase64
+      // 3. Déplacer le nouveau fichier vers le dossier public
+      await imageFile.move(app.makePath('public/uploads/items'), {
+        name: fileName,
+      })
+
+      // 4. Enregistrer le nom du fichier dans l'objet de mise à jour
+      updateData.imagePath = fileName
     }
-    
+
     object.merge(updateData)
     await object.save()
 
-    return response.redirect(`/item/${object.id}`);
+    return response.redirect(`/item/${object.id}`)
   }
 
   async destroy({ params, response }: HttpContext) {
     const object = await DonationObject.findOrFail(params.id)
+
+    // SUPPRESSION DE L'IMAGE SUR LE DISQUE
+    if (object.imagePath) {
+      try {
+        await fs.unlink(app.makePath('public/uploads/items', object.imagePath))
+      } catch (e) {
+        // Ignorer si le fichier physique est déjà absent
+      }
+    }
+
     await object.delete()
     return response.redirect().toPath('/account')
   }

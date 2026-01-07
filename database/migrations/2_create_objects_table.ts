@@ -6,18 +6,14 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.integer('user_id')
-            .unsigned()
-            .references('id')
-            .inTable('users') 
-            .onDelete('CASCADE') 
+      table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
       table.string('name').nullable()
       table.string('description', 5000).nullable()
       table.boolean('type').notNullable()
       table.integer('status').notNullable().defaultTo(1)
-      table.specificType('image_base_64', 'MEDIUMTEXT').nullable()
+      table.string('image_path').nullable()
       table.string('categorie').defaultTo('aucune')
-      
+
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

@@ -39,8 +39,8 @@
 
     <div class="item">
       <a href="/item/{{ object.id }}" class="flexResponse">
-        @if(object.imageBase64)
-        <img src="{{ object.imageBase64 }}" alt="Image de {{ object.name }}" class="item-image-thumbnail">
+        @if(object.imagePath)
+        <img src="{{ `/uploads/items/${object.imagePath}` }}" alt="Image de {{ object.name }}" class="item-image-thumbnail">
         @else
         @end
         <div class="item-info">
