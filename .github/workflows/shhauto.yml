@@ -1,0 +1,54 @@
+name: Deploy on Version Change
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'package.json'
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.version-check.outputs.changed }}
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Vérifier si la version a changé
+        id: version-check
+        run: |
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          OLD_VERSION=$(git show HEAD~1:package.json | node -p "JSON.parse(process.stdin.read()).version" || echo "0.0.0")
+          
+          echo "Ancienne version: $OLD_VERSION"
+          echo "Nouvelle version: $NEW_VERSION"
+          
+          if [ "$NEW_VERSION" != "$OLD_VERSION" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+  deploy:
+    needs: check-version
+    if: ${{ needs.check-version.outputs.changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configurer la clé SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVAT_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Exécuter les commandes sur le serveur
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /chemin/vers/ton/projet
+            git pull origin main
+            npm install
+            pm2 restart all
+          EOF
