@@ -5,37 +5,42 @@ services:
       dockerfile: Dockerfile
       args:
         - PORT=${PORT}
-
-    env_file:
-      - .env
-
     image: je-donne-je-prete:latest
     container_name: je-donne-je-prete
-
+    env_file:
+      - .env
     ports:
-      - 0.0.0.0:${PORT}:${PORT}
-
+      - "${PORT}:${PORT}"
     environment:
       - HOST=${HOST}
       - PORT=${PORT}
-      - DB_HOST=${DB_HOST}
-
+      - DB_HOST=db  # On utilise le nom du service comme hôte
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+    networks:
+      - app-network
+    depends_on:
+      - db
     restart: always
 
   db:
     image: mariadb:12.1
     container_name: db
-
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-
     volumes:
       - mysql_data:/var/lib/mysql
-
+    networks:
+      - app-network
     restart: always
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   mysql_data:
