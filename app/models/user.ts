@@ -19,7 +19,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare email: string
 
-  @column({ serializeAs: null })
+  @column({ serializeAs: null }) // Cache le password lors des exports JSON
   declare password: string
 
   @column.dateTime({ autoCreate: true })
