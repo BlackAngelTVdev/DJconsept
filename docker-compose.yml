@@ -1,29 +1,23 @@
-services:
+ services:
   je-donne-je-prete:
+  
     build:
       context: .
       dockerfile: Dockerfile
       args:
         - PORT=${PORT}
-    image: je-donne-je-prete:latest
-    container_name: je-donne-je-prete
     env_file:
       - .env
+    image: je-donne-je-prete:latest
+    container_name: je-donne-je-prete
     ports:
-      - "${PORT}:${PORT}"
+      - 0.0.0.0:${PORT}:${PORT}
     environment:
       - HOST=${HOST}
       - PORT=${PORT}
-      - DB_HOST=db  # On utilise le nom du service comme hôte
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_DATABASE=${DB_DATABASE}
-    networks:
-      - app-network
-    depends_on:
-      - db
+      - DB_HOST=${DB_HOST}
     restart: always
-
+    
   db:
     image: mariadb:12.1
     container_name: db
@@ -34,13 +28,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
-    networks:
-      - app-network
     restart: always
-
-networks:
-  app-network:
-    driver: bridge
-
 volumes:
-  mysql_data:
+
+  mysql_data: 
