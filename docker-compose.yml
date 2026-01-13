@@ -6,17 +6,17 @@
       dockerfile: Dockerfile
       args:
         - PORT=${PORT}
-    env_file:
+      env_file:
       - .env
-    image: je-donne-je-prete:latest
-    container_name: je-donne-je-prete
-    ports:
+      image: je-donne-je-prete:latest
+      container_name: je-donne-je-prete
+      ports:
       - 0.0.0.0:${PORT}:${PORT}
-    environment:
+      environment:
       - HOST=${HOST}
       - PORT=${PORT}
       - DB_HOST=${DB_HOST}
-    restart: always
+      restart: always
     
   db:
     image: mariadb:12.1
@@ -29,6 +29,6 @@
     volumes:
       - mysql_data:/var/lib/mysql
     restart: always
-volumes:
+  volumes:
 
   mysql_data: 
