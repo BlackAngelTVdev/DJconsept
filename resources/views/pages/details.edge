@@ -7,19 +7,14 @@
     <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy" alt="{{ object.name }}">
   </div>
   <div class="droit">
-    <h1>{{object.name}}</h1>
-    <h2 class="item-status">
-      @if(!object.type)
-      À donner
-      @else
-      À prêter
-      @end
-      | {{object.categorie}}
-    </h2>
-    <h3>Publié par: {{ object.user.Username }}</h3>
-    <p>{{object.description}}</p>
-
-    <a href="#" class="myButton" onclick="alert('objet réservé')">Je réserve</a>
+    @if(auth.isAuthenticated)
+    <form action="{{ route('donation_objects.reserve', { id: object.id }) }}" method="POST">
+      {{ csrfField() }}
+      <button type="submit" class="myButton">Je réserve</button>
+    </form>
+    @else
+    <a href="/login" class="myButton">Connectez-vous pour réserver</a>
+    @end
   </div>
 </main>
 @include('partials/footer')
