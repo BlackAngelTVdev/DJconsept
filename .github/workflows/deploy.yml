@@ -19,24 +19,17 @@ jobs:
 
 
       - name: Configuration de l'environnement
-              run: |
-                cp .env.example .env
-                
-                sed -i "s|^DB_HOST=.*|DB_HOST=db|g" .env
-                sed -i "s|^DB_PORT=.*|DB_PORT=3306|g" .env
-                sed -i "s|^HOST=.*|HOST=0.0.0.0|g" .env
-                
-             
-                sed -i "s|^APP_KEY=.*|APP_KEY=${{ secrets.APP_KEY }}|g" .env
-                sed -i "s|^DB_PASSWORD=.*|DB_PASSWORD=${{ secrets.DB_PASSWORD }}|g" .env
-                sed -i "s|^DB_ROOT_PASSWORD=.*|DB_ROOT_PASSWORD=${{ secrets.DB_PASSWORD }}|g" .env
-                sed -i "s|^DB_USER=.*|DB_USER=root|g" .env
-                sed -i "s|^DB_DATABASE=.*|DB_DATABASE=db|g" .env
+        run: |
+          cp .env.example .env
+          sed -i "s|APP_KEY=|APP_KEY=$APP_KEY|g" .env
 
-            - name: Build et Démarrage (Hard Reset)
-              run: |
-                docker compose down -v --remove-orphans
-                docker compose up -d --build
+          sed -i "s|DB_PASSWORD=root|DB_PASSWORD=$DB_PASSWORD|g" .env
+          sed -i "s|DB_ROOT_PASSWORD=|DB_ROOT_PASSWORD=$DB_PASSWORD|g" .env
+
+      - name: Build et Démarrage
+        run: |
+          docker compose down --remove-orphans
+          docker compose up -d --build
 
       - name: Nettoyage
         run: docker image prune -f
