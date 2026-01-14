@@ -6,7 +6,7 @@ export default class extends BaseSeeder {
 
     const users = [{
       username: 'Admin',
-      email:'admin@example.com',
+      email:'dami.scoot3@gmail.com',
       password: 'Admin',
     },{
       username: 'Test',

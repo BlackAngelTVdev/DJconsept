@@ -194,7 +194,7 @@ export default class DonationObjectsController {
 
       await mail.send((message) => {
         message
-          .to('dami.scoot3@gmail.com') // Ton mail de test
+          .to(`${item.user.email}`) // Ton mail de test
           .from('dami.scoot3@gmail.com') // Ton mail valide Brevo
           .subject(`Demande de réservation : ${item.name}`)
           .html(`
