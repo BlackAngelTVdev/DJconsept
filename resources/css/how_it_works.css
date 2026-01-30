@@ -1,0 +1,73 @@
+.page-content {
+    padding: 80px 20px;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.intro h1 { font-size: 3.5rem; }
+
+.steps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+}
+
+.step-row {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.step-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.step-text {
+    flex: 1;
+}
+
+.step-text .number {
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--primary);
+    opacity: 0.2;
+    display: block;
+    margin-bottom: -20px;
+}
+
+.step-text h2 {
+    font-size: 2rem;
+    color: var(--secondary);
+    margin-bottom: 20px;
+}
+
+.step-visual {
+    flex: 1;
+}
+
+.step-visual img {
+    width: 100%;
+    border-radius: 20px;
+    border: 2px solid var(--gray);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.cta-section {
+    text-align: center;
+    margin-top: 100px;
+    padding: 60px;
+    background: linear-gradient(45deg, var(--gray), #1a1a1a);
+    border-radius: 30px;
+}
+
+/* Mobile check */
+@media (max-width: 768px) {
+    .step-row, .step-row.reverse {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+}
