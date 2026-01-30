@@ -79,3 +79,23 @@ nav {
   font-size: 0.8rem;
   color: #444;
 }
+.btn-logout {
+  background: none;
+  border: 1px solid #ff4444;
+  color: #ff4444;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-logout:hover {
+  background: #ff4444;
+  color: white;
+}
+
+.user-name {
+  color: var(--secondary) !important;
+  font-weight: bold;
+}

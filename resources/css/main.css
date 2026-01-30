@@ -1,4 +1,5 @@
 /* Hero Section */
+@import url('./app.css');
 .hero {
   position: relative;
   height: 80vh;
