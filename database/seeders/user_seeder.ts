@@ -3,11 +3,28 @@ import User from '#models/user'
 
 export default class extends BaseSeeder {
   async run() {
-
-    await User.create({
-      fullName: 'Damien Rochat',
-      email: 'dami.scoo3@gmail.com',
-      password: 'Tw4t2LuRq!'
-    })
+    // On utilise createMany pour aller plus vite
+    await User.createMany([
+      {
+        fullName: 'Damien Rochat',
+        email: 'dami.scoo3@gmail.com',
+        password: 'Tw4t2LuRq!',
+      },
+      {
+        fullName: 'Sarah Mendoza',
+        email: 'sarah.m@electro-pulse.ch',
+        password: 'Password123!',
+      },
+      {
+        fullName: 'Marc Voisin',
+        email: 'marc.voisin@booking-agency.fr',
+        password: 'Password123!',
+      },
+      {
+        fullName: 'Lucas ‘Dj Sky’ Dupont',
+        email: 'sky.dj@gmail.com',
+        password: 'Password123!',
+      }
+    ])
   }
 }
