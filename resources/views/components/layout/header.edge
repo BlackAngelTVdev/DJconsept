@@ -2,28 +2,32 @@
   <nav class="container">
     <div class="logo">DJ<span>CONSEPT</span></div>
     <ul class="nav-links">
-
-
       @if(auth.isAuthenticated)
-      {{-- Contenu pour les mecs connectés --}}
-      <li><a href="{{ route('users.index') }}">Explorer</a></li>
-      <li class="user-menu">
-        <a href="{{ route('users.show', { id: auth.user.id }) }}" class="user-name">
-          Salut, {{ auth.user.fullName.split(' ')[0] }} !
-        </a>
-      </li>
-      <li>
-        <form action="{{ route('auth.logout') }}" method="POST" style="display: inline;">
-          {{ csrfField() }}
-          <button type="submit" class="btn-logout">Déconnexion</button>
-        </form>
-      </li>
+        <li><a href="{{ route('users.index') }}">Explorer</a></li>
+        
+        <li class="dropdown">
+          <a href="#" class="user-name dropdown-trigger">
+            Salut, {{ auth.user.fullName.split(' ')[0] }} ! <span class="arrow">▼</span>
+          </a>
+          
+          <ul class="dropdown-menu">
+            <li>
+              <a href="{{ route('users.show', { id: auth.user.id }) }}">Mon Profil</a>
+            </li>
+            <li>
+              <form action="{{ route('auth.logout') }}" method="POST">
+                {{ csrfField() }}
+                <button type="submit" class="dropdown-logout">Déconnexion</button>
+              </form>
+            </li>
+          </ul>
+        </li>
+
       @else
-      <li><a href="{{ route('home') }}">Accueil</a></li>
-      <li><a href="{{ route('how-it-works') }}">Comment ça marche</a></li>
-      {{-- Contenu pour les invités --}}
-      <li><a href="{{ route('login') }}" class="btn-outline">Connexion</a></li>
-      <li><a href="{{ route('register') }}" class="btn-primary">S'inscrire</a></li>
+        <li><a href="{{ route('home') }}">Accueil</a></li>
+        <li><a href="{{ route('how-it-works') }}">Comment ça marche</a></li>
+        <li><a href="{{ route('login') }}" class="btn-outline">Connexion</a></li>
+        <li><a href="{{ route('register') }}" class="btn-primary">S'inscrire</a></li>
       @end
     </ul>
   </nav>

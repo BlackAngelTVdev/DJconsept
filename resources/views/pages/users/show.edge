@@ -1,25 +1,40 @@
-@layout.main({ title: 'Profil utilisateur', css: 'users.css' })
-    <section class="user-profile container">
-        <h1>Profil de {{ user.fullName }}</h1>
-    
-        <div class="profile-card">
-        <div class="profile-avatar">
-            {{-- On simule un avatar avec les initiales si pas d'image --}}
-            <span>{{ user.fullName.substring(0, 2).toUpperCase() }}</span>
-        </div>
-    
+@layout.main({ title: 'Votre Profil', css: 'users.css' })
+  <section class="user-profile container">
+    <div class="profile-header">
+      @if(auth.user && auth.user.id === user.id)
+        <h1>Votre <span>Profil</span></h1>
+      @else
+        <h1>Profil de <span>{{ user.fullName.split(' ')[0] }}</span></h1>
+      @end
+    </div>
+
+    <div class="profile-card">
+      {{-- L'avatar en mode "Cover" --}}
+      <div class="profile-avatar">
+        <span>{{ user.fullName.substring(0, 2).toUpperCase() }}</span>
+      </div>
+
+      <div class="profile-content">
         <div class="profile-info">
-            <h2>{{ user.fullName }}</h2>
-            <p class="profile-email">{{ user.email }}</p>
-            <div class="profile-badge">
-            @if(user.isAdmin)
-                <span class="badge badge-admin">Administrateur</span>
-            @else
-                <span class="badge badge-user">Utilisateur</span>
-            
-            @end
-            </div>
+          <span class="badge {{ user.isAdmin ? 'badge-admin' : 'badge-user' }}">
+            {{ user.isAdmin ? 'Administrateur' : 'Membre' }}
+          </span>
+          <h2>{{ user.fullName }}</h2>
+          <p class="profile-email">{{ user.email }}</p>
         </div>
-        </div>
-    </section>
+
+        {{-- Actions visibles uniquement si c'est notre compte --}}
+        @if(auth.user && auth.user.id === user.id)
+          <div class="profile-actions">
+            <a href="{{ route('users.edit', { id: user.id }) }}" class="btn-edit">
+              Modifier le profil
+            </a>
+            <a href="#" class="btn-password">
+              Sécurité
+            </a>
+          </div>
+        @end
+      </div>
+    </div>
+  </section>
 @end

@@ -9,7 +9,7 @@
   padding: 0 20px;
 }
 
-/* --- Users Grid (Liste) --- */
+/* --- Users Grid (Page Liste / Explorer) --- */
 .content-header {
   text-align: center;
   margin-bottom: 50px;
@@ -19,6 +19,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 25px;
+  padding-bottom: 50px;
 }
 
 .user-card {
@@ -62,100 +63,151 @@
   margin-bottom: 15px;
 }
 
-/* --- Profile View (Individuel) --- */
+/* --- Profile View (Page Individuelle Premium) --- */
 .user-profile {
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding: 80px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .user-profile h1 {
-  font-size: 2.5rem;
-  margin-bottom: 40px;
+  font-size: 3rem;
+  margin-bottom: 50px;
   text-align: center;
-  background: linear-gradient(to right, var(--light), var(--secondary));
+  text-transform: uppercase;
+  letter-spacing: -2px;
+  background: linear-gradient(to right, #fff, var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.profile-card {
-  background: var(--gray);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  padding: 50px;
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  transition: 0.3s ease;
-  position: relative;
-  overflow: hidden;
+.user-profile h1 span {
+  text-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
 }
 
-.profile-card::before {
+.profile-card {
+  background: #151515;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 32px;
+  padding: 60px;
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+  transition: 0.3s ease;
+}
+
+.profile-card::after {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(138, 43, 226, 0.05) 0%, transparent 70%);
+  top: 0; right: 0;
+  width: 200px;
+  height: 200px;
+  background: var(--primary);
+  filter: blur(120px);
+  opacity: 0.15;
   pointer-events: none;
 }
 
 .profile-avatar {
-  width: 120px;
-  height: 120px;
+  width: 160px;
+  height: 160px;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
-  border-radius: 50%;
+  border-radius: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
-  font-weight: 800;
+  font-size: 3.5rem;
+  font-weight: 900;
   color: white;
-  box-shadow: 0 10px 30px rgba(138, 43, 226, 0.3);
+  transform: rotate(-3deg);
+  box-shadow: 0 20px 40px rgba(138, 43, 226, 0.3);
   flex-shrink: 0;
+  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.profile-card:hover .profile-avatar {
+  transform: rotate(0deg) scale(1.05);
 }
 
 .profile-info h2 {
-  font-size: 1.8rem;
-  margin-bottom: 5px;
-  color: var(--light);
+  font-size: 2.5rem;
+  margin: 10px 0 5px;
+  color: #fff;
+  letter-spacing: -1px;
 }
 
 .profile-email {
-  color: #888;
+  color: rgba(255, 255, 255, 0.5);
   font-size: 1.1rem;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 /* --- Badges & Buttons --- */
-.badge, .user-badge {
+.badge {
   display: inline-block;
-  padding: 6px 16px;
-  border-radius: 30px;
-  font-size: 0.75rem;
-  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
 }
 
 .badge-admin {
-  background: rgba(138, 43, 226, 0.15);
-  color: var(--primary);
-  border: 1px solid var(--primary);
-  box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
+  background: rgba(138, 43, 226, 0.2);
+  color: #bc6ff1;
+  border: 1px solid rgba(138, 43, 226, 0.3);
 }
 
 .badge-user {
   background: rgba(0, 242, 255, 0.1);
   color: var(--secondary);
-  border: 1px solid var(--secondary);
-  box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+}
+
+.profile-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.btn-edit {
+  background: #ffffff;
+  color: #000000;
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.3s ease;
+  border: none;
+}
+
+.btn-edit:hover {
+  background: var(--secondary);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 242, 255, 0.3);
+}
+
+.btn-password {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-password:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
 }
 
 .btn-outline-sm {
@@ -176,18 +228,28 @@
   color: white;
 }
 
-/* --- Responsive --- */
-@media (max-width: 600px) {
+/* --- Responsive (Mobile) --- */
+@media (max-width: 768px) {
   .profile-card {
     flex-direction: column;
     text-align: center;
-    padding: 30px;
-    gap: 20px;
+    padding: 40px 20px;
+    gap: 30px;
   }
   
   .profile-avatar {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
+    font-size: 2.5rem;
+    transform: rotate(0deg);
+  }
+
+  .profile-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .user-profile h1 {
     font-size: 2rem;
   }
 }
