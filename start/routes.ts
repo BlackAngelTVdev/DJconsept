@@ -29,7 +29,8 @@ router.group(() => {
   router.get('/users/:id/edit', [UsersController, 'edit']).as('users.edit')
   router.put('/users/:id', [UsersController, 'update']).as('users.update')
   router.delete('/users/:id', [UsersController, 'destroy']).as('users.destroy')
-
+  router.get('/users/:id/secure/edit', [UsersController, 'editSecure']).as('users.secure.edit')
+  router.patch('users/:id/security', [UsersController, 'updateSecurity']).as('users.updateSecurity').use(middleware.auth())
 }).prefix('/log').use(middleware.auth())
 
 router.group(() => {

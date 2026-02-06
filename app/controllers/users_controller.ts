@@ -1,6 +1,7 @@
 import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
 
+import hash from '@adonisjs/core/services/hash'
 export default class UsersController {
   /**
    * Affiche la liste de tous les utilisateurs (DJs et Orgas)
@@ -51,32 +52,32 @@ export default class UsersController {
 
   // Pour sauvegarder
   public async update({ request, response, params, session, auth }: HttpContext) {
-  const user = await User.findOrFail(params.id)
+    const user = await User.findOrFail(params.id)
 
-  // SÉCURITÉ : On vérifie que c'est bien l'utilisateur connecté ou un admin
-  if (auth.user!.id !== user.id && !auth.user!.isAdmin) {
-    session.flash('error', 'Tu n\'as pas l\'autorisation de faire ça.')
-    return response.redirect().back()
+    // SÉCURITÉ : On vérifie que c'est bien l'utilisateur connecté ou un admin
+    if (auth.user!.id !== user.id && !auth.user!.isAdmin) {
+      session.flash('error', "Tu n'as pas l'autorisation de faire ça.")
+      return response.redirect().back()
+    }
+
+    // On récupère TOUTES les données du formulaire sauf l'email (qu'on a enlevé de la vue)
+    const data = request.only([
+      'fullName',
+      'location',
+      'pricePerGig',
+      'instagramUrl',
+      'tiktokUrl',
+      'youtubeUrl',
+    ])
+
+    // On fusionne et on sauvegarde
+    user.merge(data)
+    await user.save()
+
+    session.flash('success', 'Profil mis à jour avec succès !')
+
+    return response.redirect().toRoute('users.show', { id: user.id })
   }
-
-  // On récupère TOUTES les données du formulaire sauf l'email (qu'on a enlevé de la vue)
-  const data = request.only([
-    'fullName', 
-    'location', 
-    'pricePerGig', 
-    'instagramUrl', 
-    'tiktokUrl', 
-    'youtubeUrl'
-  ])
-
-  // On fusionne et on sauvegarde
-  user.merge(data)
-  await user.save()
-
-  session.flash('success', 'Profil mis à jour avec succès !')
-  
-  return response.redirect().toRoute('users.show', { id: user.id })
-}
 
   /**
    * Supprime un compte
@@ -86,5 +87,48 @@ export default class UsersController {
     await user.delete()
 
     return response.redirect().toRoute('users.index')
+  }
+  async editSecure({ params, view }: HttpContext) {
+    const user = await User.findOrFail(params.id)
+    return view.render('pages/users/edit_secure', { user })
+  }
+  public async updateSecurity({ request, response, params, session, auth }: HttpContext) {
+    const user = await User.findOrFail(params.id)
+
+    // Check si c'est bien le proprio
+    if (auth.user!.id !== user.id) return response.forbidden()
+
+    const { email, password, password_confirmation, oldPassword } = request.all()
+
+    // 1. Vérifier le mot de passe actuel AVANT TOUT
+    const isValid = await hash.verify(user.password, oldPassword)
+    if (!isValid) {
+      session.flash('error', 'Mot de passe actuel incorrect.')
+      return response.redirect().back()
+    }
+
+    // 2. Gérer le changement d'email
+    if (email !== user.email) {
+      const emailExists = await User.findBy('email', email)
+      if (emailExists) {
+        session.flash('error', 'Cet email est déjà pris.')
+        return response.redirect().back()
+      }
+      user.email = email
+    }
+
+    // 3. Gérer le changement de mot de passe (si rempli)
+    if (password) {
+      if (password !== password_confirmation) {
+        session.flash('error', 'Les nouveaux mots de passe ne correspondent pas.')
+        return response.redirect().back()
+      }
+      user.password = password
+    }
+
+    await user.save()
+
+    session.flash('success', 'Sécurité mise à jour avec succès !')
+    return response.redirect().toRoute('users.show', { id: user.id })
   }
 }

@@ -1,0 +1,55 @@
+@layout.main({ title: 'Sécurité du compte', css: 'users.css' })
+<section class="user-profile container">
+    <div class="profile-header">
+        <h1>Sécurité <span>Compte</span></h1>
+    </div>
+
+    {{-- Un seul formulaire pour tout gérer d'un coup --}}
+    <form action="{{ route('users.updateSecurity', { id: user.id }) }}?_method=PATCH" method="POST" class="profile-card edit-form">
+        {{ csrfField() }}
+
+        <div class="profile-content">
+            {{-- EMAIL --}}
+            <h3 class="section-title"><i class="fa-solid fa-envelope"></i> Adresse Email</h3>
+            <div class="form-group">
+                <label>Email actuel : <span style="color: var(--secondary)">{{ user.email }}</span></label>
+                <input type="email" name="email" value="{{ user.email }}" placeholder="Nouvel email" required>
+            </div>
+
+            <hr class="form-separator">
+
+            {{-- MOT DE PASSE --}}
+            <h3 class="section-title"><i class="fa-solid fa-key"></i> Nouveau Mot de passe</h3>
+            <p class="input-hint">Laisse vide si tu ne veux pas le changer</p>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="password">Nouveau mot de passe</label>
+                    <input type="password" name="password" id="password" placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label for="password_confirmation">Confirmer le nouveau</label>
+                    <input type="password" name="password_confirmation" id="password_confirmation" placeholder="••••••••">
+                </div>
+            </div>
+
+            <hr class="form-separator">
+
+            {{-- VALIDATION CRITIQUE --}}
+            <div class="old-password-box">
+                <h3 class="section-title"><i class="fa-solid fa-shield-halved"></i> Confirmation requise</h3>
+                <div class="form-group">
+                    <label for="oldPassword">Mot de passe actuel</label>
+                    <p class="input-hint">Nécessaire pour toutes modifications</p>
+                    <input type="password" name="oldPassword" id="oldPassword" placeholder="Ton mot de passe actuel" required>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button type="submit" class="btn-edit">Mettre à jour la sécurité</button>
+                <a href="{{ route('users.show', { id: user.id }) }}" class="btn-password">Annuler</a>
+            </div>
+        </div>
+    </form>
+</section>
+@end

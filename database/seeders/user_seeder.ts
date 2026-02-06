@@ -6,7 +6,7 @@ export default class extends BaseSeeder {
     await User.createMany([
       {
         fullName: "DJ Dam's",
-        email: 'dami.scoo3@gmail.com',
+        email: 'dj.dams08@gmail.com',
         password: 'Tw4t2LuRq!',
         location: 'Lausanne, CH',
         pricePerGig: 600,
@@ -55,6 +55,13 @@ export default class extends BaseSeeder {
         email: 'gm@djconsept.fr',
         password: 'gmguest',
         location: 'Lausanne',
+      },
+      {
+        fullName: 'Triple J',
+        email: 'lael.emery@gmail.com',
+        password: 'ChangeMe123',
+        location: 'Morges',
+        isAdmin: true,
       }
     ])
   }
