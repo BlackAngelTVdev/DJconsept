@@ -7,7 +7,10 @@
 
     <div class="users-grid">
       @each(user in users)
-        @!users.card({ user })
+        {{-- On n'affiche la carte que si l'ID ne correspond pas à celui de la personne connectée --}}
+        @if(!auth.user || auth.user.id !== user.id)
+          @!users.card({ user })
+        @end
       @else
         <div class="empty-state">
           <p>Aucun membre trouvé pour le moment... Sois le premier !</p>

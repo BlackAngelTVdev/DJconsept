@@ -24,7 +24,7 @@ export default class UsersController {
     // Dans un vrai projet, utilise un Validator ici !
     const data = request.only(['fullName', 'email', 'password'])
     await User.create(data)
-    
+
     return response.redirect().toRoute('users.index')
   }
 
@@ -47,15 +47,36 @@ export default class UsersController {
   /**
    * Met à jour les infos d'un utilisateur
    */
-  async update({ params, request, response }: HttpContext) {
-    const user = await User.findOrFail(params.id)
-    const data = request.only(['fullName', 'email'])
-    
-    user.merge(data)
-    await user.save()
+  // Pour afficher la page
 
-    return response.redirect().toRoute('users.show', { id: user.id })
+  // Pour sauvegarder
+  public async update({ request, response, params, session, auth }: HttpContext) {
+  const user = await User.findOrFail(params.id)
+
+  // SÉCURITÉ : On vérifie que c'est bien l'utilisateur connecté ou un admin
+  if (auth.user!.id !== user.id && !auth.user!.isAdmin) {
+    session.flash('error', 'Tu n\'as pas l\'autorisation de faire ça.')
+    return response.redirect().back()
   }
+
+  // On récupère TOUTES les données du formulaire sauf l'email (qu'on a enlevé de la vue)
+  const data = request.only([
+    'fullName', 
+    'location', 
+    'pricePerGig', 
+    'instagramUrl', 
+    'tiktokUrl', 
+    'youtubeUrl'
+  ])
+
+  // On fusionne et on sauvegarde
+  user.merge(data)
+  await user.save()
+
+  session.flash('success', 'Profil mis à jour avec succès !')
+  
+  return response.redirect().toRoute('users.show', { id: user.id })
+}
 
   /**
    * Supprime un compte

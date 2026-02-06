@@ -14,16 +14,37 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare id: number
 
   @column()
-  declare fullName: string
+  declare fullName: string | null
 
   @column()
   declare email: string
+
+  @column({ serializeAs: null })
+  declare password: string
+
+  @column()
+  declare isAdmin: boolean
+
+  /* --- Infos Prestation --- */
   
   @column()
-  public isAdmin: boolean = false
+  declare location: string | null
 
-  @column({ serializeAs: null }) // Cache le password lors des exports JSON
-  declare password: string
+  @column()
+  declare pricePerGig: number | null
+
+  /* --- Réseaux Sociaux --- */
+
+  @column()
+  declare instagramUrl: string | null
+
+  @column()
+  declare tiktokUrl: string | null
+
+  @column()
+  declare youtubeUrl: string | null
+
+  /* --- Timestamps --- */
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
