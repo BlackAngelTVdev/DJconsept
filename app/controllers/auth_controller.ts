@@ -1,5 +1,6 @@
 import { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
+import { registerValidator } from '#validators/auth'
 
 export default class AuthController {
   public async login({ request, auth, response, session }: HttpContext) {
@@ -38,12 +39,27 @@ export default class AuthController {
     console.log(`[AUTH] Déconnexion réussie pour l'utilisateur ID: ${user?.id}`)
     return response.redirect().toPath('/login')
   }
-  public async register({ request, response, session }: HttpContext) {
-    const { fullName, email, password } = request.only(['fullName', 'email', 'password'])
 
-    if (!fullName || !email || !password) {
-      session.flash('error', 'Veuillez remplir tous les champs')
+
+  public async register({ request, auth, response, session }: HttpContext) {
+    try {
+      const payload = await request.validateUsing(registerValidator)
+
+      const user = await User.create(payload)
+      
+      await auth.use('web').login(user)
+      return response.redirect().toRoute('users.index')
+
+    } catch (error) {
+      console.log("ERREUR DETECTEE :", error.constructor.name)
+      if (error.messages) {
+        console.log("Détails validation :", error.messages)
+      } else {
+        console.error("Erreur DB/Système :", error.message)
+      }
+      session.flash('error', 'Erreur lors de l’inscription. Vérifie les champs.')
       return response.redirect().back()
     }
   }
 }
+

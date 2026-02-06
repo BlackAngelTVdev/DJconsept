@@ -1,0 +1,56 @@
+@layout.main({ title: 'Création de compte', css: 'login.css' })
+<div class="login-container">
+    <h1>Rejoindre l'aventure <span>.</span></h1>
+    <p class="subtitle">Crée ton profil en quelques secondes</p>
+
+    <form action="{{ route('auth.register') }}" method="POST">
+        {{ csrfField() }}
+
+        {{-- Nom complet --}}
+        <div class="field">
+            <label for="fullName">Nom complet</label>
+            <input type="text" name="fullName" id="fullName" value="{{ old('fullName') || '' }}"
+                placeholder="Ex: John Doe" required>
+            @inputError('fullName')
+            <p class="error"> {{ $messages.join(', ') }} </p>
+            @end
+        </div>
+
+        {{-- Email --}}
+        <div class="field">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value="{{ old('email') || '' }}" placeholder="ton@email.com"
+                required>
+            @inputError('email')
+            <p class="error"> {{ $messages.join(', ') }} </p>
+            @end
+        </div>
+
+        {{-- Mot de passe --}}
+        <div class="field">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" id="password" placeholder="••••••••" required>
+            @inputError('password')
+            <p class="error"> {{ $messages.join(', ') }} </p>
+            @end
+        </div>
+
+        {{-- Confirmation Mot de passe --}}
+        <div class="field">
+            <label for="password_confirmation">Confirmer le mot de passe</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" placeholder="••••••••"
+                required>
+        </div>
+
+        <button type="submit">Créer mon compte</button>
+
+        <p class="footer-text" style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #666;">
+            Déjà inscrit ? <a href="{{ route('login') }}"
+                style="color: var(--secondary); text-decoration: none;">Connecte-toi</a>
+        </p>
+        @if(flashMessages.has('error'))
+        <p>{{ flashMessages.get('error') }}</p>
+        @endif
+    </form>
+</div>
+@end

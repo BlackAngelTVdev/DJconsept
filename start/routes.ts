@@ -13,7 +13,7 @@ const AuthController = () => import('#controllers/auth_controller')
 router.on('/').render('pages/home').as('home')
 router.on('/comment-ca-marche').render('pages/how_it_works').as('how-it-works')
 router.on('/login').render('pages/users/login').as('login')
-router.on('/register').render('pages/register').as('register')
+router.on('/register').render('pages/users/register').as('register')
 
 
 /*
@@ -36,4 +36,5 @@ router.group(() => {
   router.post('/login', [AuthController, 'login']).as('auth.login')
   router.post('/logout', [AuthController, 'logout']).as('auth.logout')
   router.post('/register', [AuthController, 'register']).as('auth.register')
+
 }).prefix('/auth')

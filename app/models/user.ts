@@ -14,12 +14,13 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare id: number
 
   @column()
-  declare fullName: string | null
+  declare fullName: string
 
   @column()
   declare email: string
+  
   @column()
-  declare isAdmin: boolean
+  public isAdmin: boolean = false
 
   @column({ serializeAs: null }) // Cache le password lors des exports JSON
   declare password: string
