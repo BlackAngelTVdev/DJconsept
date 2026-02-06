@@ -288,33 +288,44 @@
 
 /* --- Social Icons --- */
 .profile-socials-section {
-  margin-top: 25px;
+    margin-top: 25px;
+    width: 100%; /* S'assure que la section prend toute la largeur pour le centrage */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre le titre "Réseaux Sociaux" */
 }
 
 .social-links-row {
-  display: flex;
-  gap: 15px;
-  align-items: center;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center; /* Centre les icônes sur l'axe X */
 }
 
 .social-icon-link {
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
-  font-size: 1.4rem;
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 38px;  /* Réduit de 45px à 38px */
+    height: 38px; /* Réduit de 45px à 38px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px; /* Un peu plus carré pour aller avec la taille réduite */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1.1rem; /* Icône un peu plus petite (était à 1.4) */
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .social-icon-link.instagram:hover {
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-  box-shadow: 0 0 20px rgba(214, 36, 159, 0.5);
+  background: radial-gradient(circle at 30% 107%, 
+    #fdf497 0%, 
+    #fdf497 5%, 
+    #fd5949 45%, 
+    #d6249f 60%, 
+    #285AEB 100%
+  );
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
   border-color: transparent;
 }
 
