@@ -1,6 +1,8 @@
+/* resources/css/concept.css */
 @import url('./app.css');
+
 .page-content {
-    padding: 80px 20px;
+    padding: 80px 0;
 }
 
 .intro {
@@ -8,18 +10,24 @@
     margin-bottom: 80px;
 }
 
-.intro h1 { font-size: 3.5rem; }
+.intro h1 { 
+    font-size: 3.5rem; 
+    font-weight: 900;
+    letter-spacing: -2px;
+}
 
+/* --- STEPS LAYOUT --- */
 .steps-container {
     display: flex;
     flex-direction: column;
-    gap: 120px;
+    gap: 120px; /* Espace entre les blocs */
 }
 
 .step-row {
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 80px;
+    padding: 0 20px;
 }
 
 .step-row.reverse {
@@ -31,16 +39,16 @@
 }
 
 .step-text .number {
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: 900;
     color: var(--primary);
-    opacity: 0.2;
+    opacity: 0.15;
     display: block;
-    margin-bottom: -20px;
+    margin-bottom: -25px;
 }
 
 .step-text h2 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     color: var(--secondary);
     margin-bottom: 20px;
 }
@@ -51,24 +59,75 @@
 
 .step-visual img {
     width: 100%;
-    border-radius: 20px;
-    border: 2px solid var(--gray);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    transition: 0.4s ease;
 }
 
+.step-row:hover .step-visual img {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--secondary);
+}
+
+/* --- CTA SECTION --- */
 .cta-section {
     text-align: center;
-    margin-top: 100px;
-    padding: 60px;
-    background: linear-gradient(45deg, var(--gray), #1a1a1a);
-    border-radius: 30px;
+    margin: 100px 20px 0;
+    padding: 80px 40px;
+    background: radial-gradient(circle at top right, var(--gray), #111);
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Mobile check */
+/* --- RESPONSIVE "AUX PETITS OIGNONS" --- */
+
+@media (max-width: 992px) {
+    .step-row { gap: 40px; }
+    .intro h1 { font-size: 2.8rem; }
+}
+
 @media (max-width: 768px) {
+    .page-content { padding: 40px 0; }
+
+    .intro { margin-bottom: 50px; }
+    .intro h1 { font-size: 2.2rem; }
+
+    .steps-container { gap: 60px; }
+
+    /* On force l'image au dessus du texte pour TOUTES les lignes sur mobile */
     .step-row, .step-row.reverse {
-        flex-direction: column;
+        flex-direction: column-reverse; 
         text-align: center;
         gap: 30px;
     }
+
+    .step-text .number {
+        font-size: 4rem;
+        margin-bottom: -15px;
+    }
+
+    .step-text h2 {
+        font-size: 1.8rem;
+    }
+
+    .step-text p {
+        max-width: 100%;
+    }
+
+    .step-visual img {
+        max-width: 100%;
+        border-radius: 20px;
+    }
+
+    .cta-section {
+        margin-top: 60px;
+        padding: 50px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .intro h1 { font-size: 1.8rem; }
+    
+    .step-text h2 { font-size: 1.5rem; }
 }

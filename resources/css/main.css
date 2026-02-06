@@ -60,3 +60,82 @@
 
 .card h3 { margin: 20px 0 10px; color: var(--secondary); }
 
+
+/* --- HERO & CARDS RESPONSIVE --- */
+
+@media (max-width: 1024px) {
+    .hero h1 {
+        font-size: 3.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* HERO */
+    .hero {
+        height: 70vh; /* On réduit un peu la hauteur */
+        padding: 0 20px;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        line-height: 1.1;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+    }
+
+    /* CARDS */
+    .concept {
+        grid-template-columns: 1fr; /* On force une seule colonne */
+        margin-top: -30px; /* On remonte un peu moins la section */
+        gap: 20px;
+        padding: 0 20px;
+    }
+
+    .card {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        height: 60vh;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 0.95rem;
+    }
+
+    /* On gère les boutons en colonne sur mobile si besoin */
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Si tu as des boutons l'un à côté de l'autre */
+    .btn-secondary {
+        margin-left: 0 !important; 
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    .btn-primary {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+/* Fix pour éviter les problèmes de background-image sur les navigateurs mobiles */
+@media (hover: none) {
+    .hero {
+        background-attachment: scroll; /* Évite les lags de scroll sur iOS */
+    }
+}

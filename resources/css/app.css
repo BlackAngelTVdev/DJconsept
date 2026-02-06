@@ -238,3 +238,103 @@ nav {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+/* --- RESPONSIVE "AUX PETITS OIGNONS" --- */
+
+@media (max-width: 992px) {
+    .hero h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Navigation - On empile pour laisser de la place */
+    nav {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .nav-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Hero Section - Plus compact */
+    .hero {
+        height: 60vh;
+        padding: 0 10px;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        letter-spacing: -1px;
+    }
+
+    .hero p {
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+
+    /* Concept Cards - On réduit les marges négatives pour pas que ça bouffe le texte du hero */
+    .concept {
+        margin-top: -30px;
+        padding: 0 15px;
+        gap: 20px;
+    }
+
+    .card {
+        padding: 30px 20px;
+    }
+
+    /* Boutons - On les met l'un sur l'autre si besoin */
+    .hero-content .btn-secondary {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .btn-primary {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    /* Dropdown - On le centre sur mobile pour que ça soit "chill" */
+    .dropdown-menu {
+        right: 50%;
+        transform: translateX(50%);
+        width: 220px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    /* On réduit le padding du container pour gagner de la place utile */
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Les liens de nav un peu plus gros pour les gros doigts */
+    .nav-links a {
+        font-size: 0.85rem;
+        padding: 5px;
+    }
+
+    .card h3 {
+        font-size: 1.1rem;
+    }
+}
+
+/* Fix pour éviter que les images de background ne sautent sur iOS */
+@supports (-webkit-touch-callout: none) {
+    .hero {
+        background-attachment: scroll;
+    }
+}
