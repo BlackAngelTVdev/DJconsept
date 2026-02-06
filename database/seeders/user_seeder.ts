@@ -24,6 +24,12 @@ export default class extends BaseSeeder {
         fullName: 'Lucas ‘Dj Sky’ Dupont',
         email: 'sky.dj@gmail.com',
         password: 'Password123!',
+      },
+      {
+        fullName: 'Damien Rochat',
+        email: 'admin@djconsept.fr',
+        password: 'admin',
+        isAdmin: true
       }
     ])
   }

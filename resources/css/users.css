@@ -45,7 +45,7 @@
 }
 
 .user-email {
-  color: #888;
+  color: (var(--primary));
   font-size: 0.9rem;
   margin-bottom: 15px;
 }

@@ -1,0 +1,33 @@
+@layout.main({ title: 'Login', css: 'login.css' })
+  <div class="login-container">
+    <h1>Connexion</h1>
+
+    <form action="{{ route('auth.login') }}" method="POST">
+      {{-- Obligatoire pour la sécurité --}}
+      {{ csrfField() }}
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" name="email" value="{{ old('email') || '' }}" required>
+        @inputError('email')
+          <p class="error"> {{ $messages.join(', ') }} </p>
+        @end
+      </div>
+
+      <div class="field">
+        <label for="password">Mot de passe</label>
+        <input type="password" name="password" required>
+        @inputError('password')
+          <p class="error"> {{ $messages.join(', ') }} </p>
+        @end
+      </div>
+
+      {{-- Message d'erreur global (ex: mauvais identifiants) --}}
+      @flashMessage('errors.auth')
+        <p class="alert-error"> {{ $message }} </p>
+      @end
+
+      <button type="submit">Se connecter</button>
+    </form>
+  </div>
+@end
