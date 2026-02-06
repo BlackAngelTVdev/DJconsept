@@ -1,40 +1,67 @@
 @layout.main({ title: 'Votre Profil', css: 'users.css' })
-  <section class="user-profile container">
-    <div class="profile-header">
-      @if(auth.user && auth.user.id === user.id)
-        <h1>Votre <span>Profil</span></h1>
-      @else
-        <h1>Profil de <span>{{ user.fullName.split(' ')[0] }}</span></h1>
-      @end
+<section class="user-profile container">
+  <div class="profile-header">
+    @if(auth.user && auth.user.id === user.id)
+    <h1>Votre <span>Profil</span></h1>
+    @else
+    <h1>Profil de <span>{{ user.fullName.split(' ')[0] }}</span></h1>
+    @end
+  </div>
+
+  <div class="profile-card">
+    {{-- L'avatar en mode "Cover" --}}
+    <div class="profile-avatar">
+      <span>{{ user.fullName.substring(0, 2).toUpperCase() }}</span>
     </div>
 
-    <div class="profile-card">
-      {{-- L'avatar en mode "Cover" --}}
-      <div class="profile-avatar">
-        <span>{{ user.fullName.substring(0, 2).toUpperCase() }}</span>
-      </div>
+    <div class="profile-content">
+      <div class="profile-info">
+        <span class="badge {{ user.isAdmin ? 'badge-admin' : 'badge-user' }}">
+          {{ user.isAdmin ? 'Administrateur' : 'Membre' }}
+        </span>
+        <h2>{{ user.fullName }}</h2>
+        <p class="profile-email">{{ user.email }}</p>
 
-      <div class="profile-content">
-        <div class="profile-info">
-          <span class="badge {{ user.isAdmin ? 'badge-admin' : 'badge-user' }}">
-            {{ user.isAdmin ? 'Administrateur' : 'Membre' }}
-          </span>
-          <h2>{{ user.fullName }}</h2>
-          <p class="profile-email">{{ user.email }}</p>
+        @if(user.instagramUrl || user.tiktokUrl || user.youtubeUrl)
+        <div class="profile-socials-section">
+          <h3>Réseaux sociaux</h3>
+          <div class="social-links-row">
+            @if(user.instagramUrl)
+            <a href="{{ user.instagramUrl }}" target="_blank" rel="noopener" class="social-icon-link instagram"
+              title="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            @end
+
+            @if(user.tiktokUrl)
+            <a href="{{ user.tiktokUrl }}" target="_blank" rel="noopener" class="social-icon-link tiktok"
+              title="TikTok">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+            @end
+
+            @if(user.youtubeUrl)
+            <a href="{{ user.youtubeUrl }}" target="_blank" rel="noopener" class="social-icon-link youtube"
+              title="YouTube">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+            @end
+          </div>
         </div>
+        @end
 
         {{-- Actions visibles uniquement si c'est notre compte --}}
         @if(auth.user && auth.user.id === user.id)
-          <div class="profile-actions">
-            <a href="{{ route('users.edit', { id: user.id }) }}" class="btn-edit">
-              Modifier le profil
-            </a>
-            <a href="#" class="btn-password">
-              Sécurité
-            </a>
-          </div>
+        <div class="profile-actions">
+          <a href="{{ route('users.edit', { id: user.id }) }}" class="btn-edit">
+            Modifier le profil
+          </a>
+          <a href="#" class="btn-password">
+            Sécurité
+          </a>
+        </div>
         @end
       </div>
     </div>
-  </section>
+</section>
 @end
