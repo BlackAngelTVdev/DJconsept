@@ -14,7 +14,7 @@
           </a>
         </li>
         <li>
-          <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+          <form action="{{ route('auth.logout') }}" method="POST" style="display: inline;">
             {{ csrfField() }}
             <button type="submit" class="btn-logout">Déconnexion</button>
           </form>

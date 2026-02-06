@@ -20,18 +20,12 @@ export default class AuthController {
 
       // 3. Connexion
       await auth.use('web').login(user)
-      
+
       console.log(`[AUTH] Succès : User ${user.email} (ID: ${user.id}) est connecté`)
       return response.redirect().toRoute('users.index')
-
     } catch (error) {
-      /**
-       * 4. Log précis de l'erreur en console
-       * On affiche l'erreur réelle pour savoir si c'est un problème 
-       * de DB, de mot de passe, ou de configuration.
-       */
       console.error('[AUTH] Erreur de connexion :', error.message)
-      
+
       session.flash('error', 'Identifiants incorrects')
       return response.redirect().back()
     }
@@ -40,8 +34,16 @@ export default class AuthController {
   public async logout({ auth, response }: HttpContext) {
     const user = auth.user
     await auth.use('web').logout()
-    
+
     console.log(`[AUTH] Déconnexion réussie pour l'utilisateur ID: ${user?.id}`)
     return response.redirect().toPath('/login')
+  }
+  public async register({ request, response, session }: HttpContext) {
+    const { fullName, email, password } = request.only(['fullName', 'email', 'password'])
+
+    if (!fullName || !email || !password) {
+      session.flash('error', 'Veuillez remplir tous les champs')
+      return response.redirect().back()
+    }
   }
 }
