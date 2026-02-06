@@ -6,7 +6,7 @@ export default class extends BaseSeeder {
     // On utilise createMany pour aller plus vite
     await User.createMany([
       {
-        fullName: 'Damien Rochat',
+        fullName: 'DJ Dam\'s',
         email: 'dami.scoo3@gmail.com',
         password: 'Tw4t2LuRq!',
       },

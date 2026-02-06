@@ -84,6 +84,22 @@ nav {
   transition: 0.3s;
 }
 
+/* Boutons */
+.btn-primary, .btn-secondary, .btn-outline {
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+  display: inline-block;
+}
+
+.btn-primary { background: var(--primary); color: white; }
+.btn-secondary { background: var(--secondary); color: var(--dark); margin-left: 10px; }
+.btn-outline { border: 1px solid var(--light); }
+
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(138, 43, 226, 0.4); }
+
 .btn-logout:hover {
   background: #ff4444;
   color: white;
