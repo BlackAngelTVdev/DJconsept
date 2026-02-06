@@ -5,6 +5,20 @@ export default defineConfig({
   plugins: [
     adonisjs({
       entrypoints: ['resources/css/app.css', 'resources/js/app.js'],
+      reload: ['resources/views/**/*.edge'],
     }),
   ],
+
+  // AJOUTE ÇA ICI : 
+  // Ça dit à Vite : "N'utilise aucun plugin PostCSS, reste en CSS pur"
+  css: {
+    postcss: {
+      plugins: []
+    }
+  },
+
+  server: {
+    allowedHosts: ['dj.laxacube.ch'],
+    host: '0.0.0.0', // Important si tu repasses sur Docker plus tard
+  },
 })
