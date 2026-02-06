@@ -1,0 +1,18 @@
+Hash;Date;Auteur;Email;Sujet;Description
+52a1195;2026-02-06 11:24:24 +0100;Damien Rochat;156111574+BlackAngelTVdev@users.noreply.github.com;Feat(profil): possibilité de mettre ses réeau;[20][WPI]
+
+fdb2652;2026-02-06 11:10:40 +0100;Damien Rochat;156111574+BlackAngelTVdev@users.noreply.github.com;Feat(dropDown) pour se econnecter et voir son profil;[20][DONE]
+css de user
+
+4fa9f0b;2026-02-06 10:49:02 +0100;Damien Rochat;156111574+BlackAngelTVdev@users.noreply.github.com;Feat(compte): creation de compte avec validateur;[30][DONE]
+Les nom sont unique et les email aussi
+
+28545d8;2026-02-06 09:54:56 +0100;Damien Rochat;156111574+BlackAngelTVdev@users.noreply.github.com;Feat(show) affiche le profil utilisateur;[30][DONE]
+
+e72052b;2026-02-06 09:23:21 +0100;Damien Rochat;156111574+BlackAngelTVdev@users.noreply.github.com;Feat(login): midelware;[10][DONE]
+one ne peut plus mettre les url sans etre connecter
+
+0780b2e;2026-02-06 09:15:18 +0100;Damien Rochat;156111574+BlackAngelTVdev@users.noreply.github.com;Feat(login) Css;[5][DONE]
+
+09e85a3;2026-02-06 09:11:25 +0100;Damien Rochat;156111574+BlackAngelTVdev@users.noreply.github.com;Feat(login): on peu se log;[30][DONE]
+pas encore de midelware
