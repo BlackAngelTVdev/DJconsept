@@ -232,6 +232,52 @@ nav {
   font-size: 0.8rem;
   color: #444;
 }
+/* --- FOOTER ADDITIONS (GitHub Section) --- */
+.github-info {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.github-info img {
+  height: 25px; /* Taille propre pour le badge */
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+}
+
+.github-info img:hover {
+  transform: scale(1.05);
+}
+
+.github-link {
+  color: var(--light);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
+
+.github-link i {
+  font-size: 1.1rem;
+  color: var(--secondary); /* Rappel de ta couleur accent */
+}
+
+.github-link:hover {
+  color: var(--secondary);
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
+}
+
+/* Adaptation Responsive pour le footer */
+@media (max-width: 768px) {
+  .github-info {
+    margin-top: 25px;
+  }
+}
 
 /* --- ANIMATIONS --- */
 @keyframes fadeIn {
