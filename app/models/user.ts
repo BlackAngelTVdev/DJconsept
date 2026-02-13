@@ -37,6 +37,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare longitude: number | null
 
   @column()
+  declare travelRange: number | null
+
+  @column()
   declare pricePerGig: number | null
 
   /* --- Réseaux Sociaux --- */

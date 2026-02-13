@@ -12,11 +12,11 @@ export default class extends BaseSchema {
       table.boolean('is_admin').notNullable().defaultTo(false)
 
       /* Nouveaux champs ajoutés */
-      table.string('location').nullable() // Lieu d'habitation
+      table.string('location').nullable()
       table.float('latitude')
       table.float('longitude')
-      table.integer('price_per_gig').nullable() // Prix par prestation (en centimes conseillé)
-
+      table.integer('price_per_gig').nullable()
+      table.integer('travelRange')
       /* Réseaux Sociaux */
       table.string('instagram_url').nullable()
       table.string('tiktok_url').nullable()

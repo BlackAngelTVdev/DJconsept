@@ -133,68 +133,71 @@ export default class UsersController {
     session.flash('success', 'Sécurité mise à jour avec succès !')
     return response.redirect().toRoute('users.show', { id: user.id })
   }
-  async seartch({ request, view }: HttpContext) {
-    const { location, distance, budget } = request.qs()
 
-    // 1. On récupère les DJs filtrés par budget (SQL simple)
+  async seartch({ request, view }: HttpContext) {
+    // On ne prend que la ville et le budget du client
+    const { location, budget } = request.qs()
+
     let query = User.query()
     if (budget) query.where('pricePerGig', '<=', budget)
     let djs = await query
 
-    // 2. Si l'utilisateur a rempli "Lieu de la soirée" et "Distance max"
-    if (location && distance) {
-      // On transforme le nom de la ville de la soirée en coordonnées
+    if (location) {
       const eventCoords = await this.getCoords(location)
 
       if (eventCoords) {
         const filteredDjs = []
 
         for (const dj of djs) {
-          // Si le DJ n'a pas encore de lat/lon en base, on les récupère une seule fois
-          if (!dj.latitude && dj.location) {
-            const djCoords = await this.getCoords(dj.location)
-            if (djCoords) {
-              dj.latitude = djCoords.lat
-              dj.longitude = djCoords.lon
-              await dj.save() // On enregistre pour ne plus jamais appeler l'API pour ce DJ
+          // Sécurité : Récupération des coordonnées du DJ si manquantes
+          if (!dj.latitude || !dj.longitude) {
+            if (dj.location) {
+              const coords = await this.getCoords(dj.location)
+              if (coords) {
+                dj.latitude = coords.lat
+                dj.longitude = coords.lon
+                await dj.save()
+              }
             }
           }
 
-          // Calcul mathématique de la distance (Haversine)
           if (dj.latitude && dj.longitude) {
-            const km = this.calculateDistance(
+            // Distance entre la soirée (Morges) et le DJ (Apples ou Genève)
+            const distanceToEvent = this.calculateDistance(
               eventCoords.lat,
               eventCoords.lon,
               dj.latitude,
               dj.longitude
             )
 
-            if (km <= parseInt(distance)) {
+            // Le DJ décide : s'il n'a rien mis, on met 50km par défaut
+            const djMaxRange = dj.travelRange || 50
+
+            // SI la distance de la soirée est OK pour le DJ, on l'affiche
+            if (distanceToEvent <= djMaxRange) {
+              dj.$extras.distance = Math.round(distanceToEvent)
               filteredDjs.push(dj)
             }
           }
         }
         djs = filteredDjs
+        // Tri du plus proche au plus loin
+        djs.sort((a, b) => a.$extras.distance - b.$extras.distance)
       }
     }
 
-    return view.render('pages/users/seartch', { users: djs })
+    return view.render('pages/users/seartch', { users: djs, location })
   }
+
   /**
-   * Récupère les coordonnées GPS d'une ville via l'API Nominatim (OpenStreetMap)
+   * API Nominatim pour transformer un nom de ville en coordonnées
    */
   private async getCoords(city: string) {
     try {
-      // On encode le nom de la ville pour l'URL
       const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}&limit=1`
-
       const response = await fetch(url, {
-        headers: {
-          // IMPORTANT: Mettre un User-Agent pour éviter d'être bloqué par l'API
-          'User-Agent': 'DjConceptApp/1.0',
-        },
+        headers: { 'User-Agent': 'DjConceptApp/1.0' },
       })
-
       const data = await response.json()
 
       if (data && data.length > 0) {
@@ -203,28 +206,32 @@ export default class UsersController {
           lon: parseFloat(data[0].lon),
         }
       }
-    } catch (error) {
-      console.error('Erreur API Géo:', error)
+    } catch (e) {
+      console.error('Erreur Géo :', e)
     }
     return null
   }
 
   /**
-   * Calcule la distance en KM entre deux points GPS (Formule de Haversine)
+   * Formule de Haversine (Calcul de distance sur une sphère)
+   * C'est la plus précise pour les calculs GPS
    */
   private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
     const R = 6371 // Rayon de la Terre en km
-    const dLat = ((lat2 - lat1) * Math.PI) / 180
-    const dLon = ((lon2 - lon1) * Math.PI) / 180
+
+    // Conversion en radians
+    const dLat = (lat2 - lat1) * (Math.PI / 180)
+    const dLon = (lon2 - lon1) * (Math.PI / 180)
 
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos((lat1 * Math.PI) / 180) *
-        Math.cos((lat2 * Math.PI) / 180) *
+      Math.cos(lat1 * (Math.PI / 180)) *
+        Math.cos(lat2 * (Math.PI / 180)) *
         Math.sin(dLon / 2) *
         Math.sin(dLon / 2)
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    return R * c // Distance en km
+
+    return R * c // Retourne la distance en km
   }
 }

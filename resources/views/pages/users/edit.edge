@@ -1,48 +1,64 @@
 @layout.main({ title: 'Modifier le profil', css: 'users.css' })
 <section class="user-profile container">
     <div class="profile-header">
-        <h1>Modifier votre <span>Profil</span></h1>
+        <h1>
+            Modifier votre <span>Profil</span>
+        </h1>
     </div>
 
-    <form action="{{ route('users.update', { id: user.id }) }}?_method=PUT" method="POST" class="profile-card edit-form">
+    <form action="{{ route('users.update', { id: user.id }) }}?_method=PUT" method="POST"
+        class="profile-card edit-form">
         {{ csrfField() }}
-
         <div class="profile-content">
             {{-- Infos de base --}}
             <div class="form-grid">
                 <div class="form-group">
                     <label for="fullName">Nom complet / Nom de scène</label>
-                    <input type="text" name="fullName" id="fullName" value="{{ user.fullName || '' }}" placeholder="Ex: DJ Snake">
+                    <input type="text" name="fullName" id="fullName" value="{{ user.fullName || '' }}"
+                        placeholder="Ex: DJ Snake" />
                 </div>
 
                 <div class="form-group">
                     <label for="location">Ville / Région</label>
-                    <input type="text" name="location" id="location" value="{{ user.location || '' }}" placeholder="Ex: Paris, France">
+                    <input type="text" name="location" id="location" value="{{ user.location || '' }}"
+                        placeholder="Ex: Paris, France" />
                 </div>
 
                 <div class="form-group">
                     <label for="pricePerGig">Tarif prestation (CHF)</label>
-                    <input type="number" name="pricePerGig" id="pricePerGig" value="{{ user.pricePerGig || '' }}" placeholder="Ex: 500">
+                    <input type="number" name="pricePerGig" id="pricePerGig" value="{{ user.pricePerGig || '' }}"
+                        placeholder="Ex: 500" />
+                </div>
+                <div class="form-group">
+                    <label for="travelRange">Rayon de déplacement max (en km)</label>
+                    <input type="number" name="travelRange" value="{{ user.travelRange || '' }}"
+                        placeholder="Ex: 100" />
+                    <p class="help-text">
+                        Jusqu'à quelle distance acceptes-tu de te déplacer pour une soirée ?
+                    </p>
                 </div>
             </div>
 
-            <hr class="form-separator">
+            <hr class="form-separator" />
 
             {{-- Réseaux Sociaux --}}
             <div class="form-grid">
                 <div class="form-group">
                     <label for="instagramUrl">Lien Instagram</label>
-                    <input type="url" name="instagramUrl" id="instagramUrl" value="{{ user.instagramUrl || '' }}" placeholder="https://instagram.com/...">
+                    <input type="url" name="instagramUrl" id="instagramUrl" value="{{ user.instagramUrl || '' }}"
+                        placeholder="https://instagram.com/..." />
                 </div>
 
                 <div class="form-group">
                     <label for="tiktokUrl">Lien TikTok</label>
-                    <input type="url" name="tiktokUrl" id="tiktokUrl" value="{{ user.tiktokUrl || '' }}" placeholder="https://tiktok.com/@...">
+                    <input type="url" name="tiktokUrl" id="tiktokUrl" value="{{ user.tiktokUrl || '' }}"
+                        placeholder="https://tiktok.com/@..." />
                 </div>
 
                 <div class="form-group">
                     <label for="youtubeUrl">Lien YouTube</label>
-                    <input type="url" name="youtubeUrl" id="youtubeUrl" value="{{ user.youtubeUrl || '' }}" placeholder="https://youtube.com/c/...">
+                    <input type="url" name="youtubeUrl" id="youtubeUrl" value="{{ user.youtubeUrl || '' }}"
+                        placeholder="https://youtube.com/c/..." />
                 </div>
             </div>
 
