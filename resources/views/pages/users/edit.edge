@@ -37,6 +37,16 @@
                         Jusqu'à quelle distance acceptes-tu de te déplacer pour une soirée ?
                     </p>
                 </div>
+                <div class="form-group full-width">
+                    <label for="isDj">Type de profil</label>
+                    <select name="isDj" id="isDj" class="form-select">
+                        <option value="0" {{ !user.isDj ? 'selected' : '' }}>Je suis un Organisateur (Je cherche des
+                            DJs)</option>
+                        <option value="1" {{ user.isDj ? 'selected' : '' }}>Je suis un DJ (Je propose mes services)
+                        </option>
+                    </select>
+                    <p class="help-text">Seuls les profils "DJ" apparaissent dans les résultats de recherche.</p>
+                </div>
             </div>
 
             <hr class="form-separator" />

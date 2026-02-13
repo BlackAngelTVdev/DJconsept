@@ -11,13 +11,15 @@ export default class extends BaseSchema {
       table.string('password').notNullable()
       table.boolean('is_admin').notNullable().defaultTo(false)
 
-      /* Nouveaux champs ajoutés */
       table.string('location').nullable()
-      table.float('latitude')
-      table.float('longitude')
+      table.float('latitude').nullable()
+      table.float('longitude').nullable()
       table.integer('price_per_gig').nullable()
-      table.integer('travelRange')
-      /* Réseaux Sociaux */
+
+      // Correction ici : snake_case
+      table.integer('travel_range').nullable()
+      table.boolean('is_dj').notNullable().defaultTo(false)
+
       table.string('instagram_url').nullable()
       table.string('tiktok_url').nullable()
       table.string('youtube_url').nullable()

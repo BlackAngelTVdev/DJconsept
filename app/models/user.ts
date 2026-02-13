@@ -42,6 +42,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare pricePerGig: number | null
 
+  @column()
+  declare isDj: boolean
+
   /* --- Réseaux Sociaux --- */
 
   @column()

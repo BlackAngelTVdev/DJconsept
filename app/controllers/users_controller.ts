@@ -51,31 +51,28 @@ export default class UsersController {
   // Pour afficher la page
 
   // Pour sauvegarder
-  public async update({ request, response, params, session, auth }: HttpContext) {
+  public async update({ request, params, response }: HttpContext) {
     const user = await User.findOrFail(params.id)
+    const data = request.all()
 
-    // SÉCURITÉ : On vérifie que c'est bien l'utilisateur connecté ou un admin
-    if (auth.user!.id !== user.id && !auth.user!.isAdmin) {
-      session.flash('error', "Tu n'as pas l'autorisation de faire ça.")
-      return response.redirect().back()
+    user.merge({
+      fullName: data.fullName,
+      location: data.location,
+      pricePerGig: data.pricePerGig,
+      travelRange: data.travelRange,
+      instagramUrl: data.instagramUrl,
+      tiktokUrl: data.tiktokUrl,
+      youtubeUrl: data.youtubeUrl,
+      isDj: data.isDj === '1' || data.isDj === true, // Convertit en boolean
+    })
+
+    // Si la ville a changé, on reset les coordonnées pour qu'elles soient recalculées
+    if (user.isDirty('location')) {
+      user.latitude = null
+      user.longitude = null
     }
 
-    // On récupère TOUTES les données du formulaire sauf l'email (qu'on a enlevé de la vue)
-    const data = request.only([
-      'fullName',
-      'location',
-      'pricePerGig',
-      'instagramUrl',
-      'tiktokUrl',
-      'youtubeUrl',
-    ])
-
-    // On fusionne et on sauvegarde
-    user.merge(data)
     await user.save()
-
-    session.flash('success', 'Profil mis à jour avec succès !')
-
     return response.redirect().toRoute('users.show', { id: user.id })
   }
 
@@ -138,8 +135,10 @@ export default class UsersController {
     // On ne prend que la ville et le budget du client
     const { location, budget } = request.qs()
 
-    let query = User.query()
+    let query = User.query().where('isDj', true)
+
     if (budget) query.where('pricePerGig', '<=', budget)
+
     let djs = await query
 
     if (location) {
