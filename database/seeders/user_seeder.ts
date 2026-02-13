@@ -80,9 +80,9 @@ export default class extends BaseSeeder {
         travelRange: 80,
       },
     ])
-    for (let i = 0; i < 10; i++) {
-      await UserFactory.createMany(1000)
-      console.log(`Paquet ${i + 1}/10 généré...`)
-    }
+    // for (let i = 0; i < 10; i++) {
+    //   await UserFactory.createMany(1000)
+    //   console.log(`Paquet ${i + 1}/10 généré...`)
+    // }
   }
 }

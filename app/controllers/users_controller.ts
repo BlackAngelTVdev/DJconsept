@@ -55,6 +55,9 @@ export default class UsersController {
     const user = await User.findOrFail(params.id)
     const data = request.all()
 
+    // On stocke l'ancienne ville pour comparer
+    const oldLocation = user.location
+
     user.merge({
       fullName: data.fullName,
       location: data.location,
@@ -63,13 +66,20 @@ export default class UsersController {
       instagramUrl: data.instagramUrl,
       tiktokUrl: data.tiktokUrl,
       youtubeUrl: data.youtubeUrl,
-      isDj: data.isDj === '1' || data.isDj === true, // Convertit en boolean
+      isDj: data.isDj === '1' || data.isDj === true,
     })
 
-    // Si la ville a changé, on reset les coordonnées pour qu'elles soient recalculées
-    if (user.isDirty('location')) {
-      user.latitude = null
-      user.longitude = null
+    // SI LA LOCATION A CHANGÉ : On géo-code tout de suite
+    if (user.location && user.location !== oldLocation) {
+      const coords = await this.getCoords(user.location)
+      if (coords) {
+        user.latitude = coords.lat
+        user.longitude = coords.lon
+      } else {
+        // Si Nominatim ne trouve rien, on met à null pour éviter les fausses données
+        user.latitude = null
+        user.longitude = null
+      }
     }
 
     await user.save()
