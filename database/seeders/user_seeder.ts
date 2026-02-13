@@ -1,5 +1,6 @@
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import User from '#models/user'
+import { UserFactory } from '#database/factories/user_factory'
 
 export default class extends BaseSeeder {
   async run() {
@@ -79,5 +80,9 @@ export default class extends BaseSeeder {
         travelRange: 80,
       },
     ])
+    for (let i = 0; i < 10; i++) {
+      await UserFactory.createMany(1000)
+      console.log(`Paquet ${i + 1}/10 généré...`)
+    }
   }
 }

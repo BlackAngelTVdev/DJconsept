@@ -1,22 +1,22 @@
-@layout.main({ title: 'Communauté', css: 'seartch.css' })
+@layout.main({ title: 'Communauté', css: 'seartch.css', js: 'lazy.js' })
+
 <div class="container page-content">
     <div class="content-header">
-        <h1>
-            Trouver le <span>DJ Idéal</span>
-        </h1>
+        <h1>Trouver le <span>DJ Idéal</span></h1>
     </div>
 
+    {{-- 1. Section Recherche --}}
     <section class="search-section">
         <form action="{{ route('users.seartch') }}" method="GET" class="search-form">
             <div class="search-grid">
                 <div class="form-group">
                     <label>📍 Où cherchez-vous ?</label>
-                    <input type="text" name="location" placeholder="nom de la ville" />
+                    <input type="text" name="location" placeholder="nom de la ville" value="{{ location || '' }}" />
                 </div>
 
                 <div class="form-group">
                     <label for="budget">💰 Budget Max (€)</label>
-                    <input type="number" name="budget" id="budget" placeholder="Ex: 500" />
+                    <input type="number" name="budget" id="budget" placeholder="Ex: 500" value="{{ budget || '' }}" />
                 </div>
 
                 <div class="search-actions">
@@ -26,34 +26,37 @@
         </form>
     </section>
 
-    <div class="users-grid">
+    {{-- 2. Grille de DJs (C'est ici que le JS va ajouter les cartes) --}}
+    <div class="users-grid" id="users-container">
         @each(user in users)
         <a href="{{ route('users.show', { id: user.id }) }}" class="card-main-link">
             <div class="user-card">
-                <div class="user-avatar">
-                    {{ user.fullName.charAt(0) }}
-                </div>
+                <div class="user-avatar">{{ user.fullName.charAt(0) }}</div>
                 <div class="user-info">
-                    <h3>
-                        {{ user.fullName }}
-                    </h3>
-                    <p class="user-location">
-                        📍 {{ user.location || 'Lieu non précisé' }}
-                    </p>
-                    <p class="user-price">
-                        Prix : <span>{{ user.pricePerGig || 'À négocier' }}€</span>
-                    </p>
+                    <h3>{{ user.fullName }}</h3>
+                    <p class="user-location">📍 {{ user.location || 'Lieu non précisé' }}</p>
+
+                    @if(user.$extras.distance !== undefined)
+                    <p class="distance-info">🚗 à {{ user.$extras.distance }} km</p>
+                    @end
+
+                    <p class="user-price">Prix : <span>{{ user.pricePerGig || 'À négocier' }}€</span></p>
                     <span class="badge badge-user">DJ</span>
                 </div>
             </div>
         </a>
         @else
         <div class="no-results">
-            <p>
-                Aucun DJ ne correspond à vos critères. Essayez d'élargir votre recherche !
-            </p>
+            <p>Aucun DJ ne correspond à vos critères.</p>
         </div>
         @end
+    </div>
+
+    {{-- 3. Le Trigger (TOUT EN BAS) --}}
+    <div id="load-more-trigger" data-current-page="{{ pagination.currentPage }}"
+        data-last-page="{{ pagination.lastPage }}"
+        style="height: 50px; display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+        <div class="spinner" style="display: none;"></div>
     </div>
 </div>
 @end

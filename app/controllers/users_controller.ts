@@ -131,61 +131,66 @@ export default class UsersController {
     return response.redirect().toRoute('users.show', { id: user.id })
   }
 
-  async seartch({ request, view }: HttpContext) {
-    // On ne prend que la ville et le budget du client
+  public async seartch({ request, view }: HttpContext) {
     const { location, budget } = request.qs()
+    const page = request.input('page', 1)
+    const limit = 30 //
 
-    let query = User.query().where('isDj', true)
+    // 1. Requête de base avec Pagination
+    const djsPagination = await User.query()
+      .where('isDj', true)
+      .if(budget, (query) => query.where('pricePerGig', '<=', budget))
+      .orderBy('fullName', 'asc') // Pour avoir un ordre cohérent
+      .paginate(page, limit)
 
-    if (budget) query.where('pricePerGig', '<=', budget)
+    let djs = djsPagination.all()
 
-    let djs = await query
-
+    // 2. LAZY LOADING GÉO (Calculs)
     if (location) {
       const eventCoords = await this.getCoords(location)
-
       if (eventCoords) {
         const filteredDjs = []
 
         for (const dj of djs) {
-          // Sécurité : Récupération des coordonnées du DJ si manquantes
+          // Si on n'a pas les coords en base, on géo-code à la volée
           if (!dj.latitude || !dj.longitude) {
             if (dj.location) {
               const coords = await this.getCoords(dj.location)
               if (coords) {
                 dj.latitude = coords.lat
                 dj.longitude = coords.lon
-                await dj.save()
+                await dj.save() // Stocké en base pour la prochaine fois
               }
             }
           }
 
+          // Calcul de distance si on a les coords
           if (dj.latitude && dj.longitude) {
-            // Distance entre la soirée (Morges) et le DJ (Apples ou Genève)
             const distanceToEvent = this.calculateDistance(
               eventCoords.lat,
               eventCoords.lon,
               dj.latitude,
               dj.longitude
             )
+            const djLimit = dj.travelRange || 50
 
-            // Le DJ décide : s'il n'a rien mis, on met 50km par défaut
-            const djMaxRange = dj.travelRange || 50
-
-            // SI la distance de la soirée est OK pour le DJ, on l'affiche
-            if (distanceToEvent <= djMaxRange) {
+            if (distanceToEvent <= djLimit) {
               dj.$extras.distance = Math.round(distanceToEvent)
               filteredDjs.push(dj)
             }
           }
         }
-        djs = filteredDjs
-        // Tri du plus proche au plus loin
-        djs.sort((a, b) => a.$extras.distance - b.$extras.distance)
+        djs = filteredDjs.sort((a, b) => a.$extras.distance - b.$extras.distance)
       }
     }
 
-    return view.render('pages/users/seartch', { users: djs, location })
+    // 3. Rendu (La vue reçoit 20 users max)
+    return view.render('pages/users/seartch', {
+      users: djs,
+      pagination: djsPagination.getMeta(),
+      location,
+      budget,
+    })
   }
 
   /**
