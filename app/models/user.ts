@@ -26,9 +26,15 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare isAdmin: boolean
 
   /* --- Infos Prestation --- */
-  
+
   @column()
   declare location: string | null
+
+  @column()
+  declare latitude: number | null
+
+  @column()
+  declare longitude: number | null
 
   @column()
   declare pricePerGig: number | null

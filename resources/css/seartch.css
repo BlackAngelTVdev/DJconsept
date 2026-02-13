@@ -1,0 +1,43 @@
+.search-section {
+  background: var(--gray);
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.search-form label {
+  font-size: 0.8rem;
+  color: var(--secondary);
+  margin-bottom: 8px;
+  display: block;
+  font-weight: bold;
+}
+
+.search-form input {
+  width: 100%;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: white;
+}
+
+.user-price span {
+  color: var(--secondary);
+  font-weight: bold;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 50px;
+  color: #666;
+}

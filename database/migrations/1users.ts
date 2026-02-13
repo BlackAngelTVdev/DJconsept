@@ -13,8 +13,10 @@ export default class extends BaseSchema {
 
       /* Nouveaux champs ajoutés */
       table.string('location').nullable() // Lieu d'habitation
+      table.float('latitude')
+      table.float('longitude')
       table.integer('price_per_gig').nullable() // Prix par prestation (en centimes conseillé)
-      
+
       /* Réseaux Sociaux */
       table.string('instagram_url').nullable()
       table.string('tiktok_url').nullable()

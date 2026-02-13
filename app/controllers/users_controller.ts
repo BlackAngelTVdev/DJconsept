@@ -88,10 +88,12 @@ export default class UsersController {
 
     return response.redirect().toRoute('users.index')
   }
+
   async editSecure({ params, view }: HttpContext) {
     const user = await User.findOrFail(params.id)
     return view.render('pages/users/edit_secure', { user })
   }
+
   public async updateSecurity({ request, response, params, session, auth }: HttpContext) {
     const user = await User.findOrFail(params.id)
 
@@ -130,5 +132,99 @@ export default class UsersController {
 
     session.flash('success', 'Sécurité mise à jour avec succès !')
     return response.redirect().toRoute('users.show', { id: user.id })
+  }
+  async seartch({ request, view }: HttpContext) {
+    const { location, distance, budget } = request.qs()
+
+    // 1. On récupère les DJs filtrés par budget (SQL simple)
+    let query = User.query()
+    if (budget) query.where('pricePerGig', '<=', budget)
+    let djs = await query
+
+    // 2. Si l'utilisateur a rempli "Lieu de la soirée" et "Distance max"
+    if (location && distance) {
+      // On transforme le nom de la ville de la soirée en coordonnées
+      const eventCoords = await this.getCoords(location)
+
+      if (eventCoords) {
+        const filteredDjs = []
+
+        for (const dj of djs) {
+          // Si le DJ n'a pas encore de lat/lon en base, on les récupère une seule fois
+          if (!dj.latitude && dj.location) {
+            const djCoords = await this.getCoords(dj.location)
+            if (djCoords) {
+              dj.latitude = djCoords.lat
+              dj.longitude = djCoords.lon
+              await dj.save() // On enregistre pour ne plus jamais appeler l'API pour ce DJ
+            }
+          }
+
+          // Calcul mathématique de la distance (Haversine)
+          if (dj.latitude && dj.longitude) {
+            const km = this.calculateDistance(
+              eventCoords.lat,
+              eventCoords.lon,
+              dj.latitude,
+              dj.longitude
+            )
+
+            if (km <= parseInt(distance)) {
+              filteredDjs.push(dj)
+            }
+          }
+        }
+        djs = filteredDjs
+      }
+    }
+
+    return view.render('pages/users/seartch', { users: djs })
+  }
+  /**
+   * Récupère les coordonnées GPS d'une ville via l'API Nominatim (OpenStreetMap)
+   */
+  private async getCoords(city: string) {
+    try {
+      // On encode le nom de la ville pour l'URL
+      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}&limit=1`
+
+      const response = await fetch(url, {
+        headers: {
+          // IMPORTANT: Mettre un User-Agent pour éviter d'être bloqué par l'API
+          'User-Agent': 'DjConceptApp/1.0',
+        },
+      })
+
+      const data = await response.json()
+
+      if (data && data.length > 0) {
+        return {
+          lat: parseFloat(data[0].lat),
+          lon: parseFloat(data[0].lon),
+        }
+      }
+    } catch (error) {
+      console.error('Erreur API Géo:', error)
+    }
+    return null
+  }
+
+  /**
+   * Calcule la distance en KM entre deux points GPS (Formule de Haversine)
+   */
+  private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+    const R = 6371 // Rayon de la Terre en km
+    const dLat = ((lat2 - lat1) * Math.PI) / 180
+    const dLon = ((lon2 - lon1) * Math.PI) / 180
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2)
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    return R * c // Distance en km
   }
 }

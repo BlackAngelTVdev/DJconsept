@@ -37,29 +37,26 @@ export default class AuthController {
     await auth.use('web').logout()
 
     console.log(`[AUTH] Déconnexion réussie pour l'utilisateur ID: ${user?.id}`)
-    return response.redirect().toPath('/login')
+    return response.redirect().toRoute('login')
   }
-
 
   public async register({ request, auth, response, session }: HttpContext) {
     try {
       const payload = await request.validateUsing(registerValidator)
 
       const user = await User.create(payload)
-      
+
       await auth.use('web').login(user)
       return response.redirect().toRoute('users.index')
-
     } catch (error) {
-      console.log("ERREUR DETECTEE :", error.constructor.name)
+      console.log('ERREUR DETECTEE :', error.constructor.name)
       if (error.messages) {
-        console.log("Détails validation :", error.messages)
+        console.log('Détails validation :', error.messages)
       } else {
-        console.error("Erreur DB/Système :", error.message)
+        console.error('Erreur DB/Système :', error.message)
       }
       session.flash('error', 'Erreur lors de l’inscription. Vérifie les champs.')
       return response.redirect().back()
     }
   }
 }
-
