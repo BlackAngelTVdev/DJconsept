@@ -13,7 +13,9 @@ router.on('/').render('pages/home').as('home')
 router.on('/comment-ca-marche').render('pages/how_it_works').as('how-it-works')
 router.on('/login').render('pages/auth/login').as('login')
 router.on('/register').render('pages/auth/register').as('register')
-
+router.any('*', ({ view }) => {
+  return view.render('pages/errors/not_found')
+}).as('not_found')
 /*
 |--------------------------------------------------------------------------
 | Espace Membres (CRUD Users)
