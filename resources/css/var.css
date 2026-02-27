@@ -1,22 +1,29 @@
 :root {
-  --primary: #8a2be2;
-  --secondary: #00f2ff;
-  --bg-color: #0f0f0f;
-  --light: #ffffff;
-  --gray: #222;
+  --bg-main: #0a0a0c;
+  --bg-card: #16161a;
+  --border: #2d2d35;
+  --primary: #9d4edd;
+  --primary-glow: rgba(157, 78, 221, 0.3);
+  --secondary: #00d4ff;
+  --text-main: #f8f9fa;
+  --text-muted: #a0a0ab;
 }
+
 @media (prefers-color-scheme: light) {
   :root {
-    --bg-color: #f5f5f5;
-    --gray: #ffffff;
-    --light: #1a1a1a;
-    --primary: #6200ea;   /* Un violet un peu plus contrasté pour le blanc */
-    --secondary: #00b8d4;
-    --text-main: #1a1a1a;
+    --bg-main: #f4f7ff;
+    --bg-card: #ffffff;
+    --border: #e0e4f0;
+    --primary: #6200ea;
+    --primary-glow: rgba(98, 0, 234, 0.1);
+    --secondary: #00838f;
+    --text-main: #121214;
+    --text-muted: #64748b;
   }
 }
+
 body {
-  background-color: var(--bg-color);
+  background-color: var(--bg-main);
   color: var(--text-main);
-  transition: background-color 0.3s ease; /* Pour un switch doux */
+  transition: all 0.3s ease;
 }

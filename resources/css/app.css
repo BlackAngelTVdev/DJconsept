@@ -3,485 +3,411 @@
 
 /* --- RESET & BASE --- */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-color);
-  color: var(--light);
-  line-height: 1.6;
-  overflow-x: hidden;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /* --- HEADER & NAV --- */
 .main-header {
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-main);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -1px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--text-main);
+    text-decoration: none;
+    letter-spacing: -1px;
 }
 
 .logo span { color: var(--primary); }
 
 .nav-links {
-  display: flex;
-  list-style: none;
-  gap: 30px;
-  align-items: center;
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    align-items: center;
 }
 
 .nav-links a {
-  text-decoration: none;
-  color: var(--light);
-  font-size: 0.9rem;
-  transition: 0.3s;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: 0.2s;
 }
 
-.nav-links a:hover {
-  color: var(--secondary);
-}
+.nav-links a:hover { color: var(--primary); }
 
-/* --- DROPDOWN (Menu Utilisateur) --- */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-trigger {
-  cursor: pointer;
-  padding: 10px 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--secondary) !important;
-  font-weight: bold;
-}
-
-.arrow {
-  font-size: 0.7rem;
-  transition: transform 0.3s;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: var(--gray);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  min-width: 180px;
-  list-style: none;
-  padding: 10px 0;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  display: none;
-  z-index: 1000;
-}
-
-.dropdown-menu li a, 
-.dropdown-logout {
-  display: block;
-  padding: 12px 20px;
-  color: var(--light);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: 0.2s;
-  width: 100%;
-  text-align: left;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.dropdown-menu li a:hover, 
-.dropdown-logout:hover {
-  background: rgba(138, 43, 226, 0.2);
-  color: var(--secondary);
-}
-
-.dropdown-logout {
-  color: #ff4444 !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
-}
-
-.dropdown:hover .dropdown-menu {
-  display: block;
-  animation: fadeIn 0.2s ease-out;
-}
-
-.dropdown:hover .arrow {
-  transform: rotate(180deg);
-  color: var(--primary);
-}
-
-/* --- HERO SECTION --- */
-.hero {
-  position: relative;
-  height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-image: url('https://images.unsplash.com/photo-1514525253361-bee8718a300c?q=80&w=1920');
-  background-size: cover;
-  background-position: center;
-}
-
-.hero-overlay {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(rgba(15, 15, 15, 0.5), var(--bg-color));
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-}
-
-.hero h1 {
-  font-size: 4rem;
-  margin-bottom: 20px;
-}
-
-.hero h1 span {
-  color: var(--secondary);
-  text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
-}
-
-.hero p {
-  font-size: 1.2rem;
-  max-width: 600px;
-  margin: 0 auto 30px;
-  color: #ccc;
-}
-
-/* --- CONCEPT CARDS --- */
-.concept {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  margin-top: -50px;
-  position: relative;
-  z-index: 10;
-}
-
-.card {
-  background: var(--gray);
-  padding: 40px;
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  text-align: center;
-  transition: 0.3s;
-}
-
-.card:hover { transform: translateY(-10px); }
-.card h3 { margin: 20px 0 10px; color: var(--secondary); }
-
-/* --- BOUTONS --- */
-.btn-primary, .btn-secondary, .btn-outline {
-  padding: 12px 25px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: 0.3s;
-  display: inline-block;
-  cursor: pointer;
-  border: none;
-}
-
-.btn-primary { background: var(--primary); color: white; }
-.btn-secondary { background: var(--secondary); color: var(--bg-color); margin-left: 10px; }
-.btn-outline { border: 1px solid var(--light); color: var(--light); background: transparent; }
-
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(138, 43, 226, 0.4); }
-
-/* --- FOOTER --- */
-.main-footer {
-  background: #080808;
-  padding: 60px 0 20px;
-  margin-top: 100px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  text-align: center;
-}
-
-.footer-content p { color: #666; margin-top: 10px; }
-
-.footer-bottom {
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  font-size: 0.8rem;
-  color: #444;
-}
-/* --- FOOTER ADDITIONS (GitHub Section) --- */
-.github-info {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.github-info img {
-  height: 25px; /* Taille propre pour le badge */
-  border-radius: 4px;
-  transition: transform 0.3s ease;
-}
-
-.github-info img:hover {
-  transform: scale(1.05);
-}
-
-.github-link {
-  color: var(--light);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: 0.3s;
-}
-
-.github-link i {
-  font-size: 1.1rem;
-  color: var(--secondary); /* Rappel de ta couleur accent */
-}
-
-.github-link:hover {
-  color: var(--secondary);
-  text-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
-}
-
-/* Adaptation Responsive pour le footer */
-@media (max-width: 768px) {
-  .github-info {
-    margin-top: 25px;
-  }
-}
-
-/* --- ANIMATIONS --- */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-/* --- RESPONSIVE "AUX PETITS OIGNONS" --- */
-
-@media (max-width: 992px) {
-    .hero h1 {
-        font-size: 3rem;
-    }
-}
-
-@media (max-width: 768px) {
-    /* Navigation - On empile pour laisser de la place */
-    nav {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .nav-links {
-        gap: 15px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    /* Hero Section - Plus compact */
-    .hero {
-        height: 60vh;
-        padding: 0 10px;
-    }
-
-    .hero h1 {
-        font-size: 2.5rem;
-        letter-spacing: -1px;
-    }
-
-    .hero p {
-        font-size: 1rem;
-        padding: 0 15px;
-    }
-
-    /* Concept Cards - On réduit les marges négatives pour pas que ça bouffe le texte du hero */
-    .concept {
-        margin-top: -30px;
-        padding: 0 15px;
-        gap: 20px;
-    }
-
-    .card {
-        padding: 30px 20px;
-    }
-
-    /* Boutons - On les met l'un sur l'autre si besoin */
-    .hero-content .btn-secondary {
-        margin-left: 0;
-        margin-top: 10px;
-        width: 100%;
-        max-width: 280px;
-    }
-    
-    .btn-primary {
-        width: 100%;
-        max-width: 280px;
-    }
-
-    /* Dropdown - On le centre sur mobile pour que ça soit "chill" */
-    .dropdown-menu {
-        right: 50%;
-        transform: translateX(50%);
-        width: 220px;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero h1 {
-        font-size: 2rem;
-    }
-
-    .logo {
-        font-size: 1.2rem;
-    }
-
-    /* On réduit le padding du container pour gagner de la place utile */
-    .container {
-        padding: 0 15px;
-    }
-
-    /* Les liens de nav un peu plus gros pour les gros doigts */
-    .nav-links a {
-        font-size: 0.85rem;
-        padding: 5px;
-    }
-
-    .card h3 {
-        font-size: 1.1rem;
-    }
-}
-
-/* Fix pour éviter que les images de background ne sautent sur iOS */
-@supports (-webkit-touch-callout: none) {
-    .hero {
-        background-attachment: scroll;
-    }
-}
-
-/* --- BURGER CORE --- */
-.menu-toggle {
-    display: none; /* Cache la checkbox */
-}
+/* --- BURGER MENU (No-JS) --- */
+.menu-toggle { display: none; }
 
 .burger-label {
     display: none; /* Caché sur desktop */
     cursor: pointer;
-    flex-direction: column;
-    gap: 5px;
+    width: 30px;
+    height: 22px;
+    position: relative;
     z-index: 1100;
 }
 
 .burger-label span {
     display: block;
-    width: 25px;
+    width: 100%;
     height: 2px;
-    background: var(--light);
-    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border-radius: 2px;
+    background: var(--text-main);
+    position: absolute;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- RESPONSIVE MOBILE (768px) --- */
-@media (max-width: 768px) {
-    .burger-label {
-        display: flex; /* Apparaît sur mobile */
-    }
+.burger-label span:nth-child(1) { top: 0; }
+.burger-label span:nth-child(2) { top: 10px; }
+.burger-label span:nth-child(3) { top: 20px; }
 
+/* Animation Burger -> Croix */
+.menu-toggle:checked ~ .burger-label span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+.menu-toggle:checked ~ .burger-label span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
+.menu-toggle:checked ~ .burger-label span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+/* --- HERO SECTION --- */
+.hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: radial-gradient(circle at top right, var(--primary-glow), transparent 60%);
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    margin-bottom: 20px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -2px;
+}
+
+.hero h1 span {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 650px;
+    margin: 0 auto 40px;
+}
+
+/* --- CARDS CONCEPT --- */
+.concept {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: -60px;
+    position: relative;
+    z-index: 10;
+}
+
+.card {
+    background: var(--bg-card);
+    padding: 45px 35px;
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary);
+    box-shadow: 0 20px 40px var(--primary-glow);
+}
+
+/* --- BUTTONS --- */
+.btn-primary, .btn-secondary {
+    padding: 16px 32px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 700;
+    display: inline-block;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 8px 20px var(--primary-glow);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    margin-left: 15px;
+}
+
+.btn-primary:hover {
+    filter: brightness(1.2);
+    transform: translateY(-3px);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-card);
+    border-color: var(--text-main);
+}
+
+/* --- FOOTER MULTI-COLONNES --- */
+.main-footer {
+    background: var(--bg-card);
+    padding: 80px 0 40px;
+    margin-top: 120px;
+    border-top: 1px solid var(--border);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 50px;
+    margin-bottom: 60px;
+}
+
+.footer-brand .logo { margin-bottom: 20px; display: block; }
+.footer-brand p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+
+.footer-column h4 {
+    color: var(--text-main);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 25px;
+}
+
+.footer-column ul { list-style: none; }
+.footer-column ul li { margin-bottom: 12px; }
+
+.footer-column ul li a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.footer-column ul li a:hover { color: var(--primary); padding-left: 5px; }
+
+.footer-bottom {
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 992px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 768px) {
+    .burger-label { display: block; }
+    
     .nav-links {
         position: fixed;
-        top: 0;
-        right: -100%; /* Caché hors écran */
-        width: 100%;
-        height: 100vh;
-        background: rgba(10, 10, 10, 0.98); /* Fond sombre ultra-clean */
-        backdrop-filter: blur(15px); /* Effet flou pro */
+        top: 0; right: -100%;
+        width: 85%; height: 100vh;
+        background: var(--bg-card);
         flex-direction: column;
         justify-content: center;
-        align-items: center;
-        gap: 30px;
-        transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-        z-index: 1000;
+        gap: 40px;
+        transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        border-left: 1px solid var(--border);
+        box-shadow: -20px 0 40px rgba(0,0,0,0.3);
     }
 
-    /* Quand on clique sur le burger */
-    .menu-toggle:checked ~ .nav-links {
-        right: 0;
-    }
+    .menu-toggle:checked ~ .nav-links { right: 0; }
 
-    /* Animation des barres en X */
-    .menu-toggle:checked ~ .burger-label span:nth-child(1) {
-        transform: translateY(7px) rotate(45deg);
-        background: var(--secondary);
-    }
-    .menu-toggle:checked ~ .burger-label span:nth-child(2) {
-        opacity: 0;
-    }
-    .menu-toggle:checked ~ .burger-label span:nth-child(3) {
-        transform: translateY(-7px) rotate(-45deg);
-        background: var(--secondary);
-    }
+    .hero h1 { font-size: 2.8rem; }
+    .btn-secondary { margin-left: 0; margin-top: 15px; width: 100%; text-align: center; }
+    .btn-primary { width: 100%; text-align: center; }
 
-    /* Adaptation des liens dans le menu mobile */
-    .nav-links li {
-        width: 80%;
-        text-align: center;
-    }
+    .footer-grid { grid-template-columns: 1fr; text-align: center; }
+    .footer-bottom { flex-direction: column; gap: 20px; }
+}
+/* --- RESET DES LISTES DANS LA NAV --- */
+.nav-links, .dropdown-menu {
+    list-style: none; /* Enlève les points/ronds devant les li */
+    padding: 0;
+    margin: 0;
+}
 
-    .nav-links a {
-        font-size: 1.4rem;
-        font-weight: 700;
-        display: block;
-        padding: 10px;
-    }
+/* --- LE DROPDOWN (Le container "Salut, Damien") --- */
+.dropdown {
+    position: relative;
+    cursor: pointer;
+}
 
-    /* Menu Dropdown adapté au mobile */
+.user-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    transition: 0.3s;
+}
+
+.user-name:hover {
+    border-color: var(--primary);
+    background: rgba(138, 43, 226, 0.05);
+}
+
+/* --- LE MENU CACHÉ (Dropdown Menu) --- */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 180px;
+    background: #151515; /* Fond solide pour pas voir à travers */
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 8px;
+    display: none; /* Caché par défaut */
+    flex-direction: column;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+/* Affichage au survol */
+.dropdown:hover .dropdown-menu {
+    display: flex;
+    animation: fadeInDropdown 0.2s ease-out;
+}
+
+/* Style des liens dans le dropdown */
+.dropdown-menu li a, 
+.dropdown-logout {
+    display: block;
+    padding: 12px 15px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.dropdown-menu li a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--primary);
+}
+
+/* Logout spécial */
+.dropdown-logout {
+    width: 100%;
+    text-align: left;
+    color: #ff4b4b !important; /* Rouge pour le danger */
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.dropdown-logout:hover {
+    background: rgba(255, 75, 75, 0.1) !important;
+}
+
+/* Animation propre */
+@keyframes fadeInDropdown {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- FIX MOBILE --- */
+@media (max-width: 768px) {
     .dropdown-menu {
-        position: static; /* On le remet dans le flux */
-        display: block; /* Toujours visible sur mobile */
-        background: rgba(255, 255, 255, 0.03);
-        box-shadow: none;
-        margin-top: 15px;
+        position: static; /* Dans le flux sur mobile */
+        display: block; 
+        background: transparent;
         border: none;
-        width: 100%;
+        box-shadow: none;
+        padding-left: 20px;
     }
-
-    .dropdown-trigger {
-        justify-content: center;
-        font-size: 1.4rem;
+    
+    .user-name {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
     }
+}
+/* --- LE MENU FLOTTANT CORRIGÉ --- */
+.dropdown-menu {
+    position: absolute;
+    /* On le colle juste en dessous du bouton */
+    top: 100%; 
+    right: 0;
+    min-width: 180px;
+    background: #111; /* Fond sombre solide */
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
 
-    .arrow { display: none; } /* On cache la flèche sur mobile pour épurer */
+/* On ajoute un "pont" invisible pour pas que le menu ferme 
+   si tu bouges la souris un peu trop vite */
+.dropdown::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 15px; /* Zone de sécurité */
+    display: block;
+}
 
-    /* Boutons en colonne sur mobile */
-    .btn-outline, .btn-primary {
-        margin-left: 0 !important;
-        width: 100%;
-        text-align: center;
-    }
+.dropdown:hover .dropdown-menu {
+    display: flex;
+    animation: fadeInSmall 0.2s ease-out;
+}
+
+@keyframes fadeInSmall {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }

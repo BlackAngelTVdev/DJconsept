@@ -1,9 +1,10 @@
 <header class="main-header">
   <nav class="container">
-    <div class="logo">
-      DJ<span>CONSEPT</span>
-    </div>
+    <a href="{{ route('home') }}" class="logo">
+      DJ<span>CONCEPT</span>
+    </a>
 
+    {{-- Le checkbox doit être ICI pour le hack CSS --}}
     <input type="checkbox" id="menu-toggle" class="menu-toggle" />
     <label for="menu-toggle" class="burger-label">
       <span></span>
@@ -13,44 +14,31 @@
 
     <ul class="nav-links">
       @if(auth.isAuthenticated)
-        <li>
-          <a href="{{ route('users.index') }}">Explorer</a>
-        </li>
-        <li>
-          <a href="{{ route('users.seartch') }}">Trouver un DJ</a>
-        </li>
+        <li><a href="{{ route('users.index') }}">Explorer</a></li>
+        <li><a href="{{ route('users.seartch') }}">Trouver un DJ</a></li>
 
         <li class="dropdown">
-          <a href="#" class="user-name dropdown-trigger">
-            Salut, {{ auth.user.fullName.split(' ')[0] }} ! <span class="arrow">▼</span>
+          <a href="#" class="user-name">
+            Salut, {{ auth.user.fullName.split(' ')[0] }} ! <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
           </a>
 
           <ul class="dropdown-menu">
-            <li>
-              <a href="{{ route('users.show', { id: auth.user.id }) }}">Mon Profil</a>
-            </li>
+            <li><a href="{{ route('users.show', { id: auth.user.id }) }}">Mon Profil</a></li>
             <li>
               <form action="{{ route('auth.logout') }}" method="POST">
                 {{ csrfField() }}
-                <button type="submit" class="dropdown-logout">Déconnexion</button>
+                <button type="submit" class="dropdown-logout" style="background:none; border:none; color:inherit; cursor:pointer; padding:12px 20px; font-weight:bold; width:100%; text-align:left;">
+                  Déconnexion
+                </button>
               </form>
             </li>
           </ul>
         </li>
-
       @else
-        <li>
-          <a href="{{ route('home') }}">Accueil</a>
-        </li>
-        <li>
-          <a href="{{ route('how-it-works') }}">Comment ça marche</a>
-        </li>
-        <li>
-          <a href="{{ route('login') }}" class="btn-outline">Connexion</a>
-        </li>
-        <li>
-          <a href="{{ route('register') }}" class="btn-primary">S'inscrire</a>
-        </li>
+        <li><a href="{{ route('home') }}">Accueil</a></li>
+        <li><a href="{{ route('how-it-works') }}">Concept</a></li>
+        <li><a href="{{ route('login') }}" class="btn-secondary">Connexion</a></li>
+        <li><a href="{{ route('register') }}" class="btn-primary">S'inscrire</a></li>
       @end
     </ul>
   </nav>

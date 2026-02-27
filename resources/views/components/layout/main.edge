@@ -1,17 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DJ Concept | {{ title || '' }}</title>
+  <title>DJ Concept | {{ title || 'Cloud de Salo' }}</title>
+  
+  {{-- Font Awesome --}}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  @vite([`resources/css/app.css`, `resources/css/${css}`, 'resources/js/app.js' ,`resources/js/${js}`])
+  
+  {{-- Vite Assets --}}
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @if(css)
+    @vite(['resources/css/' + css])
+  @end
+  @if(js)
+    @vite(['resources/js/' + js])
+  @end
 </head>
 <body>
-  @!layout.header()
+  @include('components/layout/header')
 
-  {{{ await $slots.main() }}}
+  <main>
+    {{{ await $slots.main() }}}
+  </main>
 
-  @!layout.footer()
+  @include('components/layout/footer')
 </body>
 </html>

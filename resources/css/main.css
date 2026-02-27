@@ -1,5 +1,7 @@
-/* Hero Section */
+/* resources/css/main.css (ou hero-cards.css) */
 @import url('./app.css');
+
+/* --- HERO SECTION --- */
 .hero {
   position: relative;
   height: 80vh;
@@ -7,135 +9,126 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-image: url('https://via.placeholder.com/1920x1080'); /* Remplace par une image de club */
+  background-image: url('https://images.unsplash.com/photo-1514525253361-bee8718a300c?q=80&w=1920'); 
   background-size: cover;
   background-position: center;
+  background-attachment: fixed; /* Effet parallax sympa sur desktop */
 }
 
 .hero-overlay {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(rgba(15, 15, 15, 0.5), var(--bg-color));
+  /* Le dégradé part d'une version transparente vers ton fond actuel */
+  background: linear-gradient(to bottom, transparent, var(--bg-main));
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
+  padding: 0 20px;
 }
 
 .hero h1 {
-  font-size: 4rem;
+  font-size: clamp(2.5rem, 6vw, 4rem);
   margin-bottom: 20px;
+  color: var(--text-main);
+  font-weight: 900;
+  line-height: 1;
 }
 
 .hero h1 span {
   color: var(--secondary);
-  text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+  /* Lueur subtile qui utilise ta variable glow */
+  text-shadow: 0 0 30px var(--primary-glow);
 }
 
 .hero p {
   font-size: 1.2rem;
-  max-width: 600px;
-  margin: 0 auto 30px;
-  color: #ccc;
+  max-width: 650px;
+  margin: 0 auto 35px;
+  color: var(--text-muted);
 }
 
-/* Cards */
+/* --- CARDS SECTION --- */
 .concept {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
-  margin-top: -50px;
+  margin-top: -80px; /* On fait monter les cartes sur le hero */
   position: relative;
   z-index: 10;
 }
 
 .card {
-  background: var(--gray);
-  padding: 40px;
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-card);
+  padding: 45px 35px;
+  border-radius: 24px;
+  border: 1px solid var(--border);
   text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
-.card h3 { margin: 20px 0 10px; color: var(--secondary); }
+.card:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px var(--primary-glow);
+}
 
+.card h3 { 
+  margin: 20px 0 12px; 
+  color: var(--secondary); 
+  font-size: 1.6rem;
+}
 
-/* --- HERO & CARDS RESPONSIVE --- */
+.card p {
+  color: var(--text-muted);
+}
+
+/* --- RESPONSIVE "AUX PETITS OIGNONS" --- */
 
 @media (max-width: 1024px) {
-    .hero h1 {
-        font-size: 3.2rem;
-    }
+  .hero { background-attachment: scroll; } /* Fix performance mobile */
 }
 
 @media (max-width: 768px) {
-    /* HERO */
-    .hero {
-        height: 70vh; /* On réduit un peu la hauteur */
-        padding: 0 20px;
-    }
+  .hero {
+    height: 75vh;
+  }
 
-    .hero h1 {
-        font-size: 2.5rem;
-        line-height: 1.1;
-    }
+  .concept {
+    grid-template-columns: 1fr;
+    margin-top: -40px;
+    padding: 0 25px;
+  }
 
-    .hero p {
-        font-size: 1.1rem;
-        margin-bottom: 25px;
-    }
-
-    /* CARDS */
-    .concept {
-        grid-template-columns: 1fr; /* On force une seule colonne */
-        margin-top: -30px; /* On remonte un peu moins la section */
-        gap: 20px;
-        padding: 0 20px;
-    }
-
-    .card {
-        padding: 30px;
-    }
+  .card {
+    padding: 35px 25px;
+  }
 }
 
 @media (max-width: 480px) {
-    .hero {
-        height: 60vh;
-    }
+  .hero {
+    height: 65vh;
+  }
 
-    .hero h1 {
-        font-size: 2rem;
-    }
+  .hero h1 {
+    font-size: 2.2rem;
+  }
 
-    .hero p {
-        font-size: 0.95rem;
-    }
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
 
-    /* On gère les boutons en colonne sur mobile si besoin */
-    .hero-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
-    /* Si tu as des boutons l'un à côté de l'autre */
-    .btn-secondary {
-        margin-left: 0 !important; 
-        width: 100%;
-        max-width: 250px;
-    }
-    
-    .btn-primary {
-        width: 100%;
-        max-width: 250px;
-    }
-}
-
-/* Fix pour éviter les problèmes de background-image sur les navigateurs mobiles */
-@media (hover: none) {
-    .hero {
-        background-attachment: scroll; /* Évite les lags de scroll sur iOS */
-    }
+  /* Alignement boutons mobile */
+  .btn-secondary {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+  
+  .btn-primary {
+    width: 100%;
+  }
 }
