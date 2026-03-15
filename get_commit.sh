@@ -3,7 +3,7 @@
 OUTPUT_DIR="./DOC"
 OUTPUT_FILE="$OUTPUT_DIR/JNR.csv"
 
-# Check Git!
+# Check Git
 if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
   echo "Erreur : Pas un dépôt Git."
   exit 1
